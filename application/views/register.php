@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="zh-CN">
     <head>
 		<meta charset="utf-8">
-		<title>用户登录 - apicat.net</title>
+		<title>用户注册 - apicat.net</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <body>
     <div class="container">
         <form class="form-signin">
-			<h3 class="text-center">用户登录</h3><br/>
+			<h3 class="text-center">欢迎加入ApiCat</h3><br/>
 			<div class="form-group">
 				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱" style="height:48px">
 			</div>
@@ -63,19 +63,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码" style="height:48px">
 			</div>
 			<div class="form-group">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="checkbox">
-							<label><input type="checkbox"> 记住我</label>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<p class="text-right" style="margin-top: 10px;margin-bottom: 10px;"><a href="#">找回密码</a></p>
-					</div>
-				</div>
+				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="确认密码" style="height:48px">
 			</div>
-			<button type="button" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
-			<p class="text-center"><a href="#">还没有账户，马上注册</a></p>
+			<div class="form-group">
+				<input type="text" class="form-control" id="exampleInputPassword1" placeholder="验证码" style="height:48px">
+			</div>
+			<button type="button" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
+			<p class="text-center"><a href="/login">已有账户？马上登录</a></p>
 		</form>
     </div>
   </body>
