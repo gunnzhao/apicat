@@ -66,7 +66,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="确认密码" style="height:48px">
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" id="exampleInputPassword1" placeholder="验证码" style="height:48px">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="验证码" aria-describedby="basic-addon2" style="height:48px">
+					<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" onclick="javascript:this.src='/verify_code?tm='+Math.random()"></span>
+				</div>
 			</div>
 			<button type="button" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
 			<p class="text-center"><a href="/login">已有账户？马上登录</a></p>
