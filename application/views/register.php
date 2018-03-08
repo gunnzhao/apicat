@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="form-group">
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="验证码" aria-describedby="basic-addon2" style="height:48px">
-					<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" onclick="javascript:this.src='/verify_code?tm='+Math.random()"></span>
+					<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" onclick="javascript:this.src='/verify_code?tm='+Math.random()" style="height:34px"></span>
 				</div>
 			</div>
 			<button type="button" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
