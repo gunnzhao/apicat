@@ -56,6 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="container">
         <form class="form-signin">
 			<h3 class="text-center">用户登录</h3><br/>
+			<div class="alert alert-warning" role="alert">账号或密码错误</div>
 			<div class="form-group">
 				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱" style="height:48px">
 			</div>
