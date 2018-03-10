@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="zh-CN">
     <head>
 		<meta charset="utf-8">
-		<title>用户登录 - apicat.net</title>
+		<title>用户登录 - ApiCat.net</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
@@ -54,14 +54,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <body>
     <div class="container">
-        <form class="form-signin">
+        <form class="form-signin" action="/login/do" method="post">
 			<h3 class="text-center">用户登录</h3><br/>
-			<div class="alert alert-warning" role="alert">账号或密码错误</div>
+			<?php if (isset($err) and !empty($err)): ?>
+			<div class="alert alert-warning" role="alert"><?php echo $err; ?></div>
+			<?php endif; ?>
 			<div class="form-group">
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱" style="height:48px">
+				<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px">
 			</div>
 			<div class="form-group">
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码" style="height:48px">
+				<input type="password" class="form-control" name="passwd" placeholder="密码" style="height:48px">
 			</div>
 			<div class="form-group">
 				<div class="row">
@@ -75,7 +77,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 				</div>
 			</div>
-			<button type="button" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
+			<button type="submit" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
 			<p class="text-center"><a href="/register">还没有账户，马上注册</a></p>
 		</form>
     </div>
