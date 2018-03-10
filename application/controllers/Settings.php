@@ -10,10 +10,19 @@ class Settings extends MY_Controller
     {
         parent::__construct();
     }
-    
-    public function index()
+
+    public function profile()
     {
-        $this->load->library('session');
-        var_dump($this->session);
+        $this->render('settings/profile');
+    }
+
+    public function email()
+    {
+        $this->render('settings/email');
+    }
+
+    public function admin()
+    {
+        $this->render('settings/admin');
     }
 }

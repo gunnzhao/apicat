@@ -53,11 +53,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../navbar/"<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $_page_nickname; ?> <span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <img src="<?php echo $_SESSION['avatar']; ?>" alt="..." class="img-circle nav-avatar">
+                                <?php echo $_page_nickname; ?> <span class="caret"></span>
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">我的团队</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">设置</a></li>
+                                <li><a href="/settings/profile">设置</a></li>
                                 <li><a href="/logout">退出</a></li>
                             </ul>
                         </li>

@@ -1,0 +1,47 @@
+/* Logo */
+.logo {
+    width: 125px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+/* 导航栏头像 */
+.nav-avatar {
+    width: 18px;
+    height: 18px;
+}
+
+/* 按钮 */
+.btn-lblue {
+    border: 1px solid #3079ed;
+    color: #ffffff;
+    background-color: #4b8cf7;
+}
+.btn-lblue:hover,
+.btn-lblue:focus,
+.btn-lblue:active,
+.btn-lblue.active,
+.btn-lblue.disabled,
+.btn-lblue[disabled] {
+    border: 1px solid #3079ed;
+    color: #ffffff;
+    background-color: #4b8cf7;
+}
+
+/* 账号信息 */
+.profile-avatar {
+    width: 200px;
+}
+.profile-avatar img {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Settings email */
+.settings-email-ul {
+    padding: 15px 10px;
+    border: 1px solid #d0dbd8;
+    border-radius: 3px;
+}

@@ -9,7 +9,8 @@ class MY_Controller extends CI_Controller {
         '_page_title'       => 'ApiCat',
         '_page_css'         => array(),
         '_page_js'          => array(),
-        '_page_nickname'    => ''
+        '_page_nickname'    => '',
+        '_page_avatar'      => ''
     );
 
     public function __construct()
@@ -26,9 +27,8 @@ class MY_Controller extends CI_Controller {
      */
     public function render($tpl, $data = null)
     {
-        if ($data) {
-            $this->tpldata['subpage_data'] = $data;
-        }
+
+        $this->tpldata['subpage_data'] = $data ? $data : array();
         $this->layout->view($tpl, $this->tpldata);
     }
 
@@ -75,5 +75,6 @@ class MY_Controller extends CI_Controller {
         }
 
         $this->set_tpldata('_page_nickname', $this->session->nickname);
+        $this->set_tpldata('_page_avatar', $this->session->avatar);
     }
 }
