@@ -65,12 +65,14 @@ class Verifycode
     /**
      * 生成验证码
      */
-    private function create_code()
+    public function create_code()
     {
-        $charset_len = strlen($this->charset) - 1;
-        for ($i = 0; $i < $this->codelen; $i++) {
-            $rand_index = mt_rand(0, $charset_len);
-            $this->code .= $this->charset[$rand_index];
+        if ($this->code == '') {
+            $charset_len = strlen($this->charset) - 1;
+            for ($i = 0; $i < $this->codelen; $i++) {
+                $rand_index = mt_rand(0, $charset_len);
+                $this->code .= $this->charset[$rand_index];
+            }
         }
     }
 

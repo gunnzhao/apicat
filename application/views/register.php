@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="zh-CN">
     <head>
 		<meta charset="utf-8">
-		<title>用户注册 - apicat.net</title>
+		<title>用户注册 - ApiCat.net</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content="">
@@ -52,29 +52,31 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</style>
     </head>
 
-  <body>
-    <div class="container">
-        <form class="form-signin">
-			<h3 class="text-center">欢迎加入ApiCat</h3><br/>
-			<div class="alert alert-warning" role="alert">验证码错误</div>
-			<div class="form-group">
-				<input type="email" class="form-control" id="exampleInputEmail1" placeholder="邮箱" style="height:48px">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="密码" style="height:48px">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="确认密码" style="height:48px">
-			</div>
-			<div class="form-group">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="验证码" aria-describedby="basic-addon2" style="height:48px">
-					<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" title="点击更换验证码" onclick="javascript:this.src='/verify_code?tm='+Math.random()" style="height:34px;cursor:pointer;"></span>
+    <body>
+		<div class="container">
+			<form class="form-signin" action="/register/do" method="post">
+				<h3 class="text-center">欢迎加入ApiCat</h3><br/>
+				<?php if (isset($err) and !empty($err)): ?>
+				<div class="alert alert-warning" role="alert"><?php echo $err; ?></div>
+				<?php endif; ?>
+				<div class="form-group">
+					<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px">
 				</div>
-			</div>
-			<button type="button" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
-			<p class="text-center"><a href="/login">已有账户？马上登录</a></p>
-		</form>
-    </div>
-  </body>
+				<div class="form-group">
+					<input type="password" class="form-control" name="passwd" placeholder="密码" style="height:48px">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" name="re_passwd" placeholder="确认密码" style="height:48px">
+				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<input type="text" class="form-control" name="verify_code" placeholder="验证码" aria-describedby="basic-addon2" style="height:48px">
+						<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" title="点击更换验证码" onclick="javascript:this.src='/verify_code?tm='+Math.random()" style="height:34px;cursor:pointer;"></span>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
+				<p class="text-center"><a href="/login">已有账户？马上登录</a></p>
+			</form>
+		</div>
+    </body>
 </html>
