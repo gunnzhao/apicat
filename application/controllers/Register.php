@@ -72,11 +72,12 @@ class Register extends CI_Controller
             return;
         }
 
-        $uid = $this->user_model->add_user($params['email']['val'], $params['passwd']['val']);
+        $uid = $this->user_model->add_user($params['nickname']['val'], $params['email']['val'], $params['passwd']['val']);
         if ($uid !== false) {
             $this->session->set_userdata(array(
                 'uid'        => $uid,
                 'nickname'   => $params['nickname']['val'],
+                'avatar'     => 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM55stttUxUOyUHrcJ8MnaH292VkkcRmdlwNg4ERNU1jRw/0',
                 'login_time' => time()
             ));
             redirect('/settings');

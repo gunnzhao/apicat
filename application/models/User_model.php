@@ -18,17 +18,20 @@ class User_model extends CI_model
 
     /**
      * 创建用户
+     * @param  string $nickname 用户昵称
      * @param  string $email 用户邮箱
      * @param  string $passwd 用户密码
      * @return bool 成功返回uid，失败返回false
      */
-    public function add_user($email, $passwd)
+    public function add_user($nickname, $email, $passwd)
     {
         $data = array(
-            'email' => $email,
-            'passwd' => password_hash($passwd, PASSWORD_DEFAULT),
-            'reg_time' => time(),
-            'login_ip' => $this->input->ip_address(),
+            'email'      => $email,
+            'passwd'     => password_hash($passwd, PASSWORD_DEFAULT),
+            'nickname'   => $nickname,
+            'avatar'     => 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM55stttUxUOyUHrcJ8MnaH292VkkcRmdlwNg4ERNU1jRw/0',
+            'reg_time'   => time(),
+            'login_ip'   => $this->input->ip_address(),
             'login_time' => time()
         );
 

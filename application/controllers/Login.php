@@ -57,6 +57,7 @@ class Login extends CI_Controller
             $this->session->set_userdata(array(
                 'uid'        => $user_info['id'],
                 'nickname'   => $user_info['nickname'],
+                'avatar'     => $user_info['avatar'],
                 'login_time' => time()
             ));
 
