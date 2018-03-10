@@ -27,7 +27,8 @@ class Layout {
      * @param bool $return
      */
     public function view($view, $data=null, $return=false) {
-        $data['content_for_layout'] = $this->obj->load->view($view, $data, true);
+        $data['content_for_layout'] = $this->obj->load->view($view, $data['subpage_data'], true);
+        unset($data['subpage_data']);
         if ($return) {
             $output = $this->obj->load->view($this->layout, $data, true);
             return $output;

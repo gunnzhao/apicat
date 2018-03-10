@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * 验证码调用类
+ */
 class Verify_code extends MY_Controller {
     
     public function index()
