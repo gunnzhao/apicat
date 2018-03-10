@@ -30,6 +30,7 @@ class Register extends CI_Controller
         $this->load->helper('email');
 
         $params = array(
+            'nickname'    => array('val' => $this->input->post('nickname'), 'err' => '请输入您的昵称'),
             'email'       => array('val' => $this->input->post('email'), 'err' => '请输入您的邮箱'),
             'passwd'      => array('val' => $this->input->post('passwd'), 'err' => '请输入您的密码'),
             're_passwd'   => array('val' => $this->input->post('re_passwd'), 'err' => '请输确认您的密码'),
@@ -75,6 +76,7 @@ class Register extends CI_Controller
         if ($uid !== false) {
             $this->session->set_userdata(array(
                 'uid'        => $uid,
+                'nickname'   => $params['nickname']['val'],
                 'login_time' => time()
             ));
             redirect('/settings');

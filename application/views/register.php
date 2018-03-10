@@ -60,6 +60,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="alert alert-warning" role="alert"><?php echo $err; ?></div>
 				<?php endif; ?>
 				<div class="form-group">
+					<input type="text" class="form-control" name="nickname" placeholder="昵称" style="height:48px">
+				</div>
+				<div class="form-group">
 					<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px">
 				</div>
 				<div class="form-group">

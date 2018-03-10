@@ -54,6 +54,14 @@ class Login extends CI_Controller
             $this->session->set_userdata('login_err', '账号或密码有误');
             redirect('/login');
         } else {
+            $this->session->set_userdata(array(
+                'uid'        => $user_info['id'],
+                'nickname'   => $user_info['nickname'],
+                'login_time' => time()
+            ));
+
+            // 更新登录时间和IP
+            $this->user_model->update_login_info($user_info['id']);
             redirect('/home');
         }
     }

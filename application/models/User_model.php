@@ -54,4 +54,23 @@ class User_model extends CI_model
         }
         return array();
     }
+
+    /**
+     * 更新登录的IP和时间
+     * @param  int $uid 用户ID
+     * @return int 影响记录数
+     */
+    public function update_login_info($uid)
+    {
+        $res = $this->db->update(
+            $this->table,
+            array('login_ip' => $this->input->ip_address(), 'login_time' => time()),
+            array('id' => $uid)
+        );
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }
