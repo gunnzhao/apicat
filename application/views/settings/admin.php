@@ -14,7 +14,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <h4>安全设置</h4><hr>
         <div class="row">
             <div class="col-xs-7">
-            <form>
+            <?php if (isset($form_err) and !empty($form_err)): ?>
+			<div class="alert alert-warning" role="alert"><?php echo $form_err; ?></div>
+            <?php elseif (isset($form_ok) and !empty($form_ok)): ?>
+			<div class="alert alert-success" role="alert"><?php echo $form_ok; ?></div>
+			<?php endif; ?>
+            <form action="/settings/do_admin" method="post">
                 <div class="form-group">
                     <label for="nickname">旧密码</label>
                     <input type="password" class="form-control" name="oldpasswd" placeholder="旧密码">

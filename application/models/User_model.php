@@ -44,6 +44,22 @@ class User_model extends CI_model
     }
 
     /**
+     * 编辑用户
+     * @param  array $data 需要编辑的用户信息
+     * @param  int $uid 用户ID
+     * @return bool|int 影响记录数
+     */
+    public function edit_user($data, $uid)
+    {
+        $res = $this->db->update($this->table, $data, array('id' => $uid));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
+
+    /**
      * 通过email查询用户数据
      * @param  string $email 用户邮箱
      * @return array
@@ -59,9 +75,24 @@ class User_model extends CI_model
     }
 
     /**
+     * 通过uid查询用户数据
+     * @param  string $uid 用户ID
+     * @return array
+     */
+    public function get_user_by_uid($uid)
+    {
+        $res = $this->db->get_where($this->table, array('id' => $uid, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
+
+    /**
      * 更新登录的IP和时间
      * @param  int $uid 用户ID
-     * @return int 影响记录数
+     * @return bool|int 影响记录数
      */
     public function update_login_info($uid)
     {

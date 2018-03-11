@@ -80,7 +80,7 @@ class Register extends CI_Controller
                 'avatar'     => 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM55stttUxUOyUHrcJ8MnaH292VkkcRmdlwNg4ERNU1jRw/0',
                 'login_time' => time()
             ));
-            redirect('/settings');
+            redirect('/settings/profile');
         } else {
             $this->session->set_userdata('register_err', '注册失败，请稍后重试');
             redirect('/register');
