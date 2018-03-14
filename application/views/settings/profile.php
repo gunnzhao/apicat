@@ -57,10 +57,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xs-4">
                 <h5>账号头像</h5>
                 <p class="profile-avatar">
-                    <img src="<?php echo $_SESSION['avatar']; ?>" alt="..." class="img-circle">
-                    <a href="#" class="btn btn-default btn-block">更换头像</a>
+                    <img src="<?php echo $_SESSION['avatar']; ?>" alt="<?php echo $_SESSION['nickname'] . '的头像'; ?>" class="img-circle" id="user-avatar">
+                    <button type="button" class="btn btn-default btn-block" data-toggle="modal" data-target="#changeAvatar">更换头像</button>
                 </p>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="changeAvatar" tabindex="-1" role="dialog" aria-labelledby="avatarModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">请选择图片</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="avatar" class="col-sm-2 control-label">上传头像</label>
+                        <div class="col-sm-10">
+                            <input type="file" id="avatar">
+                            <a class="btn btn-lblue" id="avatar-file-btn" href="javascript:void(0);">选择图片</a>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <div class="col-xs-7">
+                        <div id="clipArea"></div>
+                    </div>
+                    <div class="col-xs-5">
+                        <p id="view"></p>
+                        <p class="text-center"><a class="btn btn-default btn-sm" id="clipBtn">截取头像</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-lblue" id="upload">保存修改</button>
+            </div>
+        </div>
+        </div>
 </div>

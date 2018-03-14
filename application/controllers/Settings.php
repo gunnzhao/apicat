@@ -16,6 +16,12 @@ class Settings extends MY_Controller
      */
     public function profile()
     {
+        $this->add_page_css('/static/css/avatar_upload.css');
+        $this->add_page_js('/static/js/iscroll-zoom.js');
+        $this->add_page_js('/static/js/hammer.js');
+        $this->add_page_js('/static/js/lrz.all.bundle.js');
+        $this->add_page_js('/static/js/jquery.photoClip.min.js');
+        $this->add_page_js('/static/js/avatar_upload.js');
         $this->render('settings/profile');
     }
 

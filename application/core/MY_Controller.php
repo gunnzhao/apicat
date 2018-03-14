@@ -13,10 +13,15 @@ class MY_Controller extends CI_Controller {
         '_page_avatar'      => ''
     );
 
+    // json返回变量
+    protected $json_data = array('status' => 0, 'data' => '', 'msg' => '');
+
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('session');
         $this->check_login();
+        $this->json_data['data'] = new stdClass();
         $this->load->library('layout');
     }
 
@@ -27,7 +32,6 @@ class MY_Controller extends CI_Controller {
      */
     protected function render($tpl, $data = null)
     {
-
         $this->tpldata['subpage_data'] = $data ? $data : array();
         $this->layout->view($tpl, $this->tpldata);
     }
@@ -50,7 +54,7 @@ class MY_Controller extends CI_Controller {
      */
     protected function add_page_js($js)
     {
-        $this->tpldata['page_js'][] = $js . '?v=' . microtime(true);
+        $this->tpldata['_page_js'][] = $js . '?v=' . microtime(true);
     }
 
     /**
@@ -60,7 +64,7 @@ class MY_Controller extends CI_Controller {
      */
     protected function add_page_css($css)
     {
-        $this->tpldata['page_css'][] = $css . '?v=' . microtime(true);
+        $this->tpldata['_page_css'][] = $css . '?v=' . microtime(true);
     }
 
     /**
@@ -68,7 +72,6 @@ class MY_Controller extends CI_Controller {
      */
     protected function check_login()
     {
-        $this->load->library('session');
         if (empty($this->session->uid)) {
             $this->load->helper('url');
             redirect('/login');
@@ -106,7 +109,6 @@ class MY_Controller extends CI_Controller {
      */
     private function return_show_msg($msg, $result = true)
     {
-        $this->load->library('session');
         $this->load->helper('url');
 
         if ($result) {
@@ -117,5 +119,28 @@ class MY_Controller extends CI_Controller {
         
         $source_page = $this->input->server('HTTP_REFERER');
         redirect($source_page);
+    }
+
+    /**
+     * 以Json字符串作为返回数据返回给客户端
+     * @param  array $data 返回数据内容
+     * @return void
+     */
+    protected function response_json_ok($data = null) {
+        if ($data) {
+            $this->json_data['data'] = $data;
+        }
+        $this->output->set_content_type('application/json')->set_output(json_encode($this->json_data));
+    }
+
+    /**
+     * 以Json字符串作为返回数据，报错给客户端
+     * @param  string $msg 错误原因
+     * @return void
+     */
+    protected function response_json_fail($msg) {
+        $this->json_data['status'] = -1;
+        $this->json_data['msg'] = $msg;
+        $this->output->set_content_type('application/json')->set_output(json_encode($this->json_data));
     }
 }
