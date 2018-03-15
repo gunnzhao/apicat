@@ -122,6 +122,14 @@ class MY_Controller extends CI_Controller {
     }
 
     /**
+     * 错误页面的表单数据
+     */
+    protected function form_err_data($data)
+    {
+        $this->session->set_userdata('form_err_data', $data);
+    }
+
+    /**
      * 以Json字符串作为返回数据返回给客户端
      * @param  array $data 返回数据内容
      * @return void
