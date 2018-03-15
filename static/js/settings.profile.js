@@ -42,4 +42,20 @@ $(function(){
             }
         });
     });
+
+    var cities = new Array();
+    $.get('/location/all_cities', {}, function(res) {
+        if (res.status == 0) {
+            cities = res.data.records;
+        }
+    });
+
+    $('select[name="province"]').change(function() {
+        var province_id = $(this).val();
+        
+        $('select[name="city"]').empty();
+        for (var i = 0; i < cities[province_id].length; i++) {
+            $('select[name="city"]').append('<option value="' + cities[province_id][i]['id'] + '">' + cities[province_id][i]['name'] + '</option>');
+        }
+    });
 })
