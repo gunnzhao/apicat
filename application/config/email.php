@@ -64,16 +64,19 @@ $config['smtp_crypto'] = '';
  */
 $config['wordwrap'] = true;
 
-$config[''] = '';
+/**
+ * 自动换行时每行的最大字符数
+ */
+$config['wrapchars'] = 76;
 
-$config[''] = '';
+/**
+ * 邮件类型
+ * text 或 html
+ * 如果发送的是HTML邮件，必须是一个完整的网页，确保网页中没有使用相对路径的链接和图片地址，它们在邮件中不能正确显示。
+ */
+$config['mailtype'] = 'text';
 
-$config[''] = '';
-
-$config[''] = '';
-
-$config[''] = '';
-
-$config[''] = '';
-
-$config[''] = '';
+/**
+ * Email 优先级（1 = 最高. 5 = 最低. 3 = 正常）
+ */
+$config['priority'] = 3;
