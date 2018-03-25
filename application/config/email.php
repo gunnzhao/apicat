@@ -10,7 +10,7 @@ $config['useragent'] = 'ApiCat';
  * 邮件发送协议
  * 支持mail, sendmail, smtp
  */
-$config['protocol'] = 'sendmail';
+$config['protocol'] = 'smtp';
 
 /**
  * 服务器上 Sendmail 的实际路径
