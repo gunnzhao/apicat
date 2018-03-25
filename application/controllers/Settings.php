@@ -156,6 +156,16 @@ class Settings extends MY_Controller
         }
     }
 
+    public function send_email()
+    {
+        $this->load->helper('email');
+        if (!valid_email($params['email']['val'])) {
+            return $this->response_json_fail('邮箱格式有误');
+        }
+
+        $this->response_json_ok();
+    }
+
     /**
      * 修改密码
      */
