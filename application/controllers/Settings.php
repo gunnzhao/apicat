@@ -120,7 +120,40 @@ class Settings extends MY_Controller
      */
     public function email()
     {
-        $this->render('settings/email');
+        $this->load->helper('form');
+        $this->load->model('user_model');
+        $user_info = $this->user_model->get_user_by_uid($this->session->uid);
+        $tpl_data = array('is_verified' => $user_info['email_verified'], 'email' => $user_info['email']);
+
+        $this->add_page_js('/static/js/settings.email.js');
+
+        if ($this->input->method() == 'get') {
+            return $this->render('settings/email', $tpl_data);
+        }
+
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules(
+            'new_email', '新邮箱', 'trim|required|valid_email',
+            array(
+                'required'    => '请输入您的新邮箱',
+                'valid_email' => '您的邮箱格式有误'
+            )
+        );
+        $this->form_validation->set_rules(
+            'verify_code', '新邮箱', 'trim|required|min_length[4]|max_length[6]',
+            array(
+                'required'   => '请输入您的验证码',
+                'min_length' => '您输入的验证码有误',
+                'max_length' => '您输入的验证码有误'
+            )
+        );
+
+        if ($this->form_validation->run() == false) {
+            $this->render('settings/email', $tpl_data);
+        } else {
+            $tpl_data['result'] = true;
+            $this->render('settings/email', $tpl_data);
+        }
     }
 
     /**
