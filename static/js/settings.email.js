@@ -1,7 +1,19 @@
 $(function(){
     var send_verify_code = function(email) {
-        alert(email);
-        return true;
+        return $.ajax({
+            type: 'post',
+            url: '/email/send_verify_code',
+            data: {'email': email},
+            async: false,
+            success: function(res) {
+                if (res.status == 0) {
+                    return true;
+                } else {
+                    alert(res.msg);
+                    return false;
+                }
+            }
+        });
     }
 
     var buttonCountdown = function($el, ms) {
@@ -40,8 +52,12 @@ $(function(){
             return;
         }
 
+        $(this).prop('disabled', true);
+
         if (send_verify_code(email_addr)) {
             buttonCountdown($(this), 1000 * 60);
+        } else {
+            $(this).prop('disabled', false);
         }
     });
 });

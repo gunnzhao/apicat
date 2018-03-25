@@ -31,6 +31,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-xs-7">
                 <?php echo validation_errors('<div class="alert alert-warning" role="alert">', '</div>'); ?>
+                <?php if (isset($result) and $result): ?>
+                <div class="alert alert-success" role="alert">修改成功</div>
+                <?php elseif (isset($result) and !$result): ?>
+                <div class="alert alert-warning" role="alert">修改失败，请稍后重试</div>
+                <?php endif; ?>
                 <form class="form-horizontal" action="/settings/email" method="post">
                     <div class="form-group">
                         <label for="new_email" class="col-sm-2 control-label">新邮箱</label>

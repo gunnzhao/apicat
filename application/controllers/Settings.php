@@ -133,14 +133,14 @@ class Settings extends MY_Controller
 
         $this->load->library('form_validation');
         $this->form_validation->set_rules(
-            'new_email', '新邮箱', 'trim|required|valid_email',
+            'new_email', '新邮箱', 'trim|required|valid_email|callback_check_email',
             array(
                 'required'    => '请输入您的新邮箱',
                 'valid_email' => '您的邮箱格式有误'
             )
         );
         $this->form_validation->set_rules(
-            'verify_code', '新邮箱', 'trim|required|min_length[4]|max_length[6]',
+            'verify_code', '新邮箱', 'trim|required|min_length[4]|max_length[6]|callback_check_verify_code',
             array(
                 'required'   => '请输入您的验证码',
                 'min_length' => '您输入的验证码有误',
@@ -151,19 +151,17 @@ class Settings extends MY_Controller
         if ($this->form_validation->run() == false) {
             $this->render('settings/email', $tpl_data);
         } else {
-            $tpl_data['result'] = true;
+            $this->load->model('user_model');
+            $res = $this->user_model->edit_user(array('email' => $this->input->post('new_email'), 'email_verified' => 1), $this->session->uid);
+            if ($res !== false) {
+                $tpl_data['result'] = true;
+                $tpl_data['is_verified'] = 1;
+                $tpl_data['email'] = $this->input->post('new_email');
+            } else {
+                $tpl_data['result'] = false;
+            }
             $this->render('settings/email', $tpl_data);
         }
-    }
-
-    public function send_email()
-    {
-        $this->load->helper('email');
-        if (!valid_email($params['email']['val'])) {
-            return $this->response_json_fail('邮箱格式有误');
-        }
-
-        $this->response_json_ok();
     }
 
     /**
@@ -219,5 +217,46 @@ class Settings extends MY_Controller
         } else {
             $this->show_err('修改失败，请稍后重试');
         }
+    }
+
+    /**
+     * 验证码是否正确
+     */
+    public function check_verify_code()
+    {
+        $code = $this->input->post('verify_code');
+        $this->form_validation->set_message('check_verify_code', '验证码有误');
+
+        $this->load->model('email_verify_model');
+        $record = $this->email_verify_model->get_last_record($this->session->uid);
+        if (!$record) {
+            return false;
+        }
+        log_message('debug', json_encode($record));
+        // 超过15分钟，验证码失效
+        if ((time() - $record['insert_time']) > 900) {
+            return false;
+        }
+        if ($code != $record['verify_code']) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    /**
+     * 验证邮箱是否被使用
+     */
+    public function check_email()
+    {
+        $email = $this->input->post('new_email');
+        $this->form_validation->set_message('check_verify_code', '该邮箱已被使用');
+
+        $this->load->model('user_model');
+        $email_exist = $this->user_model->get_user_by_email($email);
+        if ($email_exist) {
+            return false;
+        }
+        return true;
     }
 }
