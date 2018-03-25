@@ -56,4 +56,35 @@ class Email_verify_model extends CI_model
         }
         return array();
     }
+
+    /**
+     * 通过hash_val获取一条记录
+     * @param  string $hash_val 表中的hash值
+     * @return array
+     */
+    public function get_record_by_hash_val($hash_val)
+    {
+        $res = $this->db->get_where($this->table, array('hash_val' => $hash_val));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
+
+    /**
+     * 编辑记录
+     * @param  array $data 需要编辑的信息
+     * @param  int $id 记录ID
+     * @return bool|int 影响记录数
+     */
+    public function edit_record($data, $id)
+    {
+        $res = $this->db->update($this->table, $data, array('id' => $id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

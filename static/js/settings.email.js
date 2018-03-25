@@ -1,16 +1,17 @@
 $(function(){
-    var send_verify_code = function(email) {
-        return $.ajax({
+    var send_verify_code = function($el, email) {
+        $el.prop('disabled', true);
+        $.ajax({
             type: 'post',
             url: '/email/send_verify_code',
             data: {'email': email},
             async: false,
             success: function(res) {
                 if (res.status == 0) {
-                    return true;
+                    buttonCountdown($el, 1000 * 60);
                 } else {
                     alert(res.msg);
-                    return false;
+                    $el.prop('disabled', false);
                 }
             }
         });
@@ -51,13 +52,25 @@ $(function(){
         if (email_addr == '') {
             return;
         }
+        send_verify_code($(this), email_addr);
+    });
 
-        $(this).prop('disabled', true);
-
-        if (send_verify_code(email_addr)) {
-            buttonCountdown($(this), 1000 * 60);
-        } else {
-            $(this).prop('disabled', false);
-        }
+    $('#verify_email').click(function() {
+        var _this = $(this);
+        _this.prop('disabled', true);
+        $.ajax({
+            type: 'post',
+            url: '/email/send_verify_link',
+            data: {'email': $('#user-email').html()},
+            async: false,
+            success: function(res) {
+                if (res.status == 0) {
+                    _this.html('邮件已发送');
+                } else {
+                    alert(res.msg);
+                    _this.prop('disabled', false);
+                }
+            }
+        });
     });
 });
