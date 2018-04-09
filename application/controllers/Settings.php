@@ -128,43 +128,7 @@ class Settings extends MY_Controller
 
         $this->load->helper('form_msg');
 
-        return $this->render('settings/email', $tpl_data);
-
-        if ($this->input->method() == 'get') {
-            return $this->render('settings/email', $tpl_data);
-        }
-
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules(
-            'new_email', '新邮箱', 'trim|required|valid_email|callback_check_email',
-            array(
-                'required'    => '请输入您的新邮箱',
-                'valid_email' => '您的邮箱格式有误'
-            )
-        );
-        $this->form_validation->set_rules(
-            'verify_code', '新邮箱', 'trim|required|min_length[4]|max_length[6]|callback_check_verify_code',
-            array(
-                'required'   => '请输入您的验证码',
-                'min_length' => '您输入的验证码有误',
-                'max_length' => '您输入的验证码有误'
-            )
-        );
-
-        if ($this->form_validation->run() == false) {
-            $this->render('settings/email', $tpl_data);
-        } else {
-            $this->load->model('user_model');
-            $res = $this->user_model->edit_user(array('email' => $this->input->post('new_email'), 'email_verified' => 1), $this->session->uid);
-            if ($res !== false) {
-                $tpl_data['result'] = true;
-                $tpl_data['is_verified'] = 1;
-                $tpl_data['email'] = $this->input->post('new_email');
-            } else {
-                $tpl_data['result'] = false;
-            }
-            $this->render('settings/email', $tpl_data);
-        }
+        $this->render('settings/email', $tpl_data);
     }
 
     public function do_email()
@@ -216,17 +180,8 @@ class Settings extends MY_Controller
      */
     public function admin()
     {
-        if (!empty($this->session->form_err)) {
-            $form_err = $this->session->form_err;
-            $this->session->unset_userdata('form_err');
-            $this->render('settings/admin', array('form_err' => $form_err));
-        } elseif (!empty($this->session->form_ok)) {
-            $form_ok = $this->session->form_ok;
-            $this->session->unset_userdata('form_ok');
-            $this->render('settings/admin', array('form_ok' => $form_ok));
-        } else {
-            $this->render('settings/admin');
-        }
+        $this->load->helper('form_msg');
+        $this->render('settings/admin');
     }
 
     public function do_admin()
