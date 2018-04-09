@@ -120,12 +120,15 @@ class Settings extends MY_Controller
      */
     public function email()
     {
-        $this->load->helper('form');
         $this->load->model('user_model');
         $user_info = $this->user_model->get_user_by_uid($this->session->uid);
         $tpl_data = array('is_verified' => $user_info['email_verified'], 'email' => $user_info['email']);
 
         $this->add_page_js('/static/js/settings.email.js');
+
+        $this->load->helper('form_msg');
+
+        return $this->render('settings/email', $tpl_data);
 
         if ($this->input->method() == 'get') {
             return $this->render('settings/email', $tpl_data);
@@ -161,6 +164,50 @@ class Settings extends MY_Controller
                 $tpl_data['result'] = false;
             }
             $this->render('settings/email', $tpl_data);
+        }
+    }
+
+    public function do_email()
+    {
+        $new_email = $this->input->post('new_email');
+        $verify_code = $this->input->post('verify_code');
+
+        if (empty($new_email)) {
+            $this->show_err('请输入新邮箱');
+        }
+        if (empty($verify_code)) {
+            $this->show_err('请输入验证码');
+        }
+
+        if (strlen($verify_code) < 4 or strlen($verify_code) > 6) {
+            $this->show_err('您输入的验证码有误');
+        }
+
+        $this->load->model('user_model');
+        $email_exist = $this->user_model->get_user_by_email($new_email);
+        if ($email_exist) {
+            $this->show_err('该邮箱已被使用');
+        }
+
+        $this->load->model('email_verify_model');
+        $record = $this->email_verify_model->get_last_record($this->session->uid);
+        if (!$record) {
+            $this->show_err('您输入的验证码有误');
+        }
+        // 超过15分钟，验证码失效
+        if ((time() - $record['insert_time']) > 900) {
+            $this->show_err('您输入的验证码有误');
+        }
+        if ($verify_code != $record['verify_code']) {
+            $this->show_err('您输入的验证码有误');
+        }
+
+        $this->load->model('user_model');
+        $res = $this->user_model->edit_user(array('email' => $new_email, 'email_verified' => 1), $this->session->uid);
+        if ($res !== false) {
+            $this->show_ok('邮箱修改成功');
+        } else {
+            $this->show_err('邮箱修改失败，请稍后重试。');
         }
     }
 

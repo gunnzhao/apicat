@@ -110,11 +110,12 @@ class MY_Controller extends CI_Controller {
     private function return_show_msg($msg, $result = true)
     {
         $this->load->helper('url');
+        $this->load->helper('form_msg');
 
         if ($result) {
-            $this->session->set_userdata('form_ok', $msg);
+            set_ok($msg);
         } else {
-            $this->session->set_userdata('form_err', $msg);
+            set_error($msg);
         }
         
         $source_page = $this->input->server('HTTP_REFERER');
