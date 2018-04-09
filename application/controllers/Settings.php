@@ -16,6 +16,7 @@ class Settings extends MY_Controller
      */
     public function profile()
     {
+        $this->load->helper('form_msg');
         $this->load->model('location_model');
         $this->load->model('user_model');
         
@@ -42,49 +43,15 @@ class Settings extends MY_Controller
         $this->add_page_js('/static/js/jquery.photoClip.min.js');
         $this->add_page_js('/static/js/settings.profile.js');
 
-        if (!empty($this->session->form_err)) {
-            // 表单数据覆盖原数据
-            $user_info['nickname'] = $this->session->form_err_data['nickname'];
-            $user_info['gender'] = $this->session->form_err_data['gender'];
-            $user_info['location_id'] = $this->session->form_err_data['city'];
-            $province_id = $this->session->form_err_data['province'];
-
-            $form_err = $this->session->form_err;
-            $this->session->unset_userdata('form_err');
-            $this->render(
-                'settings/profile', 
-                array(
-                    'form_err'    => $form_err,
-                    'provinces'   => $provinces, 
-                    'cities'      => $cities,
-                    'province_id' => $province_id, 
-                    'user_info'   => $user_info
-                )
-            );
-        } elseif (!empty($this->session->form_ok)) {
-            $form_ok = $this->session->form_ok;
-            $this->session->unset_userdata('form_ok');
-            $this->render(
-                'settings/profile', 
-                array(
-                    'form_ok'     => $form_ok,
-                    'provinces'   => $provinces, 
-                    'cities'      => $cities,
-                    'province_id' => $province_id, 
-                    'user_info'   => $user_info
-                )
-            );
-        } else {
-            $this->render(
-                'settings/profile', 
-                array(
-                    'provinces'   => $provinces, 
-                    'cities'      => $cities,
-                    'province_id' => $province_id, 
-                    'user_info'   => $user_info
-                )
-            );
-        }
+        $this->render(
+            'settings/profile', 
+            array(
+                'provinces'   => $provinces, 
+                'cities'      => $cities,
+                'province_id' => $province_id, 
+                'user_info'   => $user_info
+            )
+        );
     }
 
     public function do_profile()

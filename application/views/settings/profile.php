@@ -15,24 +15,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <div class="col-xs-7">
             <form action="/settings/do_profile" method="post">
-                <?php if (isset($form_err) and !empty($form_err)): ?>
-                <div class="alert alert-warning" role="alert"><?php echo $form_err; ?></div>
-                <?php elseif (isset($form_ok) and !empty($form_ok)): ?>
-                <div class="alert alert-success" role="alert"><?php echo $form_ok; ?></div>
-                <?php endif; ?>
+                <?php echo form_error('<div class="alert alert-warning" role="alert">', '</div>'); ?>
+                <?php echo form_ok('<div class="alert alert-success" role="alert">', '</div>'); ?>
                 
                 <div class="form-group">
                     <label for="nickname">昵称</label>
-                    <input type="text" class="form-control" name="nickname" placeholder="昵称" value="<?php echo $user_info['nickname']; ?>">
+                    <input type="text" class="form-control" name="nickname" placeholder="昵称" value="<?php echo show_val('nickname', $user_info['nickname']); ?>">
                 </div>
                 <div class="form-group">
                     <label for="gender">性别</label>
                     <div class="radio">
                         <label class="radio-inline">
-                            <input type="radio" name="gender" value="1" <?php echo $user_info['gender'] == 1 ? 'checked' : ''; ?>> 男
+                            <input type="radio" name="gender" value="1" <?php echo show_radio('gender', $user_info['gender'], 1); ?>> 男
                         </label>
                         <label class="radio-inline">
-                            <input type="radio" name="gender" value="2" <?php echo $user_info['gender'] == 2 ? 'checked' : ''; ?>> 女
+                            <input type="radio" name="gender" value="2" <?php echo show_radio('gender', $user_info['gender'], 2); ?>> 女
                         </label>
                     </div>
                 </div>
@@ -41,7 +38,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <select class="form-control" name="province" style="width: 200px;">
                         <option value="0">请选择</option>
                         <?php foreach ($provinces as $v): ?>
-                        <option value="<?php echo $v['id']; ?>" <?php echo $v['id'] == $province_id ? 'selected' : ''; ?>><?php echo $v['name']; ?></option>
+                        <option value="<?php echo $v['id']; ?>" <?php echo show_select('province', $province_id, $v['id']); ?>><?php echo $v['name']; ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -50,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <select class="form-control" name="city" style="width: 200px;">
                         <?php if ($province_id != 0): ?>
                             <?php foreach ($cities[$province_id] as $v): ?>
-                            <option value="<?php echo $v['id']; ?>" <?php echo $v['id'] == $user_info['location_id'] ? 'selected' : ''; ?>><?php echo $v['name']; ?></option>
+                            <option value="<?php echo $v['id']; ?>" <?php echo show_select('city', $user_info['location_id'], $v['id']); ?>><?php echo $v['name']; ?></option>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <option value="0">请选择</option>

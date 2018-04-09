@@ -110,10 +110,11 @@ if (!function_exists('show_select')) {
     /**
      * 决定是否在select的option中是否呈选中状态
      * @param  string $key select名称
-     * @param  string $val option的值
+     * @param  string $default 默认值
+     * @param  string $val option的value值
      * @return string
      */
-    function show_select($key, $val)
+    function show_select($key, $default = '', $val = 1)
     {
         if (isset($_SESSION['_formmsg_form_data']) and isset($_SESSION['_formmsg_form_data'][$key])) {
             if ($_SESSION['_formmsg_form_data'][$key] == $val) {
@@ -121,6 +122,9 @@ if (!function_exists('show_select')) {
                 return 'selected';
             }
         } else {
+            if ($default == $val) {
+                return 'selected';
+            }
             return '';
         }
     }
@@ -130,10 +134,11 @@ if (!function_exists('show_radio')) {
     /**
      * 决定是否将radio选中
      * @param  string $key radio名称
-     * @param  string $val radio的值
+     * @param  string $default 默认值
+     * @param  string $val radio中对应的value值
      * @return string
      */
-    function show_radio($key, $val)
+    function show_radio($key, $default = '', $val = 1)
     {
         if (isset($_SESSION['_formmsg_form_data']) and isset($_SESSION['_formmsg_form_data'][$key])) {
             if ($_SESSION['_formmsg_form_data'][$key] == $val) {
@@ -141,6 +146,9 @@ if (!function_exists('show_radio')) {
                 return 'checked';
             }
         } else {
+            if ($default == $val) {
+                return 'checked';
+            }
             return '';
         }
     }
@@ -150,10 +158,11 @@ if (!function_exists('show_checkbox')) {
     /**
      * 决定是否将checkbox选中
      * @param  string $key checkbox名称
-     * @param  string $val checkbox的值
+     * @param  string $default 默认值
+     * @param  string $val checkbox的value值
      * @return string
      */
-    function show_checkbox($key, $val)
+    function show_checkbox($key, $default = '', $val = 1)
     {
         if (isset($_SESSION['_formmsg_form_data']) and isset($_SESSION['_formmsg_form_data'][$key])) {
             if ($_SESSION['_formmsg_form_data'][$key] == $val) {
@@ -161,6 +170,9 @@ if (!function_exists('show_checkbox')) {
                 return 'checked';
             }
         } else {
+            if ($default == $val) {
+                return 'checked';
+            }
             return '';
         }
     }
