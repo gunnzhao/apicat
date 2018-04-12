@@ -56,11 +56,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="container">
         <form class="form-signin" action="/login/do" method="post">
 			<h3 class="text-center">用户登录</h3><br/>
-			<?php if (isset($err) and !empty($err)): ?>
-			<div class="alert alert-warning" role="alert"><?php echo $err; ?></div>
-			<?php endif; ?>
+			<?php echo form_error('<div class="alert alert-warning" role="alert">', '</div>'); ?>
 			<div class="form-group">
-				<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px">
+				<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px" value="<?php echo show_val('email'); ?>">
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control" name="passwd" placeholder="密码" style="height:48px">

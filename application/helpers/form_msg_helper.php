@@ -70,9 +70,10 @@ if (!function_exists('init_form_post')) {
     /**
      * 初始化form数据
      * 将表单提交的数据放入指定数组中
+     * @param  array $params 需要初始化的提交参数
      * @return void
      */
-    function init_form_post()
+    function init_form_post($params = array())
     {
         $_SESSION['_formmsg_form_data'] = array();
         
@@ -80,9 +81,17 @@ if (!function_exists('init_form_post')) {
             return;
         }
 
-        foreach ($_POST as $k => $v) {
-            if ($v !== '') {
-                $_SESSION['_formmsg_form_data'][$k] = $v;
+        if ($params) {
+            foreach ($params as $v) {
+                if (isset($_POST[$v]) and $_POST[$v] !== '') {
+                    $_SESSION['_formmsg_form_data'][$v] = $_POST[$v];
+                }
+            }
+        } else {
+            foreach ($_POST as $k => $v) {
+                if ($v !== '') {
+                    $_SESSION['_formmsg_form_data'][$k] = $v;
+                }
             }
         }
     }
