@@ -25,6 +25,8 @@ class Register extends CI_Controller
         $this->load->helper('email');
         $this->load->helper('form_msg');
 
+        init_form_post(array('nickname', 'email'));
+
         $params = array(
             'nickname'    => array('val' => $this->input->post('nickname'), 'err' => '请输入您的昵称'),
             'email'       => array('val' => $this->input->post('email'), 'err' => '请输入您的邮箱'),
