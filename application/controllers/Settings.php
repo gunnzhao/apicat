@@ -56,6 +56,9 @@ class Settings extends MY_Controller
 
     public function do_profile()
     {
+        $this->load->helper('form_msg');
+        init_form_post(array('nickname', 'gender', 'province', 'city'));
+
         $nickname = $this->input->post('nickname');
         if (empty($nickname)) {
             $this->form_err_data(array(
