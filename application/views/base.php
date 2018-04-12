@@ -48,7 +48,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">我的项目</a></li>
+                        <li class="active"><a href="/projects">我的项目</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../navbar/"<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
