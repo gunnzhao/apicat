@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <li id="user-email"><?php echo $email; ?></li>
             <?php if ($is_verified == 0): ?>
             <li><span class="label label-warning">未验证</span></li>
-            <li><button class="btn btn-default btn-xs" id="verify_email">去验证</button></li>
+            <li><button class="btn btn-default btn-xs" id="verify_email" style="margin-top: 1px;">去验证</button></li>
             <?php else: ?>
             <li><span class="label label-success">已验证</span></li>
             <?php endif; ?>
