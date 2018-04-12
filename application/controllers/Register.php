@@ -15,19 +15,15 @@ class Register extends CI_Controller
 
     public function index()
     {
-        if (!empty($this->session->register_err)) {
-            $err = $this->session->register_err;
-            $this->session->unset_userdata('register_err');
-            $this->load->view('register', array('err' => $err));
-        } else {
-            $this->load->view('register');
-        }
+        $this->load->helper('form_msg');
+        $this->load->view('register');
     }
     
     public function do()
     {
         $this->load->helper('url');
         $this->load->helper('email');
+        $this->load->helper('form_msg');
 
         $params = array(
             'nickname'    => array('val' => $this->input->post('nickname'), 'err' => '请输入您的昵称'),
@@ -39,37 +35,32 @@ class Register extends CI_Controller
 
         foreach ($params as $v) {
             if (empty($v['val'])) {
-                $this->session->set_userdata('register_err', $v['err']);
-                redirect('/register');
-                return;
+                set_error($v['err']);
+                return redirect('/register');
             }
         }
 
         if (!valid_email($params['email']['val'])) {
-            $this->session->set_userdata('register_err', '邮箱格式有误');
-            redirect('/register');
-            return;
+            set_error('邮箱格式有误');
+            return redirect('/register');
         }
 
         if ($params['passwd']['val'] != $params['re_passwd']['val']) {
-            $this->session->set_userdata('register_err', '两次密码输入不一致');
-            redirect('/register');
-            return;
+            set_error('两次密码输入不一致');
+            return redirect('/register');
         }
 
         if (!isset($this->session->verify_code) or $params['verify_code']['val'] != $this->session->verify_code) {
-            $this->session->set_userdata('register_err', '验证码有误');
-            redirect('/register');
-            return;
+            set_error('验证码有误');
+            return redirect('/register');
         }
 
         $this->load->model('user_model');
 
         $record = $this->user_model->get_user_by_email($params['email']['val']);
         if ($record) {
-            $this->session->set_userdata('register_err', '该邮箱已被注册');
-            redirect('/register');
-            return;
+            set_error('该邮箱已被注册');
+            return redirect('/register');
         }
 
         $uid = $this->user_model->add_user($params['nickname']['val'], $params['email']['val'], $params['passwd']['val']);
@@ -82,7 +73,7 @@ class Register extends CI_Controller
             ));
             redirect('/settings/profile');
         } else {
-            $this->session->set_userdata('register_err', '注册失败，请稍后重试');
+            set_error('注册失败，请稍后重试');
             redirect('/register');
         }
     }
