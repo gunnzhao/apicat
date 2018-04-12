@@ -103,6 +103,9 @@ class Settings extends MY_Controller
 
     public function do_email()
     {
+        $this->load->helper('form_msg');
+        init_form_post(array('new_email'));
+
         $new_email = $this->input->post('new_email');
         $verify_code = $this->input->post('verify_code');
 
