@@ -58,7 +58,7 @@ class Login extends CI_Controller
 
             // 更新登录时间和IP
             $this->user_model->update_login_info($user_info['id']);
-            redirect('/home');
+            redirect('/projects');
         }
     }
 }
