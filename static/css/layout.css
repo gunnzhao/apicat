@@ -1,3 +1,16 @@
+/* Base */
+a {
+    color: #08c;
+}
+a:hover {
+    color: #005580;
+    text-decoration: underline;
+}
+.list-group-item.active{
+    background-color: #4D90FE;
+    border-color: #4D90FE;
+}
+
 /* Logo */
 .logo {
     width: 125px;
