@@ -13,6 +13,7 @@ class Projects extends MY_Controller
 
     public function index()
     {
+        $this->add_page_css('/static/css/projects.css');
         $this->render('projects/index');
     }
 }

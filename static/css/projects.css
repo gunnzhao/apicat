@@ -1,0 +1,12 @@
+.projects {
+    border: 1px solid #DDDDDD;
+    border-radius: 5px;
+    padding: 2px 20px 8px 20px;
+    margin-bottom: 24px;
+    width: 265px;
+}
+
+.projects h3 {
+    color: #3079ed;
+    font-weight: bold;
+}
