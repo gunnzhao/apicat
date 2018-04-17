@@ -10,13 +10,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-xs-12">
         <p class="text-right"><a href="#" data-toggle="modal" data-target="#createProjectModal">创建项目</a></p>
     </div>
-    <div class="col-xs-3">
-        <div class="projects">
-            <h3><a href="#">ECP</a></h3>
-            <p>最后一次修改 2018-04-14 21:53</p>
-            <p>By Gunn</p>
-        </div>
+    <?php if (empty($records)): ?>
+    <div class="col-xs-12">
+        <p class="text-center">暂无项目</p>
     </div>
+    <?php else: ?>
+        <?php foreach($records as $v): ?>
+            <div class="col-xs-3">
+                <div class="projects">
+                    <h3><a href="/project?id=<?php echo $v['id']; ?>"><?php echo $v['title']; ?></a></h3>
+                    <p>最后修改 <?php echo date('Y-m-d H:i', $v['update_time']); ?></p>
+                    <p>By <?php echo $v['update_user']; ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
 
 <div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel">

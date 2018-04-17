@@ -90,6 +90,24 @@ class User_model extends CI_model
     }
 
     /**
+     * 通过多个uid查询多个用户
+     * @param  array $uids 用户id
+     * @return array
+     */
+    public function get_users_by_uids($uids)
+    {
+        $this->db->select('id,nickname,avatar');
+
+        if (count($uids) == 1) {
+            $this->db->where('id', $uids[0]);
+        } else {
+            $this->db->where_in('id', $uids);
+        }
+
+        return $this->db->get($this->table)->result_array();
+    }
+
+    /**
      * 更新登录的IP和时间
      * @param  int $uid 用户ID
      * @return bool|int 影响记录数
