@@ -27,32 +27,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <h4 class="modal-title" id="myModalLabel">创建项目</h4>
             </div>
             <div class="modal-body">
+                <div id="err-msg" class="alert alert-warning" style="display:none;" role="alert">123</div>
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="projectName" class="col-sm-2 control-label">项目名称</label>
+                        <label for="title" class="col-sm-2 control-label">项目名称</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="project_name" placeholder="项目名称">
+                            <input type="text" class="form-control" id="title" placeholder="项目名称">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="authority" class="col-sm-2 control-label">权限</label>
                         <div class="col-sm-10">
-                            <select class="form-control">
-                                <option>公开</option>
-                                <option>私有</option>
+                            <select class="form-control" id="authority">
+                                <option value="0">私有</option>
+                                <option value="1">公开</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="description" class="col-sm-2 control-label">项目描述</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea id="description" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-lblue">确认</button>
+                <button type="button" class="btn btn-lblue" id="add">确认</button>
             </div>
         </div>
     </div>
