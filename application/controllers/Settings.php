@@ -59,7 +59,7 @@ class Settings extends MY_Controller
         $this->load->helper('form_msg');
         init_form_post(array('nickname', 'gender', 'province', 'city'));
 
-        $nickname = $this->input->post('nickname');
+        $nickname = trim($this->input->post('nickname'));
         if (empty($nickname)) {
             $this->form_err_data(array(
                 'nickname' => $nickname,
@@ -106,8 +106,8 @@ class Settings extends MY_Controller
         $this->load->helper('form_msg');
         init_form_post(array('new_email'));
 
-        $new_email = $this->input->post('new_email');
-        $verify_code = $this->input->post('verify_code');
+        $new_email = trim($this->input->post('new_email'));
+        $verify_code = trim($this->input->post('verify_code'));
 
         if (empty($new_email)) {
             $this->show_err('请输入新邮箱');
@@ -160,9 +160,9 @@ class Settings extends MY_Controller
     public function do_admin()
     {
         $params = array(
-            'oldpasswd'    => array('val' => $this->input->post('oldpasswd'), 'err' => '请输入您的旧密码'),
-            'newpasswd'    => array('val' => $this->input->post('newpasswd'), 'err' => '请输入您的新密码'),
-            're_newpasswd' => array('val' => $this->input->post('re_newpasswd'), 'err' => '请输确认您的新密码')
+            'oldpasswd'    => array('val' => trim($this->input->post('oldpasswd')), 'err' => '请输入您的旧密码'),
+            'newpasswd'    => array('val' => trim($this->input->post('newpasswd')), 'err' => '请输入您的新密码'),
+            're_newpasswd' => array('val' => trim($this->input->post('re_newpasswd')), 'err' => '请输确认您的新密码')
         );
 
         foreach ($params as $v) {
@@ -199,7 +199,7 @@ class Settings extends MY_Controller
      */
     public function check_verify_code()
     {
-        $code = $this->input->post('verify_code');
+        $code = trim($this->input->post('verify_code'));
         $this->form_validation->set_message('check_verify_code', '验证码有误');
 
         $this->load->model('email_verify_model');
@@ -224,7 +224,7 @@ class Settings extends MY_Controller
      */
     public function check_email()
     {
-        $email = $this->input->post('new_email');
+        $email = trim($this->input->post('new_email'));
         $this->form_validation->set_message('check_verify_code', '该邮箱已被使用');
 
         $this->load->model('user_model');

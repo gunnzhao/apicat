@@ -28,11 +28,11 @@ class Register extends CI_Controller
         init_form_post(array('nickname', 'email'));
 
         $params = array(
-            'nickname'    => array('val' => $this->input->post('nickname'), 'err' => '请输入您的昵称'),
-            'email'       => array('val' => $this->input->post('email'), 'err' => '请输入您的邮箱'),
-            'passwd'      => array('val' => $this->input->post('passwd'), 'err' => '请输入您的密码'),
-            're_passwd'   => array('val' => $this->input->post('re_passwd'), 'err' => '请输确认您的密码'),
-            'verify_code' => array('val' => $this->input->post('verify_code'), 'err' => '请输确认您的验证码')
+            'nickname'    => array('val' => trim($this->input->post('nickname')), 'err' => '请输入您的昵称'),
+            'email'       => array('val' => trim($this->input->post('email')), 'err' => '请输入您的邮箱'),
+            'passwd'      => array('val' => trim($this->input->post('passwd')), 'err' => '请输入您的密码'),
+            're_passwd'   => array('val' => trim($this->input->post('re_passwd')), 'err' => '请输确认您的密码'),
+            'verify_code' => array('val' => trim($this->input->post('verify_code')), 'err' => '请输确认您的验证码')
         );
 
         foreach ($params as $v) {

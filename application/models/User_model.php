@@ -21,7 +21,7 @@ class User_model extends CI_model
      * @param  string $nickname 用户昵称
      * @param  string $email 用户邮箱
      * @param  string $passwd 用户密码
-     * @return bool 成功返回uid，失败返回false
+     * @return int|bool 成功返回uid，失败返回false
      */
     public function add_user($nickname, $email, $passwd)
     {

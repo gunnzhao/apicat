@@ -41,7 +41,7 @@ class Email extends MY_Controller
 
     public function send_verify_code()
     {
-        $email = $this->input->post('email');
+        $email = trim($this->input->post('email'));
         if (!$email) {
             return $this->response_json_fail('缺少邮箱');
         }
@@ -87,7 +87,7 @@ class Email extends MY_Controller
 
     public function send_verify_link()
     {
-        $email = $this->input->post('email');
+        $email = trim($this->input->post('email'));
         if (!$email) {
             return $this->response_json_fail('缺少邮箱');
         }

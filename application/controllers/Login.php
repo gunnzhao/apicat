@@ -27,7 +27,7 @@ class Login extends CI_Controller
 
         init_form_post(array('email'));
 
-        $email = $this->input->post('email');
+        $email = trim($this->input->post('email'));
         if (empty($email)) {
             set_error('请输入您的邮箱');
             return redirect('/login');
@@ -37,7 +37,7 @@ class Login extends CI_Controller
             return redirect('/login');
         }
 
-        $passwd = $this->input->post('passwd');
+        $passwd = trim($this->input->post('passwd'));
         if (empty($passwd)) {
             set_error('请输入您的密码');
             return redirect('/login');
