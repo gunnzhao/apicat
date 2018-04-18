@@ -9,4 +9,6 @@
 .projects h3 {
     color: #3079ed;
     font-weight: bold;
+    margin-top: 16px;
+    margin-bottom: 16px;
 }

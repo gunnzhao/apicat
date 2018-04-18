@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xs-3">
                 <div class="projects">
                     <h3><a href="/project?id=<?php echo $v['id']; ?>"><?php echo $v['title']; ?></a></h3>
-                    <p>最后修改 <?php echo date('Y-m-d H:i', $v['update_time']); ?></p>
+                    <p>最后更新 <?php echo date('Y-m-d H:i', $v['update_time']); ?></p>
                     <p>By <?php echo $v['update_user']; ?></p>
                 </div>
             </div>

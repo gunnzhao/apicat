@@ -78,9 +78,15 @@ class Projects_model extends CI_model
         return $this->db->affected_rows();
     }
 
+    /**
+     * 获取指定用户的项目列表
+     * @param  int $uid 用户id
+     * @return array
+     */
     public function project_records($uid)
     {
         $this->db->select('id,pro_key,title,authority,description,update_time,update_uid');
+        $this->db->order_by('update_time', 'DESC');
         return $this->db->get_where($this->table, array('uid' => $uid, 'status' => 0))->result_array();
     }
 }

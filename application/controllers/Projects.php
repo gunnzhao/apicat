@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * 项目类
+ * 用户项目类
  */
 class Projects extends MY_Controller
 {
