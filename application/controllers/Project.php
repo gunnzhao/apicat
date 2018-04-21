@@ -18,4 +18,11 @@ class Project extends MY_Controller
         $this->add_page_js('/static/js/project.index.js');
         $this->render('project/index');
     }
+
+    public function add()
+    {
+        $this->add_page_css('/static/css/project.index.css');
+        $this->add_page_js('/static/js/project.index.js');
+        $this->render('project/add');
+    }
 }
