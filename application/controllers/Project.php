@@ -14,7 +14,8 @@ class Project extends MY_Controller
 
     public function index()
     {
-        $this->add_page_css('/static/css/project.css');
+        $this->add_page_css('/static/css/project.index.css');
+        $this->add_page_js('/static/js/project.index.js');
         $this->render('project/index');
     }
 }

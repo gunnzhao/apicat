@@ -2,6 +2,11 @@ h3 span {
     font-size: 16px;
 }
 
+.doc p {
+    font-size: 14px;
+    margin-top: 24px;
+}
+
 .api-cate {
     margin-top: 20px;
     padding: 0px;
@@ -10,7 +15,7 @@ h3 span {
 .api-cate li {
     list-style-type: none;
     border-top: 1px solid #DDDDDD;
-    padding: 15px 0px 15px 15px;
+    padding: 12px 0px 12px 15px;
     line-height: normal;
     cursor: pointer;
 }
@@ -29,4 +34,18 @@ h3 span {
     position: absolute;
     right: 15px;
     top: 16px;
+}
+
+.apis {
+    padding: 0px;
+}
+
+.apis li {
+    border: none;
+    list-style-type: none;
+    padding: 8px 0px 8px 8px;
+}
+
+.apis li.active {
+    color: #08C;
 }
