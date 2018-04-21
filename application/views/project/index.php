@@ -36,7 +36,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <div class="col-xs-9">
         <div class="doc">
-            <h3>添加商户</h3>
+            <div class="row">
+                <div class="col-xs-11"><h3>添加商户</h3></div>
+                <div class="col-xs-1">
+                    <button type="button" class="btn btn-lblue btn-xs edit-entrance">修改</button>
+                </div>
+            </div>
+            <small>最后修改 2018-04-21 12:12:12 By Gunn</small>
+            
             <p><strong>HTTP Post-raw</strong></p>
             <p><strong>URL: </strong> <code>https://ecapi.parkingwang.com/v4/shopAdd</code></p>
 

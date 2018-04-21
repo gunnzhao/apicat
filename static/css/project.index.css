@@ -49,3 +49,7 @@ h3 span {
 .apis li.active {
     color: #08C;
 }
+
+.edit-entrance {
+    margin-top: 20px;
+}
