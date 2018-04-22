@@ -21,7 +21,9 @@ class Project extends MY_Controller
 
     public function add()
     {
+        $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
+        $this->add_page_js('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js('/static/js/project.index.js');
         $this->render('project/add');
     }
