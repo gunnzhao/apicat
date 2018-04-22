@@ -10,6 +10,12 @@ a:hover {
     background-color: #4D90FE;
     border-color: #4D90FE;
 }
+footer {
+    margin-top: 24px;
+}
+.main-container {
+    min-height: 575px;
+}
 
 /* Logo */
 .logo {

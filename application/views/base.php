@@ -69,9 +69,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container main-container">
         <?php echo $content_for_layout;?>
         </div>
+
+        <footer>
+            <p class="text-center">&copy; ApiCat</p>
+        </footer>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
