@@ -8,27 +8,75 @@ $(function(){
     $('#return_success').numberedtextarea();
     $('#return_fail').numberedtextarea();
 
-    var params = [];
-    $('input[name="body_names"]').keydown(function() {add_newline($(this))});
+    var body_params = [];
+    $('input[name="body_names"]').keydown(function() {add_bodyline($(this))});
 
-    function add_newline(click_obj) {
+    function add_bodyline(click_obj) {
         var param_num = click_obj.parents('tr').index();
-        if ($.inArray(param_num, params) < 0) {
-            params.push(param_num);
+        if ($.inArray(param_num, body_params) < 0) {
+            body_params.push(param_num);
             var param_html = click_obj.parents('tr').html();
             click_obj.parents('table').append('<tr>' + param_html + '</tr>');
             click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
 
             // 注册新的事件
             var last_obj = $('table tr input[name="body_names"]').last();
-            last_obj.keydown(function() {add_newline(last_obj)});
+            last_obj.keydown(function() {add_bodyline(last_obj)});
             var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
-            cancel_obj.click(function() {del_line(cancel_obj)});
+            cancel_obj.click(function() {del_bodyline(cancel_obj)});
         }
     }
 
-    function del_line(click_obj) {
-        params.pop();
+    function del_bodyline(click_obj) {
+        body_params.pop();
+        click_obj.parents('tr').remove();
+    }
+
+    var header_params = [];
+    $('input[name="header_names"]').keydown(function() {add_headerline($(this))});
+
+    function add_headerline(click_obj) {
+        var param_num = click_obj.parents('tr').index();
+        if ($.inArray(param_num, header_params) < 0) {
+            header_params.push(param_num);
+            var param_html = click_obj.parents('tr').html();
+            click_obj.parents('table').append('<tr>' + param_html + '</tr>');
+            click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
+
+            // 注册新的事件
+            var last_obj = $('table tr input[name="header_names"]').last();
+            last_obj.keydown(function() {add_headerline(last_obj)});
+            var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
+            cancel_obj.click(function() {del_headerline(cancel_obj)});
+        }
+    }
+
+    function del_headerline(click_obj) {
+        header_params.pop();
+        click_obj.parents('tr').remove();
+    }
+
+    var return_params = [];
+    $('input[name="return_names"]').keydown(function() {add_returnline($(this))});
+
+    function add_returnline(click_obj) {
+        var param_num = click_obj.parents('tr').index();
+        if ($.inArray(param_num, return_params) < 0) {
+            return_params.push(param_num);
+            var param_html = click_obj.parents('tr').html();
+            click_obj.parents('table').append('<tr>' + param_html + '</tr>');
+            click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
+
+            // 注册新的事件
+            var last_obj = $('table tr input[name="return_names"]').last();
+            last_obj.keydown(function() {add_returnline(last_obj)});
+            var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
+            cancel_obj.click(function() {del_returnline(cancel_obj)});
+        }
+    }
+
+    function del_returnline(click_obj) {
+        return_params.pop();
         click_obj.parents('tr').remove();
     }
 });

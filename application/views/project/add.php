@@ -112,9 +112,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>参数说明</th>
                                     </tr>
                                     <tr>
-                                        <td class="field-cancel"><a href="#">x</a></td>
+                                        <td class="field-cancel"></td>
                                         <td class="field-name">
-                                            <input type="text">
+                                            <input type="text" name="header_names">
                                         </td>
                                         <td class="field-type">
                                             <select>
@@ -153,9 +153,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <th>参数说明</th>
                             </tr>
                             <tr>
-                                <td class="field-cancel"><a href="#">x</a></td>
+                                <td class="field-cancel"></td>
                                 <td class="return-field-name">
-                                    <input type="text">
+                                    <input type="text" name="return_names">
                                 </td>
                                 <td class="return-field-type">
                                     <select>
@@ -167,7 +167,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <td class="return-field-description">
                                     <input type="text">
                                 </td>
-                                
                             </tr>
                         </table>
                     </div>
@@ -187,6 +186,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <textarea id="return_fail" class="form-control" rows="14" style="margin-top: 8px"></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row row-form">
+                    <div class="col-xs-12">
+                        <p class="text-center"><button type="button" class="btn btn-lblue" style="width:150px;">创建</button></p>
                     </div>
                 </div>
             </form>
