@@ -82,7 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr>
                                         <td class="field-cancel"><a href="#">x</a></td>
                                         <td class="field-name">
-                                            <input type="text">
+                                            <input type="text" name="body_names">
                                         </td>
                                         <td class="field-type">
                                             <select>
