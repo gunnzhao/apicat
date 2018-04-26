@@ -70,38 +70,66 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="body">
-                                <table class="table table-bordered" style="margin-top: 8px">
+                                <table class="table table-bordered">
                                     <tr>
+                                        <th></th>
                                         <th>参数名称</th>
                                         <th>类型</th>
-                                        <th>是否必传</th>
+                                        <th>必传</th>
                                         <th>默认值</th>
                                         <th>参数说明</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"></td>
-                                        <td>string</td>
-                                        <td>是</td>
-                                        <td>-</td>
-                                        <td>访问令牌</td>
+                                        <td class="field-cancel"><a href="#">x</a></td>
+                                        <td class="field-name">
+                                            <input type="text">
+                                        </td>
+                                        <td class="field-type">
+                                            <select>
+                                                <option value="">string</option>
+                                                <option value="">int</option>
+                                                <option value="">array</option>
+                                            </select>
+                                        </td>
+                                        <td class="field-transport"><input type="checkbox"></td>
+                                        <td class="field-default">
+                                            <input type="text">
+                                        </td>
+                                        <td class="field-description">
+                                            <input type="text">
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="header">
-                                <table class="table table-bordered" style="margin-top: 8px">
+                                <table class="table table-bordered">
                                     <tr>
+                                        <th></th>
                                         <th>参数名称</th>
                                         <th>类型</th>
-                                        <th>是否必传</th>
+                                        <th>必传</th>
                                         <th>默认值</th>
                                         <th>参数说明</th>
                                     </tr>
                                     <tr>
-                                        <td><input type="text"></td>
-                                        <td>string</td>
-                                        <td>是</td>
-                                        <td>-</td>
-                                        <td>访问令牌</td>
+                                        <td class="field-cancel"><a href="#">x</a></td>
+                                        <td class="field-name">
+                                            <input type="text">
+                                        </td>
+                                        <td class="field-type">
+                                            <select>
+                                                <option value="">string</option>
+                                                <option value="">int</option>
+                                                <option value="">array</option>
+                                            </select>
+                                        </td>
+                                        <td class="field-transport"><input type="checkbox"></td>
+                                        <td class="field-default">
+                                            <input type="text">
+                                        </td>
+                                        <td class="field-description">
+                                            <input type="text">
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -119,14 +147,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <p><strong>返回参数</strong></p>
                         <table class="table table-bordered">
                             <tr>
+                                <th></th>
                                 <th>参数名称</th>
                                 <th>类型</th>
                                 <th>参数说明</th>
                             </tr>
                             <tr>
-                                <td><input type="text"></td>
-                                <td>string</td>
-                                <td>访问令牌</td>
+                                <td class="field-cancel"><a href="#">x</a></td>
+                                <td class="return-field-name">
+                                    <input type="text">
+                                </td>
+                                <td class="return-field-type">
+                                    <select>
+                                        <option value="">string</option>
+                                        <option value="">int</option>
+                                        <option value="">array</option>
+                                    </select>
+                                </td>
+                                <td class="return-field-description">
+                                    <input type="text">
+                                </td>
+                                
                             </tr>
                         </table>
                     </div>

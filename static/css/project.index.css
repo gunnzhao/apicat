@@ -57,3 +57,47 @@ h3 span {
 .row-form {
     margin-top: 16px;
 }
+.row-form table {
+    margin-top: 8px;
+    margin-bottom: 0px;
+}
+
+.field-cancel {
+    width: 30px;
+    text-align: center;
+}
+.field-cancel a {
+    color: #101010;
+}
+.field-name input {
+    min-width: 150px;
+    width: 185px;
+}
+.field-type select {
+    min-width: 60px;
+    width: 85px;
+    height: 26px;
+}
+.field-transport {
+    text-align: center;
+}
+.field-default input {
+    width: 130px;
+}
+.field-description input {
+    min-width: 150px;
+    width: 300px;
+}
+.return-field-name input {
+    min-width: 150px;
+    width: 275px;
+}
+.return-field-type select {
+    min-width: 60px;
+    width: 90px;
+    height: 26px;
+}
+.return-field-description input {
+    min-width: 150px;
+    width: 400px;
+}
