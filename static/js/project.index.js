@@ -13,13 +13,11 @@ $(function(){
 
     function add_newline(click_obj) {
         var param_num = click_obj.parents('tr').index();
-        //console.log(param_num);
         if ($.inArray(param_num, params) < 0) {
             params.push(param_num);
             var param_html = click_obj.parents('tr').html();
             click_obj.parents('table').append('<tr>' + param_html + '</tr>');
-            var last_obj = click_obj.parents('table').last('tr input[name="body_names"]');
-            
+            var last_obj = $('table tr input[name="body_names"]').last();
             last_obj.keyup(function() {add_newline(last_obj)});
         }
     }
