@@ -80,7 +80,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>参数说明</th>
                                     </tr>
                                     <tr>
-                                        <td class="field-cancel"><a href="#">x</a></td>
+                                        <td class="field-cancel"></td>
                                         <td class="field-name">
                                             <input type="text" name="body_names">
                                         </td>
