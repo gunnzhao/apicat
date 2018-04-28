@@ -3,6 +3,16 @@ $(function(){
         $(this).next().toggle();
     });
 
+    $('#create-cate').click(function() {
+        $('.create-cate-input').show();
+    });
+    $('.create-cate-input input').keydown(function(e) {
+        if(e.keyCode==13){
+            alert(1);
+            $('.create-cate-input').hide();
+        }
+    });
+
     // https://github.com/Dorious/jquery-numberedtextarea
     $('#request_example').numberedtextarea();
     $('#return_success').numberedtextarea();

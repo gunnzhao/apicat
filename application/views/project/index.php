@@ -13,6 +13,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul class="apis">
                     <li class="active">添加商户</li>
                     <li>编辑商户</li>
+                    <li>
+                        <a href="#" class="btn btn-default btn-xs">创建接口</a>
+                    </li>
                 </ul>
             </li>
             <li class="cate-node">
@@ -32,7 +35,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <span class="glyphicon glyphicon-menu-down cate-icon"></span>
             </li>
         </ul>
-        <p class="text-center"><a href="#">创建分类</a></p>
+        <p class="create-cate-input" style="display:none;">
+            <input type="text" class="form-control input-sm">
+        </p>
+        <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
     </div>
     <div class="col-xs-9">
         <div class="doc">
