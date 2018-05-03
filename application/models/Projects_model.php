@@ -89,4 +89,20 @@ class Projects_model extends CI_model
         $this->db->order_by('update_time', 'DESC');
         return $this->db->get_where($this->table, array('uid' => $uid, 'status' => 0))->result_array();
     }
+
+    /**
+     * 通过项目key获取项目详情
+     * @param  string $pro_key 项目key
+     * @return array
+     */
+    public function get_project_by_key($pro_key)
+    {
+        $this->db->select('id,uid,pro_key,title,authority');
+        $res = $this->db->get_where($this->table, array('pro_key' => $pro_key, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
 }

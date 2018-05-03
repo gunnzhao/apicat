@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class="col-xs-3">
-        <h3>ECP <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h3>
+        <h3><?php echo $project_info['title']; ?> <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h3>
         <ul class="api-cate">
             <li class="cate-node">
                 <span class="cate-title">商户管理</span>
@@ -18,22 +18,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </li>
                 </ul>
             </li>
+            <?php if (!empty($categories)): ?>
+            <?php foreach ($categories as $v): ?>
             <li class="cate-node">
-                <span class="cate-title">商户管理</span>
+                <span class="cate-title"><?php echo $v['title']; ?></span>
                 <span class="glyphicon glyphicon-menu-down cate-icon"></span>
             </li>
-            <li class="cate-node">
-                <span class="cate-title">商户管理</span>
-                <span class="glyphicon glyphicon-menu-down cate-icon"></span>
-            </li>
-            <li class="cate-node">
-                <span class="cate-title">商户管理</span>
-                <span class="glyphicon glyphicon-menu-down cate-icon"></span>
-            </li>
-            <li class="cate-node">
-                <span class="cate-title">商户管理</span>
-                <span class="glyphicon glyphicon-menu-down cate-icon"></span>
-            </li>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </ul>
         <p class="create-cate-input" style="display:none;">
             <input type="text" class="form-control input-sm">
@@ -45,7 +37,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-xs-11"><h3>添加商户</h3></div>
                 <div class="col-xs-1">
+                    <?php if ($project_info['uid'] == $_SESSION['uid']): ?>
                     <button type="button" class="btn btn-lblue btn-xs edit-entrance">修改</button>
+                    <?php endif; ?>
                 </div>
             </div>
             <small>最后修改 2018-04-21 12:12:12 By Gunn</small>
