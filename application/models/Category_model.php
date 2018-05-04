@@ -27,4 +27,39 @@ class Category_model extends CI_model
         $this->db->order_by('display_order', 'DESC');
         return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
     }
+
+    /**
+     * 检查同项目下分类名称是否已存在
+     * @param  int $pid 项目id
+     * @param  string $title 分类名称
+     * @return bool 存在true 不存在false
+     */
+    public function check_exist($pid, $title)
+    {
+        $this->db->select('id');
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0, 'title' => $title));
+        if ($res->num_rows() >= 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function add_category($pid, $title)
+    {
+        $data = array(
+            'pid'         => $pid,
+            'title'       => $title,
+            'insert_time' => time()
+        );
+
+        $res = $this->db->insert($this->table, $data);
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        $insert_id = $this->db->insert_id();
+
+        $this->db->update($this->table, array('pro_key' => md5($insert_id)), array('id' => $insert_id));
+        return $insert_id;
+    }
 }

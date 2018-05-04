@@ -42,5 +42,20 @@ class Project extends MY_Controller
     }
 
     public function add_category()
-    {}
+    {
+        $project_id = $this->input->post('pid');
+        $category_name = $this->input->post('title');
+
+        // 检查分类是否已经存在
+        $exist = $this->category_model->check_exist($project_id, $category_name);
+        if ($exist) {
+            return $this->response_json_fail('该名称已经存在，请勿重复添加。');
+        }
+
+        $res = $this->category_model->add_category($project_id, $category_name);
+        if (!$res) {
+            return $this->response_json_fail('添加失败，请重试。');
+        }
+        return $this->response_json_ok();
+    }
 }
