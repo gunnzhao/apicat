@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php foreach($records as $v): ?>
             <div class="col-xs-3">
                 <div class="projects">
-                    <h3><a href="/project?id=<?php echo $v['id']; ?>"><?php echo $v['title']; ?></a></h3>
+                    <h3><a href="/project?pro_key=<?php echo $v['pro_key']; ?>"><?php echo $v['title']; ?></a></h3>
                     <p>最后更新 <?php echo date('Y-m-d H:i', $v['update_time']); ?></p>
                     <p>By <?php echo $v['update_user']; ?></p>
                 </div>

@@ -35,6 +35,7 @@ class Projects extends MY_Controller
         foreach ($records as $v) {
             $result[] = array(
                 'id'          => $v['id'],
+                'pro_key'     => $v['pro_key'],
                 'title'       => $v['title'],
                 'update_time' => $v['update_time'],
                 'update_user' => $users[$v['update_uid']]
