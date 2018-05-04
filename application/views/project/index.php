@@ -2,12 +2,27 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
+    <div class="col-xs-9">
+        <h3 class="project-name"><?php echo $project_info['title']; ?>
+        <small>API数: 123 | 团队成员: 9 | <a href="#">设置</a></small>
+        </h3>
+    </div>
     <div class="col-xs-3">
-        <h3><?php echo $project_info['title']; ?> <a href="#"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a></h3>
+        <div class="input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><span class="icon-search" aria-hidden="true"></span></button>
+            </span>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-3">
         <ul class="api-cate">
             <li class="cate-node">
-                <span class="cate-title">商户管理</span>
-                <span class="glyphicon glyphicon-menu-down cate-icon"></span>
+                <span class="cate-title"><span class="icon-folder-close-alt"></span> 商户管理</span>
+                <span class="icon-cog cate-icon" style="display:none"></span>
             </li>
             <li style="display:none;">
                 <ul class="apis">

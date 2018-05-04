@@ -7,17 +7,31 @@ h3 span {
     margin-top: 24px;
 }
 
+.project-name {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.project-name a {
+    color: #777777
+}
+.project-name a:hover {
+    color: #777777
+}
+
 .api-cate {
-    margin-top: 20px;
+    margin-top: 0px;
     padding: 0px;
 }
 
 .api-cate li {
     list-style-type: none;
-    border-top: 1px solid #DDDDDD;
-    padding: 12px 0px 12px 15px;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 12px 0px 12px 24px;
     line-height: normal;
     cursor: pointer;
+}
+.api-cate li:last-child {
+    border: none;
 }
 
 .cate-node {
@@ -32,7 +46,7 @@ h3 span {
 
 .cate-icon {
     position: absolute;
-    right: 15px;
+    right: 24px;
     top: 16px;
 }
 

@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
 
     <link href="/static/css/layout.css?v=<?php echo microtime(true); ?>" rel="stylesheet">
 

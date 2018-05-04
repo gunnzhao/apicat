@@ -1,6 +1,12 @@
 $(function(){
     $('.api-cate li').click(function() {
         $(this).next().toggle();
+        var folder = $(this).children('.cate-title').children('span').attr('class');
+        if (folder == 'icon-folder-close-alt') {
+            $(this).children('.cate-title').children('span').attr('class', 'icon-folder-open-alt');
+        } else {
+            $(this).children('.cate-title').children('span').attr('class', 'icon-folder-close-alt');
+        }
     });
 
     $('#create-cate').click(function() {
@@ -11,6 +17,13 @@ $(function(){
             alert(1);
             $('.create-cate-input').hide();
         }
+    });
+
+    $('.cate-node').mouseover(function() {
+        $(this).children('.cate-icon').show();
+    });
+    $('.cate-node').mouseout(function() {
+        $(this).children('.cate-icon').hide();
     });
 
     // https://github.com/Dorious/jquery-numberedtextarea
