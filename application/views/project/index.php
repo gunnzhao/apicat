@@ -23,12 +23,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php if (!empty($categories)): ?>
             <?php foreach ($categories as $v): ?>
             <li class="cate-node">
-                <span class="cate-title"><span class="icon-folder-close-alt"></span>&nbsp; <?php echo $v['title']; ?></span>
-                <span class="icon-cog cate-icon" style="display:none"></span>
+                <div class="cate-title">
+                    <span class="icon-folder-close-alt"></span>&nbsp; <?php echo $v['title']; ?>
+                </div>
+                <div class="dropdown cate-icon" style="display:none">
+                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <span class="icon-cog" type="button"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">编辑</a></li>
+                        <li><a href="#">删除</a></li>
+                    </ul>
+                </div>
             </li>
             <li style="display:none;">
                 <ul class="apis">
-                    <li class="active">添加商户添加商户添加商户添加商户添加商户</li>
+                    <li class="active">添加商户</li>
                     <li>编辑商户</li>
                     <li>
                         <a href="#" class="btn btn-default btn-xs">创建接口</a>

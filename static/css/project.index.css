@@ -34,12 +34,17 @@ h3 span {
     border: none;
 }
 
+.dropdown-menu li {
+    border: none;
+    padding: 0px;
+    cursor: none;
+}
+
 .cate-node {
     position: relative;
 }
 
 .cate-title {
-    display: inline-block;
     max-width: 195px;
     white-space: nowrap;
     overflow: hidden;
@@ -48,7 +53,13 @@ h3 span {
 .cate-icon {
     position: absolute;
     right: 24px;
-    top: 16px;
+    top: 12px;
+}
+.cate-icon a {
+    color: #888888; 
+}
+.cate-icon a:hover {
+    text-decoration-line: none;
 }
 
 .apis {
