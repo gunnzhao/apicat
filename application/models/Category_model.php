@@ -57,6 +57,15 @@ class Category_model extends CI_model
             log_message('error', $this->db->last_query());
             return false;
         }
-        return $this->db->insert_id();
+        $insert_id = $this->db->insert_id();
+
+        // 查询当前创建的分类是项目的第几个
+        $this->db->where(array('pid' => $pid, 'status' => 0));
+        $rank = $this->db->count_all_results($this->table);
+        
+        // 更新显示顺序
+        $this->db->update($this->table, array('display_order' => $rank), array('id' => $insert_id));
+
+        return $insert_id;
     }
 }

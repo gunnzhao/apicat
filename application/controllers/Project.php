@@ -45,7 +45,7 @@ class Project extends MY_Controller
     public function add_category()
     {
         $project_id = $this->input->post('pid');
-        $category_name = $this->input->post('title');
+        $category_name = trim($this->input->post('title'));
 
         // 检查分类是否已经存在
         $exist = $this->category_model->check_exist($project_id, $category_name);
