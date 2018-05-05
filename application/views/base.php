@@ -45,7 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="/home"><img src="/static/img/logo.png" class="logo"></a>
+                    <a href="/projects"><img src="/static/img/logo.png" class="logo"></a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">

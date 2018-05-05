@@ -40,7 +40,8 @@ h3 span {
 
 .cate-title {
     display: inline-block;
-    max-width: 210px;
+    max-width: 195px;
+    white-space: nowrap;
     overflow: hidden;
 }
 
@@ -58,6 +59,9 @@ h3 span {
     border: none;
     list-style-type: none;
     padding: 8px 0px 8px 8px;
+    max-width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .apis li.active {

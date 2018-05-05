@@ -57,9 +57,6 @@ class Category_model extends CI_model
             log_message('error', $this->db->last_query());
             return false;
         }
-        $insert_id = $this->db->insert_id();
-
-        $this->db->update($this->table, array('pro_key' => md5($insert_id)), array('id' => $insert_id));
-        return $insert_id;
+        return $this->db->insert_id();
     }
 }

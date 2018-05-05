@@ -20,30 +20,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-3">
         <ul class="api-cate">
+            <?php if (!empty($categories)): ?>
+            <?php foreach ($categories as $v): ?>
             <li class="cate-node">
-                <span class="cate-title"><span class="icon-folder-close-alt"></span> 商户管理</span>
+                <span class="cate-title"><span class="icon-folder-close-alt"></span>&nbsp; <?php echo $v['title']; ?></span>
                 <span class="icon-cog cate-icon" style="display:none"></span>
             </li>
             <li style="display:none;">
                 <ul class="apis">
-                    <li class="active">添加商户</li>
+                    <li class="active">添加商户添加商户添加商户添加商户添加商户</li>
                     <li>编辑商户</li>
                     <li>
                         <a href="#" class="btn btn-default btn-xs">创建接口</a>
                     </li>
                 </ul>
             </li>
-            <?php if (!empty($categories)): ?>
-            <?php foreach ($categories as $v): ?>
-            <li class="cate-node">
-                <span class="cate-title"><?php echo $v['title']; ?></span>
-                <span class="glyphicon glyphicon-menu-down cate-icon"></span>
-            </li>
             <?php endforeach; ?>
             <?php endif; ?>
         </ul>
         <p class="create-cate-input" style="display:none;">
-            <input type="text" class="form-control input-sm">
+            <input type="text" class="form-control input-sm" id="create-category">
+            <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
         </p>
         <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
     </div>

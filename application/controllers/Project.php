@@ -38,6 +38,7 @@ class Project extends MY_Controller
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js('/static/js/project.index.js');
+        $this->add_page_js('/static/js/project.add.js');
         $this->render('project/add');
     }
 
@@ -56,6 +57,6 @@ class Project extends MY_Controller
         if (!$res) {
             return $this->response_json_fail('添加失败，请重试。');
         }
-        return $this->response_json_ok();
+        return $this->response_json_ok(array('cid' => $res));
     }
 }

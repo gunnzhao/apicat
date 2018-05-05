@@ -1,21 +1,45 @@
 $(function(){
-    $('.api-cate li').click(function() {
-        $(this).next().toggle();
-        var folder = $(this).children('.cate-title').children('span').attr('class');
-        if (folder == 'icon-folder-close-alt') {
-            $(this).children('.cate-title').children('span').attr('class', 'icon-folder-open-alt');
-        } else {
-            $(this).children('.cate-title').children('span').attr('class', 'icon-folder-close-alt');
-        }
-    });
+    function bind_apilist(obj) {
+        obj.click(function() {
+            var folder = $(this).children('.cate-title').children('span').attr('class');
+            if (folder == 'icon-folder-close-alt') {
+                $('.cate-node').children('.cate-title').children('span').attr('class', 'icon-folder-close-alt');
+                $('.apis').parent().hide();
+                $(this).children('.cate-title').children('span').attr('class', 'icon-folder-open-alt');
+            } else {
+                $(this).children('.cate-title').children('span').attr('class', 'icon-folder-close-alt');
+            }
+            $(this).next().toggle();
+        });
+    }
+    bind_apilist($('.api-cate li'));
 
     $('#create-cate').click(function() {
         $('.create-cate-input').show();
     });
-    $('.create-cate-input input').keydown(function(e) {
+    $('#create-category').keydown(function(e) {
         if(e.keyCode==13){
-            alert(1);
-            $('.create-cate-input').hide();
+            var _self = $(this)
+            $.ajax({
+                type: 'post',
+                url: '/project/add_category',
+                data: {'pid': $('#pid').val(), 'title': _self.val()},
+                async: false,
+                success: function(res) {
+                    if (res.status == 0) {
+                        var append_html = '<li class="cate-node"><span class="cate-title"><span class="icon-folder-close-alt"></span> ';
+                        append_html += _self.val();
+                        append_html += '</span><span class="icon-cog cate-icon" style="display:none"></span></li>';
+                        append_html += '<li style="display:none;"><ul class="apis"><li><a href="#" class="btn btn-default btn-xs">创建接口</a></li></ul></li>';
+                        $('.api-cate').append(append_html);
+                        $('.create-cate-input').hide();
+                        _self.val('');
+                        bind_apilist($('.api-cate').children('.cate-node').last());
+                    } else {
+                        alert(res.msg);
+                    }
+                }
+            });
         }
     });
 
@@ -25,81 +49,4 @@ $(function(){
     $('.cate-node').mouseout(function() {
         $(this).children('.cate-icon').hide();
     });
-
-    // https://github.com/Dorious/jquery-numberedtextarea
-    $('#request_example').numberedtextarea();
-    $('#return_success').numberedtextarea();
-    $('#return_fail').numberedtextarea();
-
-    var body_params = [];
-    $('input[name="body_names"]').keydown(function() {add_bodyline($(this))});
-
-    function add_bodyline(click_obj) {
-        var param_num = click_obj.parents('tr').index();
-        if ($.inArray(param_num, body_params) < 0) {
-            body_params.push(param_num);
-            var param_html = click_obj.parents('tr').html();
-            click_obj.parents('table').append('<tr>' + param_html + '</tr>');
-            click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
-
-            // 注册新的事件
-            var last_obj = $('table tr input[name="body_names"]').last();
-            last_obj.keydown(function() {add_bodyline(last_obj)});
-            var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
-            cancel_obj.click(function() {del_bodyline(cancel_obj)});
-        }
-    }
-
-    function del_bodyline(click_obj) {
-        body_params.pop();
-        click_obj.parents('tr').remove();
-    }
-
-    var header_params = [];
-    $('input[name="header_names"]').keydown(function() {add_headerline($(this))});
-
-    function add_headerline(click_obj) {
-        var param_num = click_obj.parents('tr').index();
-        if ($.inArray(param_num, header_params) < 0) {
-            header_params.push(param_num);
-            var param_html = click_obj.parents('tr').html();
-            click_obj.parents('table').append('<tr>' + param_html + '</tr>');
-            click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
-
-            // 注册新的事件
-            var last_obj = $('table tr input[name="header_names"]').last();
-            last_obj.keydown(function() {add_headerline(last_obj)});
-            var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
-            cancel_obj.click(function() {del_headerline(cancel_obj)});
-        }
-    }
-
-    function del_headerline(click_obj) {
-        header_params.pop();
-        click_obj.parents('tr').remove();
-    }
-
-    var return_params = [];
-    $('input[name="return_names"]').keydown(function() {add_returnline($(this))});
-
-    function add_returnline(click_obj) {
-        var param_num = click_obj.parents('tr').index();
-        if ($.inArray(param_num, return_params) < 0) {
-            return_params.push(param_num);
-            var param_html = click_obj.parents('tr').html();
-            click_obj.parents('table').append('<tr>' + param_html + '</tr>');
-            click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
-
-            // 注册新的事件
-            var last_obj = $('table tr input[name="return_names"]').last();
-            last_obj.keydown(function() {add_returnline(last_obj)});
-            var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
-            cancel_obj.click(function() {del_returnline(cancel_obj)});
-        }
-    }
-
-    function del_returnline(click_obj) {
-        return_params.pop();
-        click_obj.parents('tr').remove();
-    }
 });
