@@ -24,7 +24,7 @@ class Category_model extends CI_model
     public function get_categories($pid)
     {
         $this->db->select('id,title');
-        $this->db->order_by('display_order', 'DESC');
+        $this->db->order_by('display_order', 'ASC');
         return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
     }
 
