@@ -30,9 +30,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="icon-cog" type="button"></span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">编辑</a></li>
-                        <li><a href="#">删除</a></li>
+                    <ul class="dropdown-menu" data-cid="<?php echo $v['id']; ?>">
+                        <li><a href="javascript:void(0);" class="edit-category">编辑</a></li>
+                        <li><a href="javascript:void(0);" class="del-category">删除</a></li>
                     </ul>
                 </div>
             </li>
@@ -49,10 +49,53 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php endif; ?>
         </ul>
         <p class="create-cate-input" style="display:none;">
-            <input type="text" class="form-control input-sm" id="create-category">
+            <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
         </p>
         <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
+
+        <div id="editCateModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">编辑分类</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form name="edit-cate-form" onsubmit="return false;">
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">分类名称</label>
+                                <input type="hidden" name="cid" value="0">
+                                <input type="text" class="form-control" name="cate_name">
+                                <input type="hidden" name="position" value="0">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-lblue" id="edit-cate">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="delCateModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="del-cate-title">删除分类</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>删除分类后，该分类下的所有内容都将被清除。</p>
+                        <input type="hidden" id="wantto-del" value="0">
+                        <input type="hidden" id="wantto-del-position" value="0">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger btn-block" id="del-cate">确定删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-xs-9">
         <div class="doc">

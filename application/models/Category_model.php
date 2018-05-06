@@ -68,4 +68,20 @@ class Category_model extends CI_model
 
         return $insert_id;
     }
+
+    /**
+     * 编辑分类
+     * @param  array $data 需要编辑的信息
+     * @param  int $id 分类ID
+     * @return bool|int 影响记录数
+     */
+    public function edit_category($data, $id)
+    {
+        $res = $this->db->update($this->table, $data, array('id' => $id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

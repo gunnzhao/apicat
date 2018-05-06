@@ -67,4 +67,45 @@ class Project extends MY_Controller
         }
         return $this->response_json_ok(array('cid' => $res));
     }
+
+    public function edit_category()
+    {
+        $project_id = $this->input->post('pid');
+        $category_id = $this->input->post('cid');
+        $category_name = trim($this->input->post('title'));
+
+        if ($project_id == 0 or $category_id == 0) {
+            return $this->response_json_fail('编辑失败');
+        }
+
+        if (empty($category_name)) {
+            return $this->response_json_fail('名称不能为空');
+        }
+
+        // 检查分类是否已经存在
+        $exist = $this->category_model->check_exist($project_id, $category_name);
+        if ($exist) {
+            return $this->response_json_fail('该名称已经存在');
+        }
+
+        $res = $this->category_model->edit_category(array('title' => $category_name), $category_id);
+        if (!$res) {
+            return $this->response_json_fail('编辑失败，请重试。');
+        }
+        return $this->response_json_ok();
+    }
+
+    public function del_category()
+    {
+        $category_id = $this->input->post('cid');
+        if ($category_id == 0) {
+            return $this->response_json_fail('删除失败');
+        }
+
+        $res = $this->category_model->edit_category(array('status' => 1), $category_id);
+        if (!$res) {
+            return $this->response_json_fail('删除失败，请重试。');
+        }
+        return $this->response_json_ok();
+    }
 }
