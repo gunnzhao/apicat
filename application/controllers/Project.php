@@ -47,6 +47,14 @@ class Project extends MY_Controller
         $project_id = $this->input->post('pid');
         $category_name = trim($this->input->post('title'));
 
+        if ($project_id == 0) {
+            return $this->response_json_fail('添加失败');
+        }
+
+        if (empty($category_name)) {
+            return $this->response_json_fail('名称不能为空');
+        }
+
         // 检查分类是否已经存在
         $exist = $this->category_model->check_exist($project_id, $category_name);
         if ($exist) {
