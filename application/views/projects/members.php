@@ -26,9 +26,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group">
                         <label for="email" class="sr-only">Password</label>
-                        <input type="email" class="form-control" name="email">
+                        <input type="email" class="form-control" name="email" style="width:300px;">
                     </div>
-                    <button type="submit" class="btn btn-lblue">修改</button>
+                    <button type="button" class="btn btn-lblue">邀请</button>
                 </form>
             </div>
         </div>
