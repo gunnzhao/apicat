@@ -11,8 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-xs-3">
         <div class="list-group">
             <a href="#" class="list-group-item disabled">项目设置</a>
-            <a href="/settings/profile" class="list-group-item active">基本设置</a>
-            <a href="/settings/email" class="list-group-item">成员管理</a>
+            <a href="/projects/settings" class="list-group-item active">基本设置</a>
+            <a href="/projects/members" class="list-group-item">成员管理</a>
         </div>
     </div>
     <div class="col-xs-9">

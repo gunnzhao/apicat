@@ -1,0 +1,26 @@
+.members {
+    margin-top: 24px;
+    padding-top: 8px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    min-width: 95px;
+}
+
+.members img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.user-name {
+    max-width: 95%;
+    padding-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.del-member:hover {
+    color: #FFFFFF;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}

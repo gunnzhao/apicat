@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li><a href="../navbar/"<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo $_page_avatar; ?>" alt="..." class="img-circle nav-avatar">
+                                <img src="<?php echo $_page_avatar; ?>" alt="<?php echo $_page_nickname; ?>" class="img-circle nav-avatar">
                                 <?php echo $_page_nickname; ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">

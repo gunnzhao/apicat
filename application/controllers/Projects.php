@@ -73,4 +73,10 @@ class Projects extends MY_Controller
         $this->load->helper('form_msg');
         $this->render('projects/settings');
     }
+
+    public function members()
+    {
+        $this->add_page_css('/static/css/projects.members.css');
+        $this->render('projects/members');
+    }
 }
