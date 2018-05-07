@@ -67,4 +67,10 @@ class Projects extends MY_Controller
         }
         $this->response_json_ok();
     }
+
+    public function settings()
+    {
+        $this->load->helper('form_msg');
+        $this->render('projects/settings');
+    }
 }
