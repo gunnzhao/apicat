@@ -90,7 +90,12 @@ $(function(){
     });
 
     $('#create-cate').click(function() {
+        $('#create-category').val('');
         $('.create-cate-input').show();
+        $('#create-category').focus();
+    });
+    $('#create-category').blur(function() {
+        $('.create-cate-input').hide();
     });
     $('#create-category').keydown(function(e) {
         if(e.keyCode==13){
