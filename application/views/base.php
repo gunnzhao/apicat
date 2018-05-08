@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li class="active"><a href="/projects">我的项目</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="../navbar/"<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
+                        <li><a href="../navbar/"<span class="icon-bell" aria-hidden="true"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <img src="<?php echo $_page_avatar; ?>" alt="<?php echo $_page_nickname; ?>" class="img-circle nav-avatar">
