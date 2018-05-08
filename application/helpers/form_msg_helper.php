@@ -83,15 +83,15 @@ if (!function_exists('init_form_post')) {
 
         if ($params) {
             foreach ($params as $v) {
-                if (isset($_POST[$v]) and $_POST[$v] !== '') {
+                if (isset($_POST[$v])) {
                     $_SESSION['_formmsg_form_data'][$v] = $_POST[$v];
+                } else {
+                    $_SESSION['_formmsg_form_data'][$v] = '';
                 }
             }
         } else {
             foreach ($_POST as $k => $v) {
-                if ($v !== '') {
-                    $_SESSION['_formmsg_form_data'][$k] = $v;
-                }
+                $_SESSION['_formmsg_form_data'][$k] = $v;
             }
         }
     }
