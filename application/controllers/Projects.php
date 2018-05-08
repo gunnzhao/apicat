@@ -70,8 +70,63 @@ class Projects extends MY_Controller
 
     public function settings()
     {
+        $pid = $this->input->get('pid');
+        if (!$pid) {
+            show_404();
+        }
+
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        if (!$project_info) {
+            show_404();
+        }
+
+        if ($project_info['uid'] != $this->session->uid) {
+            show_404();
+        }
+
         $this->load->helper('form_msg');
-        $this->render('projects/settings');
+        $this->render('projects/settings', array('project_info' => $project_info));
+    }
+
+    public function do_settings()
+    {
+        $this->load->helper('form_msg');
+        init_form_post(array('pid', 'title', 'authority', 'description'));
+        $pid = trim($this->input->post('pid'));
+        if (!$pid) {
+            $this->show_err('修改失败');
+        }
+
+        $title = trim($this->input->post('title'));
+        if (!$title) {
+            $this->show_err('请输入项目名称');
+        }
+
+        $authority = trim($this->input->post('authority'));
+        if ($authority != 0 and $authority != 1) {
+            $this->show_err('修改失败');
+        }
+
+        $description = trim($this->input->post('description'));
+        $owner = $this->projects_model->check_owner($this->session->uid, $pid);
+        if (!$owner) {
+            $this->show_err('修改失败');
+        }
+
+        $is_repeat = $this->projects_model->check_title_repeat($this->session->uid, $pid, $title);
+        if ($is_repeat) {
+            $this->show_err('项目名称重复');
+        }
+
+        $res = $this->projects_model->edit_project_by_id(
+            array('title' => $title, 'authority' => $authority, 'description' => $description, 'update_uid' => $this->session->uid),
+            $pid
+        );
+        if ($res !== false) {
+            $this->show_ok('修改成功');
+        } else {
+            $this->show_err('修改失败，请稍后重试');
+        }
     }
 
     public function members()
