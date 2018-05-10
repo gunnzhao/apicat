@@ -29,7 +29,7 @@ class User_model extends CI_model
             'email'      => $email,
             'passwd'     => password_hash($passwd, PASSWORD_DEFAULT),
             'nickname'   => $nickname,
-            'avatar'     => 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM55stttUxUOyUHrcJ8MnaH292VkkcRmdlwNg4ERNU1jRw/0',
+            'avatar'     => '/static/img/user.png',
             'reg_time'   => time(),
             'login_ip'   => $this->input->ip_address(),
             'login_time' => time()
