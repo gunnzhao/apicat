@@ -32,7 +32,8 @@ class Projects_model extends CI_model
             'authority'   => $authority,
             'description' => $description,
             'insert_time' => time(),
-            'update_time' => time()
+            'update_time' => time(),
+            'update_uid'  => $uid
         );
 
         $res = $this->db->insert($this->table, $data);

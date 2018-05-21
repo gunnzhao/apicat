@@ -65,6 +65,9 @@ class Projects extends MY_Controller
         if (!$res) {
             return $this->response_json_fail('项目创建失败，请重试。');
         }
+
+        $this->load->model('project_members_model');
+        $this->project_members_model->add_member($res, $this->session->uid);
         $this->response_json_ok();
     }
 
@@ -131,7 +134,23 @@ class Projects extends MY_Controller
 
     public function members()
     {
+        $pid = $this->input->get('pid');
+        if (!$pid) {
+            show_404();
+        }
+
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        if (!$project_info) {
+            show_404();
+        }
+
+        if ($project_info['uid'] != $this->session->uid) {
+            show_404();
+        }
+
+        $this->load->model('project_members_model');
+
         $this->add_page_css('/static/css/projects.members.css');
-        $this->render('projects/members');
+        $this->render('projects/members', array('project_info' => $project_info));
     }
 }
