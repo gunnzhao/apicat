@@ -149,8 +149,84 @@ class Projects extends MY_Controller
         }
 
         $this->load->model('project_members_model');
+        $uids = $this->project_members_model->get_members($pid);
+
+        $this->load->model('user_model');
+        $members = $this->user_model->get_users_by_uids($uids);
 
         $this->add_page_css('/static/css/projects.members.css');
-        $this->render('projects/members', array('project_info' => $project_info));
+        $this->render('projects/members', array('project_info' => $project_info, 'members' => $members));
+    }
+
+    public function add_member()
+    {
+        $email = $this->input->post('email');
+        if (!$email) {
+            return $this->response_json_fail('请输入邮箱');
+        }
+
+        $pid = $this->input->post('pid');
+        if (!$pid) {
+            return $this->response_json_fail('邀请失败');
+        }
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        if (!$project_info) {
+            // 项目不存在
+            return $this->response_json_fail('邀请失败');
+        }
+        if (!$project_info['uid'] != $this->session->uid) {
+            // 项目创建人和邀请人不一致
+            return $this->response_json_fail('邀请失败');
+        }
+
+        $this->load->helper('email');
+        if (!valid_email($email)) {
+            return $this->response_json_fail('邮箱格式有误');
+        }
+        
+        $this->load->model('project_invite_model');
+        $this->load->model('user_model');
+        $user = $this->user_model->get_user_by_email($email);
+        if ($user) {
+            $invite_code = $this->project_invite_model->add_record($pid, $this->session->uid, $user['id']);
+            if (!$invite_code) {
+                return $this->response_json_fail('邀请失败，请重试');
+            }
+
+            $this->send_email($email, $pid, $invite_code);
+        } else {
+            $res = $this->user_model->add_user('HelloWorld', $email, '123456');
+            if (!$res) {
+                return $this->response_json_fail('邀请失败，请重试');
+            }
+
+            $invite_code = $this->project_invite_model->add_record($pid, $this->session->uid, $res);
+            if (!$invite_code) {
+                return $this->response_json_fail('邀请失败，请重试');
+            }
+
+            $this->send_email($email, $pid, $invite_code);
+        }
+        $this->response_json_ok();
+    }
+
+    private function send_email($email, $pid, $invite_code)
+    {
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        $subject = $this->session->nickname . '邀请您加入' . $project_info['title'] . '项目';
+        $message = $this->session->nickname . "邀请您加入" . $project_info['title'] . "项目\n";
+        $message .= "点此链接加入：" . config_item('base_url') . "/projects/invite?invite_code=" . $invite_code;
+
+        $this->load->library('email');
+        $this->email->from('baqimovie@163.com', 'ApiCat');
+        $this->email->to($email);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        $res = $this->email->send();
+
+        if (!$res) {
+            return false;
+        }
+        return true;
     }
 }

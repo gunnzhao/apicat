@@ -24,7 +24,13 @@ class Project_members_model extends CI_model
     public function get_members($pid)
     {
         $this->db->select('pid,uid');
-        return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0));
+        if ($res->num_rows() > 0) {
+            $records = $res->result_array();
+            return array_column($records, 'uid');
+        } else {
+            return array();
+        }
     }
 
     /**
