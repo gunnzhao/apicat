@@ -71,8 +71,9 @@ class Email extends MY_Controller
             return $this->response_json_fail('验证码发送失败，请稍后重试');
         }
 
+        $this->config->load('email');
         $this->load->library('email');
-        $this->email->from('baqimovie@163.com', 'ApiCat');
+        $this->email->from($this->config->item('sender_email'), $this->config->item('useragent'));
         $this->email->to($email);
         $this->email->subject('ApiCat修改邮箱验证码');
         $this->email->message('当前您正在进行修改邮箱操作，您的验证码是：' . $code);
@@ -108,8 +109,9 @@ class Email extends MY_Controller
 
         $link = config_item('base_url') . '/email/verify?code=' . hash('sha256', $this->session->uid . $email . $code);
 
+        $this->config->load('email');
         $this->load->library('email');
-        $this->email->from('baqimovie@163.com', 'ApiCat');
+        $this->email->from($this->config->item('sender_email'), $this->config->item('useragent'));
         $this->email->to($email);
         $this->email->subject('ApiCat邮箱验证');
         $this->email->message('请点击此链接验证您的邮箱：' . $link);

@@ -226,8 +226,9 @@ class Projects extends MY_Controller
         $message = $this->session->nickname . "邀请您加入" . $project_info['title'] . "项目\n";
         $message .= "通过此链接加入：" . config_item('base_url') . "/projects/invite?invite_code=" . $invite_code;
 
+        $this->config->load('email');
         $this->load->library('email');
-        $this->email->from('baqimovie@163.com', 'ApiCat');
+        $this->email->from($this->config->item('sender_email'), $this->config->item('useragent'));
         $this->email->to($email);
         $this->email->subject($subject);
         $this->email->message($message);
