@@ -7,6 +7,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $config['useragent'] = 'ApiCat';
 
 /**
+ * 代理邮箱
+ */
+$config['sender_email'] = '';
+
+/**
  * 邮件发送协议
  * 支持mail, sendmail, smtp
  */
