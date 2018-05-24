@@ -219,6 +219,26 @@ class Projects extends MY_Controller
         $this->response_json_ok();
     }
 
+    public function del_member()
+    {
+        $pid = $this->input->post('pid');
+        if (!$pid) {
+            return $this->response_json_fail('删除失败');
+        }
+
+        $uid = $this->input->post('uid');
+        if (!$uid) {
+            return $this->response_json_fail('请选择要删除的用户');
+        }
+
+        $this->load->model('project_members_model');
+        $res = $this->project_members_model->del_member($pid, $uid);
+        if ($res === false) {
+            return $this->response_json_fail('删除失败');
+        }
+        $this->response_json_ok();
+    }
+
     private function send_email($email, $pid, $invite_code)
     {
         $project_info = $this->projects_model->get_project_by_id($pid);

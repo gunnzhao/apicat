@@ -37,9 +37,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="row">
             <?php foreach ($members as $v): ?>
             <div class="col-xs-2">
-                <div class="members">
+                <div class="members" data-index="<?php echo $v['id']; ?>">
                     <p class="text-center">
-                        <img src="<?php echo $v['avatar']; ?>" alt="加多宝" class="img-circle">
+                        <img src="<?php echo $v['avatar']; ?>" alt="<?php echo $v['nickname']; ?>" class="img-circle">
                     </p>
                     <p class="text-center user-name"><?php echo $v['nickname']; ?></p>
                     <?php if ($v['id'] == $_SESSION['uid']): ?>
