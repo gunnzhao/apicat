@@ -26,9 +26,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <div class="form-group">
                         <label for="email" class="sr-only">Email</label>
+                        <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
                         <input type="email" class="form-control" name="email" style="width:300px;">
                     </div>
-                    <button type="button" class="btn btn-lblue">邀请</button>
+                    <button type="button" class="btn btn-lblue" id="invite">邀请</button>
                 </form>
             </div>
         </div>

@@ -81,4 +81,20 @@ class Project_members_model extends CI_model
         }
         return true;
     }
+    
+    /**
+     * 检查某个用户是否在项目中
+     * @param  int $pid 项目id
+     * @param  int $uid 成员id
+     * @return bool 存在返回true，不存在返回false
+     */
+    public function check_exist($pid, $uid)
+    {
+        $this->db->select('id');
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'uid' => $uid, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            return true;
+        }
+        return false;
+    }
 }

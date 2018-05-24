@@ -26,7 +26,7 @@ class Project_invite_model extends CI_model
     public function add_record($pid, $invite_uid, $be_invited_uid)
     {
         $data = array(
-            'invite_key'     => '',
+            'invite_code'     => '',
             'pid'            => $pid,
             'invite_uid'     => $invite_uid,
             'be_invited_uid' => $be_invited_uid,
@@ -43,5 +43,40 @@ class Project_invite_model extends CI_model
         $invite_code = md5($insert_id);
         $this->db->update($this->table, array('invite_code' => $invite_code), array('id' => $insert_id));
         return $invite_code;
+    }
+
+    /**
+     * 获取一条邀请记录
+     * @param  int $pid 项目id
+     * @param  int $be_invited_uid 被邀请人id
+     * @return array
+     */
+    public function get_record($pid, $be_invited_uid)
+    {
+        $this->db->select('id,invite_code,invite_uid,be_invited_uid,accept');
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1, 0);
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'be_invited_uid' => $be_invited_uid));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
+
+    /**
+     * 修改一条记录
+     * @param  array $data 要修改的信息
+     * @param  int $id 记录id
+     * @return bool|int 影响记录数
+     */
+    public function edit_record($data, $id)
+    {
+        $res = $this->db->update($this->table, $data, array('id' => $id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
     }
 }
