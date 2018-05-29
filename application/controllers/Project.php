@@ -34,12 +34,28 @@ class Project extends MY_Controller
 
     public function add()
     {
+        $pro_key = $this->input->get('pro_key');
+        if (!$pro_key) {
+            show_404();
+        }
+        $cate_id = $this->input->get('cate_id');
+        if (!$cate_id) {
+            show_404();
+        }
+
+        $project_info = $this->projects_model->get_project_by_key($pro_key);
+        if (!$project_info) {
+            show_404();
+        }
+
+        $categories = $this->category_model->get_categories($project_info['id']);
+
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js('/static/js/project.index.js');
         $this->add_page_js('/static/js/project.add.js');
-        $this->render('project/add');
+        $this->render('project/add', array('project_info' => $project_info, 'categories' => $categories));
     }
 
     public function add_category()
