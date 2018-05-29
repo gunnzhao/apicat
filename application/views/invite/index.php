@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="../../favicon.ico">
+        <link rel="icon" href="/static/img/favicon.ico">
         <title>项目邀请</title>
         <!-- Bootstrap core CSS -->
         <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
