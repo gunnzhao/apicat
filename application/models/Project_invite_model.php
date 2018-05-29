@@ -46,12 +46,12 @@ class Project_invite_model extends CI_model
     }
 
     /**
-     * 获取一条邀请记录
+     * 获取项目下被邀请人的最后一条记录
      * @param  int $pid 项目id
      * @param  int $be_invited_uid 被邀请人id
      * @return array
      */
-    public function get_record($pid, $be_invited_uid)
+    public function get_last_record($pid, $be_invited_uid)
     {
         $this->db->select('id,invite_code,invite_uid,be_invited_uid,accept');
         $this->db->order_by('id', 'DESC');
@@ -78,5 +78,38 @@ class Project_invite_model extends CI_model
             return false;
         }
         return $this->db->affected_rows();
+    }
+
+    /**
+     * 通过邀请码获取一条记录
+     * @param  string $invite_code 邀请码
+     * @return array
+     */
+    public function get_record_by_code($invite_code)
+    {
+        $this->db->select('id,invite_code,pid,invite_uid,be_invited_uid,accept');
+        $res = $this->db->get_where($this->table, array('invite_code' => $invite_code));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
+
+    /**
+     * 通过邀请码和被邀请人id获取记录
+     * @param  string $invite_code 邀请码
+     * @param  int $be_invited_uid 被邀请人id
+     * @return array
+     */
+    public function get_record_be_invited($invite_code, $be_invited_uid)
+    {
+        $this->db->select('id,pid,accept');
+        $res = $this->db->get_where($this->table, array('invite_code' => $invite_code, 'be_invited_uid' => $be_invited_uid));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
     }
 }

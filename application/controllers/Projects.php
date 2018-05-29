@@ -201,7 +201,7 @@ class Projects extends MY_Controller
         }
 
         $this->load->model('project_invite_model');
-        $record = $this->project_invite_model->get_record($pid, $be_invited_uid);
+        $record = $this->project_invite_model->get_last_record($pid, $be_invited_uid);
         if ($record) {
             if ($record['accept'] == 1) {
                 return $this->response_json_fail('该成员已在您的项目中');
@@ -244,7 +244,7 @@ class Projects extends MY_Controller
         $project_info = $this->projects_model->get_project_by_id($pid);
         $subject = $this->session->nickname . '邀请您加入' . $project_info['title'] . '项目';
         $message = $this->session->nickname . "邀请您加入" . $project_info['title'] . "项目\n";
-        $message .= "通过此链接加入：" . config_item('base_url') . "/projects/invite?invite_code=" . $invite_code;
+        $message .= "通过此链接加入：" . config_item('base_url') . "/invite?invite_code=" . $invite_code;
 
         $this->config->load('email');
         $this->load->library('email');
