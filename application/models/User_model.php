@@ -31,8 +31,7 @@ class User_model extends CI_model
             'nickname'   => $nickname,
             'avatar'     => '/static/img/user.png',
             'reg_time'   => time(),
-            'login_ip'   => $this->input->ip_address(),
-            'login_time' => time()
+            'login_ip'   => ''
         );
 
         $res = $this->db->insert($this->table, $data);
