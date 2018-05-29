@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * 用户邀请类
  */
-class Invite extends MY_Controller
+class Invite extends CI_Controller
 {
     public function __construct()
     {
@@ -45,6 +45,7 @@ class Invite extends MY_Controller
         } else {
             $result['uid'] = $be_invited_user['id'];
             $result['email'] = $be_invited_user['email'];
+            $result['invite_code'] = $invite_code;
             $this->load->view('invite/new_user', $result);
         }
     }

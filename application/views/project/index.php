@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="row">
     <div class="col-xs-9">
-        <h3 class="project-name"><?php echo $project_info['title']; ?>
+        <h3 class="project-name" data-prokey="<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?>
         <small>API数: 123 | 团队成员: 9 | <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a></small>
         </h3>
     </div>
@@ -41,7 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <li class="active">添加商户</li>
                     <li>编辑商户</li>
                     <li>
-                        <a href="#" class="btn btn-default btn-xs">创建接口</a>
+                        <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">创建接口</a>
                     </li>
                 </ul>
             </li>

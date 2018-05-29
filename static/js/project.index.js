@@ -100,6 +100,7 @@ $(function(){
     $('#create-category').keydown(function(e) {
         if(e.keyCode==13){
             var _self = $(this)
+            var pro_key = $('.project-name').data('prokey');
             $.ajax({
                 type: 'post',
                 url: '/project/add_category',
@@ -116,7 +117,9 @@ $(function(){
                         append_html += res.data.cid;
                         append_html += '"><li><a href="javascript:void(0);" class="edit-category">编辑</a></li><li><a href="javascript:void(0);" class="del-category">删除</a></li></ul>';
                         append_html += '</div></li>';
-                        append_html += '<li style="display:none;"><ul class="apis"><li><a href="javascript:void(0);" class="btn btn-default btn-xs">创建接口</a></li></ul></li>';
+                        append_html += '<li style="display:none;"><ul class="apis"><li>';
+                        append_html += '<a href="/project/add?pro_key=' + pro_key;
+                        append_html += '&cate_id=' + res.data.cid + '" class="btn btn-default btn-xs">创建接口</a></li></ul></li>';
                         $('.api-cate').append(append_html);
                         $('.create-cate-input').hide();
                         _self.val('');
