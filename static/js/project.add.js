@@ -1,8 +1,8 @@
 $(function(){
     // https://github.com/Dorious/jquery-numberedtextarea
     $('#request_example').numberedtextarea();
-    $('#return_success').numberedtextarea();
-    $('#return_fail').numberedtextarea();
+    $('#response_success').numberedtextarea();
+    $('#response_fail').numberedtextarea();
 
 
     // 创建API部分
@@ -55,7 +55,7 @@ $(function(){
     }
 
     var return_params = [];
-    $('input[name="return_names[]"]').keydown(function() {add_returnline($(this))});
+    $('input[name="response_names[]"]').keydown(function() {add_returnline($(this))});
 
     function add_returnline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -66,7 +66,7 @@ $(function(){
             click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
 
             // 注册新的事件
-            var last_obj = $('table tr input[name="return_names[]"]').last();
+            var last_obj = $('table tr input[name="response_names[]"]').last();
             last_obj.keydown(function() {add_returnline(last_obj)});
             var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
             cancel_obj.click(function() {del_returnline(cancel_obj)});
@@ -83,7 +83,7 @@ $(function(){
         var method = $(this).html();
         var method_val = method_arr.indexOf(method) + 1;
 
-        $('input[name="method"]').data(method_val);
+        $('input[name="method"]').val(method_val);
         $('#method').parents('.input-group-btn').children('button').html(method + ' <span class="caret"></span>');
     });
 
@@ -100,11 +100,33 @@ $(function(){
             $('input[name="url"]').focus();
             return;
         }
+        var pro_key = $('.project-name').data('prokey');
 
         var body_names = $('input[name="body_names[]"]').serialize();
 
         var form_data = $('#api-doc').serializeArray();
+
+        $('.header_musts').each(function() {
+            if ($(this).prop('checked')) {
+                form_data.push({"name": "header_musts[]", "value": "1"});
+            } else {
+                form_data.push({"name": "header_musts[]", "value": "0"});
+            }
+        });
+        $('.body_musts').each(function() {
+            if ($(this).prop('checked')) {
+                form_data.push({"name": "body_musts[]", "value": "1"});
+            } else {
+                form_data.push({"name": "body_musts[]", "value": "0"});
+            }
+        });
+
         $.post('/project/do_add', form_data, function(res) {
+            if (res.status == 0) {
+                location.href = '/project?pro_key=' + pro_key + '&doc_id=' + res.data.doc_id;
+            } else {
+                alert(res.msg);
+            }
         });
     });
 });

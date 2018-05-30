@@ -112,7 +112,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GET <span class="caret"></span></button>
-                                <ul class="dropdown-menu" id="method" data-method="1">
+                                <ul class="dropdown-menu" id="method">
                                     <li><a href="javascript:void(0);">GET</a></li>
                                     <li><a href="javascript:void(0);">POST</a></li>
                                     <li><a href="javascript:void(0);">PUT</a></li>
@@ -121,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <li><a href="javascript:void(0);">OPTIONS</a></li>
                                 </ul>
                             </div>
-                            <input type="hidden" name="method">
+                            <input type="hidden" name="method" value="1">
                             <input type="text" name="url" class="form-control" placeholder="URL">
                         </div>
                     </div>
@@ -150,12 +150,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </td>
                                         <td class="field-type">
                                             <select name="body_types[]">
-                                                <option value="">string</option>
-                                                <option value="">int</option>
-                                                <option value="">array</option>
+                                                <option value="1">int</option>
+                                                <option value="2">float</option>
+                                                <option value="3">string</option>
+                                                <option value="4">array</option>
+                                                <option value="5">boolean</option>
                                             </select>
                                         </td>
-                                        <td class="field-transport"><input type="checkbox" name="body_musts[]"></td>
+                                        <td class="field-transport"><input type="checkbox" class="body_musts"></td>
                                         <td class="field-default">
                                             <input type="text" name="body_defaults[]">
                                         </td>
@@ -182,12 +184,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </td>
                                         <td class="field-type">
                                             <select name="header_types[]">
-                                                <option value="">string</option>
-                                                <option value="">int</option>
-                                                <option value="">array</option>
+                                                <option value="1">int</option>
+                                                <option value="2">float</option>
+                                                <option value="3">string</option>
+                                                <option value="4">array</option>
+                                                <option value="5">boolean</option>
                                             </select>
                                         </td>
-                                        <td class="field-transport"><input type="checkbox" name="header_musts[]"></td>
+                                        <td class="field-transport"><input type="checkbox" class="header_musts"></td>
                                         <td class="field-default">
                                             <input type="text" name="header_defaults[]">
                                         </td>
@@ -219,17 +223,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <tr>
                                 <td class="field-cancel"></td>
                                 <td class="return-field-name">
-                                    <input type="text" name="return_names[]">
+                                    <input type="text" name="response_names[]">
                                 </td>
                                 <td class="return-field-type">
-                                    <select name="return_types[]">
-                                        <option value="">string</option>
-                                        <option value="">int</option>
-                                        <option value="">array</option>
+                                    <select name="response_types[]">
+                                        <option value="1">int</option>
+                                        <option value="2">float</option>
+                                        <option value="3">string</option>
+                                        <option value="4">array</option>
+                                        <option value="5">boolean</option>
                                     </select>
                                 </td>
                                 <td class="return-field-description">
-                                    <input type="text" name="return_descriptions[]">
+                                    <input type="text" name="response_descriptions[]">
                                 </td>
                             </tr>
                         </table>
@@ -244,16 +250,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="success">
-                                <textarea id="return_success" name="return_success" class="form-control" rows="14" style="margin-top: 8px"></textarea>
+                                <textarea id="response_success" name="response_success" class="form-control" rows="14" style="margin-top: 8px"></textarea>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="fail">
-                                <textarea id="return_fail" name="return_fail" class="form-control" rows="14" style="margin-top: 8px"></textarea>
+                                <textarea id="response_fail" name="response_fail" class="form-control" rows="14" style="margin-top: 8px"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row row-form">
                     <div class="col-xs-12">
+                        <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
+                        <input type="hidden" name="cid" value="<?php echo $cid; ?>">
                         <p class="text-center"><button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button></p>
                     </div>
                 </div>

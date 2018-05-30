@@ -55,7 +55,80 @@ class Project extends MY_Controller
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js('/static/js/project.index.js');
         $this->add_page_js('/static/js/project.add.js');
-        $this->render('project/add', array('project_info' => $project_info, 'categories' => $categories));
+        $this->render('project/add', array('project_info' => $project_info, 'categories' => $categories, 'cid' => $cate_id));
+    }
+
+    public function do_add()
+    {
+        $pid = trim($this->input->post('pid'));
+        if (!$pid) {
+            return $this->response_json_fail('创建失败');
+        }
+
+        $cid = trim($this->input->post('cid'));
+        if (!$cid) {
+            return $this->response_json_fail('创建失败');
+        }
+
+        $title = trim($this->input->post('title'));
+        if (!$title or ($title < 1 and $title > 6)) {
+            return $this->response_json_fail('请输入接口名称');
+        }
+
+        $method = $this->input->post('method');
+        if ($method === null) {
+            return $this->response_json_fail('请选择请求方式');
+        }
+
+        $url = trim($this->input->post('url'));
+        if (!$url) {
+            return $this->response_json_fail('请输入接口地址');
+        }
+
+        $this->load->model('doc_model');
+        $doc_id = $this->doc_model->add_record($pid, $cid, $title, $url, $method);
+
+        $header_names = $this->input->post('header_names');
+        if ($header_names and !empty($header_names[0])) {
+            $this->add_header_info($doc_id);
+        }
+
+        $body_names = $this->input->post('body_names');
+        if ($body_names and !empty($body_names[0])) {
+            $this->add_body_info($doc_id);
+        }
+
+        $response_names = $this->input->post('response_names');
+        if ($response_names and !empty($response_names[0])) {
+            $this->add_response_info($doc_id);
+        }
+
+        $this->load->model('param_example_model');
+        if ($this->input->post('request_example')) {
+            $this->param_example_model->add_record(array(
+                'doc_id'  => $doc_id,
+                'content' => $this->input->post('request_example')
+            ));
+        }
+
+        if ($this->input->post('response_success')) {
+            $this->param_example_model->add_record(array(
+                'doc_id'  => $doc_id,
+                'type'    => 1,
+                'content' => $this->input->post('response_success')
+            ));
+        }
+
+        if ($this->input->post('response_fail')) {
+            $this->param_example_model->add_record(array(
+                'doc_id'  => $doc_id,
+                'type'    => 1,
+                'state'   => 1,
+                'content' => $this->input->post('response_fail')
+            ));
+        }
+
+        $this->response_json_ok(array('doc_id' => $doc_id));
     }
 
     public function add_category()
@@ -123,5 +196,93 @@ class Project extends MY_Controller
             return $this->response_json_fail('删除失败，请重试。');
         }
         return $this->response_json_ok();
+    }
+
+    private function add_header_info($doc_id)
+    {
+        $header_names = $this->input->post('header_names');
+        $header_types = $this->input->post('header_types');
+        $header_musts = $this->input->post('header_musts');
+        $header_defaults = $this->input->post('header_defaults');
+        $header_descriptions = $this->input->post('header_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($header_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[] = array(
+                'doc_id'      => $doc_id,
+                'source'      => 0,
+                'title'       => $v,
+                'type'        => $header_types[$k],
+                'is_must'     => $header_musts[$k],
+                'default'     => $header_defaults[$k],
+                'description' => $header_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+
+        $this->load->model('request_params_model');
+        $this->request_params_model->add_record($data);
+    }
+
+    private function add_body_info($doc_id)
+    {
+        $body_names = $this->input->post('body_names');
+        $body_types = $this->input->post('body_types');
+        $body_musts = $this->input->post('body_musts');
+        $body_defaults = $this->input->post('body_defaults');
+        $body_descriptions = $this->input->post('body_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($body_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[] = array(
+                'doc_id'      => $doc_id,
+                'source'      => 1,
+                'title'       => $v,
+                'type'        => $body_types[$k],
+                'is_must'     => $body_musts[$k],
+                'default'     => $body_defaults[$k],
+                'description' => $body_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+
+        $this->load->model('request_params_model');
+        $this->request_params_model->add_record($data);
+    }
+
+    private function add_response_info($doc_id)
+    {
+        $response_names = $this->input->post('response_names');
+        $response_types = $this->input->post('response_types');
+        $response_descriptions = $this->input->post('response_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($response_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[] = array(
+                'doc_id'      => $doc_id,
+                'title'       => $v,
+                'type'        => $response_types[$k],
+                'description' => $response_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+
+        $this->load->model('response_params_model');
+        $this->response_params_model->add_record($data);
     }
 }
