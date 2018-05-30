@@ -7,7 +7,7 @@ $(function(){
 
     // 创建API部分
     var body_params = [];
-    $('input[name="body_names"]').keydown(function() {add_bodyline($(this))});
+    $('input[name="body_names[]"]').keydown(function() {add_bodyline($(this))});
 
     function add_bodyline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -18,7 +18,7 @@ $(function(){
             click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
 
             // 注册新的事件
-            var last_obj = $('table tr input[name="body_names"]').last();
+            var last_obj = $('table tr input[name="body_names[]"]').last();
             last_obj.keydown(function() {add_bodyline(last_obj)});
             var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
             cancel_obj.click(function() {del_bodyline(cancel_obj)});
@@ -31,7 +31,7 @@ $(function(){
     }
 
     var header_params = [];
-    $('input[name="header_names"]').keydown(function() {add_headerline($(this))});
+    $('input[name="header_names[]"]').keydown(function() {add_headerline($(this))});
 
     function add_headerline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -42,7 +42,7 @@ $(function(){
             click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
 
             // 注册新的事件
-            var last_obj = $('table tr input[name="header_names"]').last();
+            var last_obj = $('table tr input[name="header_names[]"]').last();
             last_obj.keydown(function() {add_headerline(last_obj)});
             var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
             cancel_obj.click(function() {del_headerline(cancel_obj)});
@@ -55,7 +55,7 @@ $(function(){
     }
 
     var return_params = [];
-    $('input[name="return_names"]').keydown(function() {add_returnline($(this))});
+    $('input[name="return_names[]"]').keydown(function() {add_returnline($(this))});
 
     function add_returnline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -66,7 +66,7 @@ $(function(){
             click_obj.parents('tr').find('.field-cancel').html('<a href="javascript:void(0);">x</a>');
 
             // 注册新的事件
-            var last_obj = $('table tr input[name="return_names"]').last();
+            var last_obj = $('table tr input[name="return_names[]"]').last();
             last_obj.keydown(function() {add_returnline(last_obj)});
             var cancel_obj = click_obj.parents('tr').find('.field-cancel').children('a');
             cancel_obj.click(function() {del_returnline(cancel_obj)});
@@ -77,4 +77,34 @@ $(function(){
         return_params.pop();
         click_obj.parents('tr').remove();
     }
+
+    $('#method li a').click(function() {
+        var method_arr = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
+        var method = $(this).html();
+        var method_val = method_arr.indexOf(method) + 1;
+
+        $('input[name="method"]').data(method_val);
+        $('#method').parents('.input-group-btn').children('button').html(method + ' <span class="caret"></span>');
+    });
+
+    $('#create').click(function() {
+        var title = $('input[name="title"]').val();
+        if (!title) {
+            alert('请输入接口名称');
+            $('input[name="title"]').focus();
+            return;
+        }
+        var url = $('input[name="url"]').val();
+        if (!url) {
+            alert('请输入接口URL');
+            $('input[name="url"]').focus();
+            return;
+        }
+
+        var body_names = $('input[name="body_names[]"]').serialize();
+
+        var form_data = $('#api-doc').serializeArray();
+        $.post('/project/do_add', form_data, function(res) {
+        });
+    });
 });

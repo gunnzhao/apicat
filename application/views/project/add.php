@@ -101,10 +101,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-xs-9">
         <div class="create-doc">
             <h3>创建接口</h3>
-            <form>
+            <form id="api-doc">
                 <div class="row row-form">
                     <div class="col-xs-6">
-                        <input type="text" class="form-control" placeholder="接口名称">
+                        <input type="text" name="title" class="form-control" placeholder="接口名称">
                     </div>
                 </div>
                 <div class="row row-form">
@@ -112,16 +112,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GET <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">GET</a></li>
-                                    <li><a href="#">POST</a></li>
-                                    <li><a href="#">PUT</a></li>
-                                    <li><a href="#">PATCH</a></li>
-                                    <li><a href="#">DELETE</a></li>
-                                    <li><a href="#">OPTIONS</a></li>
+                                <ul class="dropdown-menu" id="method" data-method="1">
+                                    <li><a href="javascript:void(0);">GET</a></li>
+                                    <li><a href="javascript:void(0);">POST</a></li>
+                                    <li><a href="javascript:void(0);">PUT</a></li>
+                                    <li><a href="javascript:void(0);">PATCH</a></li>
+                                    <li><a href="javascript:void(0);">DELETE</a></li>
+                                    <li><a href="javascript:void(0);">OPTIONS</a></li>
                                 </ul>
                             </div>
-                            <input type="text" class="form-control" placeholder="URL">
+                            <input type="hidden" name="method">
+                            <input type="text" name="url" class="form-control" placeholder="URL">
                         </div>
                     </div>
                 </div>
@@ -145,21 +146,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr>
                                         <td class="field-cancel"></td>
                                         <td class="field-name">
-                                            <input type="text" name="body_names">
+                                            <input type="text" name="body_names[]">
                                         </td>
                                         <td class="field-type">
-                                            <select>
+                                            <select name="body_types[]">
                                                 <option value="">string</option>
                                                 <option value="">int</option>
                                                 <option value="">array</option>
                                             </select>
                                         </td>
-                                        <td class="field-transport"><input type="checkbox"></td>
+                                        <td class="field-transport"><input type="checkbox" name="body_musts[]"></td>
                                         <td class="field-default">
-                                            <input type="text">
+                                            <input type="text" name="body_defaults[]">
                                         </td>
                                         <td class="field-description">
-                                            <input type="text">
+                                            <input type="text" name="body_descriptions[]">
                                         </td>
                                     </tr>
                                 </table>
@@ -177,21 +178,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr>
                                         <td class="field-cancel"></td>
                                         <td class="field-name">
-                                            <input type="text" name="header_names">
+                                            <input type="text" name="header_names[]">
                                         </td>
                                         <td class="field-type">
-                                            <select>
+                                            <select name="header_types[]">
                                                 <option value="">string</option>
                                                 <option value="">int</option>
                                                 <option value="">array</option>
                                             </select>
                                         </td>
-                                        <td class="field-transport"><input type="checkbox"></td>
+                                        <td class="field-transport"><input type="checkbox" name="header_musts[]"></td>
                                         <td class="field-default">
-                                            <input type="text">
+                                            <input type="text" name="header_defaults[]">
                                         </td>
                                         <td class="field-description">
-                                            <input type="text">
+                                            <input type="text" name="header_descriptions[]">
                                         </td>
                                     </tr>
                                 </table>
@@ -202,7 +203,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row row-form">
                     <div class="col-xs-12">
                         <p><strong>请求参数示例</strong></p>
-                        <textarea id="request_example" class="form-control" rows="14"></textarea>
+                        <textarea id="request_example" name="request_example" class="form-control" rows="14"></textarea>
                     </div>
                 </div>
                 <div class="row row-form">
@@ -218,17 +219,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <tr>
                                 <td class="field-cancel"></td>
                                 <td class="return-field-name">
-                                    <input type="text" name="return_names">
+                                    <input type="text" name="return_names[]">
                                 </td>
                                 <td class="return-field-type">
-                                    <select>
+                                    <select name="return_types[]">
                                         <option value="">string</option>
                                         <option value="">int</option>
                                         <option value="">array</option>
                                     </select>
                                 </td>
                                 <td class="return-field-description">
-                                    <input type="text">
+                                    <input type="text" name="return_descriptions[]">
                                 </td>
                             </tr>
                         </table>
@@ -243,17 +244,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="success">
-                                <textarea id="return_success" class="form-control" rows="14" style="margin-top: 8px"></textarea>
+                                <textarea id="return_success" name="return_success" class="form-control" rows="14" style="margin-top: 8px"></textarea>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="fail">
-                                <textarea id="return_fail" class="form-control" rows="14" style="margin-top: 8px"></textarea>
+                                <textarea id="return_fail" name="return_fail" class="form-control" rows="14" style="margin-top: 8px"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row row-form">
                     <div class="col-xs-12">
-                        <p class="text-center"><button type="button" class="btn btn-lblue" style="width:150px;">创建</button></p>
+                        <p class="text-center"><button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button></p>
                     </div>
                 </div>
             </form>
