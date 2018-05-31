@@ -24,7 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php foreach ($categories as $v): ?>
             <li class="cate-node">
                 <div class="cate-title">
-                    <span class="icon-folder-close-alt"></span>&nbsp; <?php echo $v['title']; ?>
+                    <span class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></span>&nbsp; <?php echo $v['title']; ?>
                 </div>
                 <div class="dropdown cate-icon" style="display:none">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -36,11 +36,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </ul>
                 </div>
             </li>
-            <li style="display:none;">
+            <li style="<?php echo $active_cid == $v['id'] ? 'display:block;' : 'display:none;'; ?>">
                 <ul class="apis">
                     <?php if (isset($apis[$v['id']])): ?>
                     <?php foreach ($apis[$v['id']] as $v2): ?>
-                    <li class="active"><?php echo $v2['title']; ?></li>
+                    <li <?php echo $doc_id == $v2['id'] ? 'class="active"' : ''; ?>><?php echo $v2['title']; ?></li>
                     <?php endforeach; ?>
                     <?php endif; ?>
                     <li>
@@ -103,18 +103,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="col-xs-9">
         <div class="doc">
             <div class="row">
-                <div class="col-xs-11"><h3>添加商户</h3></div>
+                <div class="col-xs-11"><h3><?php echo $doc['title']; ?></h3></div>
                 <div class="col-xs-1">
                     <?php if ($project_info['uid'] == $_SESSION['uid']): ?>
                     <button type="button" class="btn btn-lblue btn-xs edit-entrance">修改</button>
                     <?php endif; ?>
                 </div>
             </div>
-            <small>最后修改 2018-04-21 12:12:12 By Gunn</small>
+            <small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By Gunn</small>
             
-            <p><strong>HTTP Post-raw</strong></p>
-            <p><strong>URL: </strong> <code>https://ecapi.parkingwang.com/v4/shopAdd</code></p>
+            <p><strong><?php echo $request_types[$doc['method']]; ?> Post-raw</strong></p>
+            <p><strong>URL: </strong> <code><?php echo $doc['url']; ?></code></p>
 
+            <?php if (!empty($doc['header'])): ?>
+            <p><strong>请求Header参数说明</strong></p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>是否必传</th>
+                    <th>默认值</th>
+                    <th>参数说明</th>
+                </tr>
+                <?php foreach ($doc['header'] as $v): ?>
+                <tr>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['is_must'] == 0 ? '否' : '是'; ?></td>
+                    <td><?php echo $v['default']; ?></td>
+                    <td><?php echo $v['description']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+
+            <?php if (!empty($doc['body'])): ?>
             <p><strong>请求参数说明</strong></p>
             <table class="table table-bordered">
                 <tr>
@@ -124,22 +147,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <th>默认值</th>
                     <th>参数说明</th>
                 </tr>
+                <?php foreach ($doc['body'] as $v): ?>
                 <tr>
-                    <td>token</td>
-                    <td>string</td>
-                    <td>是</td>
-                    <td>-</td>
-                    <td>访问令牌</td>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['is_must'] == 0 ? '否' : '是'; ?></td>
+                    <td><?php echo $v['default']; ?></td>
+                    <td><?php echo $v['description']; ?></td>
                 </tr>
+                <?php endforeach; ?>
             </table>
+            <?php endif; ?>
 
+            <?php if (!empty($doc['request_example'])): ?>
             <p><strong>请求参数示例</strong></p>
-            <pre>
-{
-    "a": 1,
-    "b": 2
-}</pre>
+            <pre><?php echo $doc['request_example']; ?></pre>
+            <?php endif; ?>
 
+            <?php if (!empty($doc['response'])): ?>
             <p><strong>返回参数说明</strong></p>
             <table class="table table-bordered">
                 <tr>
@@ -147,13 +172,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <th>类型</th>
                     <th>参数说明</th>
                 </tr>
+                <?php foreach ($doc['header'] as $v): ?>
                 <tr>
-                    <td>token</td>
-                    <td>string</td>
-                    <td>访问令牌</td>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['description']; ?></td>
                 </tr>
+                <?php endforeach; ?>
             </table>
+            <?php endif; ?>
 
+            <?php if (!empty($doc['response_success_example']) or !empty($doc['response_fail_example'])): ?>
             <p><strong>返回参数示例</strong></p>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#nomal" aria-controls="nomal" role="tab" data-toggle="tab">正常示例</a></li>
@@ -162,20 +191,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="nomal">
-                    <br/><pre>
-{
-    "a": 1,
-    "b": 2
-}</pre>
+                    <br/><pre><?php echo $doc['response_success_example']; ?></pre>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="exception">
-                    <br/><pre>
-{
-    "a": 1,
-    "b": 2
-}</pre>
+                    <br/><pre><?php echo $doc['response_fail_example']; ?></pre>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

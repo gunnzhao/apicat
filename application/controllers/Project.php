@@ -35,15 +35,15 @@ class Project extends MY_Controller
                 $doc_id = $this->input->get('doc_id');
             } else {
                 if ($records) {
-                    $active_pid = $records[0]['pid'];
+                    $active_cid = $records[0]['cid'];
                     $doc_id = $records[0]['id'];
                 } else {
-                    $active_pid = 0;
+                    $active_cid = 0;
                     $doc_id = 0;
                 }
             }
         } else {
-            $active_pid = 0;
+            $active_cid = 0;
             $doc_id = 0;
         }
 
@@ -58,6 +58,7 @@ class Project extends MY_Controller
                 }
 
                 if ($doc_id == $v['id']) {
+                    $active_cid = $v['cid'];
                     $doc = $v;
                 }
             }
@@ -83,31 +84,39 @@ class Project extends MY_Controller
             $doc['body'] = $body;
             
             $response_params = $this->response_params_model->get_records($doc_id);
+            $doc['response'] = $request_params;
             
             $examples = $this->param_example_model->get_records($doc_id);
-            $request = $response = array();
+            $request_example = $response_success_example = $response_fail_example = '';
             if ($examples) {
                 foreach ($examples as $v) {
                     if ($v['type'] == 0) {
-                        $request[] = $v;
+                        $request_example = $v['content'];
                     } else {
-                        $response[] = $v;
+                        if ($v['state'] == 0) {
+                            $response_success_example = $v['content'];
+                        } else {
+                            $response_fail_example = $v['content'];
+                        }
                     }
                 }
             }
-            $doc['request'] = $request;
-            $doc['response'] = $response;
+            $doc['request_example'] = $request_example;
+            $doc['response_success_example'] = $response_success_example;
+            $doc['response_fail_example'] = $response_fail_example;
         }
 
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
         $this->render('project/index', array(
-            'project_info' => $project_info,
-            'categories'   => $categories,
-            'apis'         => $apis,
-            'active_pid'   => $active_pid,
-            'doc_id'       => $doc_id,
-            'doc'          => $doc
+            'project_info'  => $project_info,
+            'categories'    => $categories,
+            'apis'          => $apis,
+            'active_cid'    => $active_cid,
+            'doc_id'        => $doc_id,
+            'doc'           => $doc,
+            'param_types'   => array('', 'int', 'float', 'string', 'array', 'boolean'),
+            'request_types' => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
         ));
     }
 
