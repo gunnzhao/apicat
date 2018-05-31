@@ -35,4 +35,15 @@ class Request_params_model extends CI_model
         }
         return $this->db->insert_id();
     }
+
+    /**
+     * 获取所有请求参数
+     * @param  int $doc_id 文档id
+     * @return array
+     */
+    public function get_records($doc_id)
+    {
+        $this->db->select('id,source,title,type,is_must,default,description');
+        return $this->db->get_where($this->table, array('doc_id' => $doc_id, 'status' => 0))->result_array();
+    }
 }

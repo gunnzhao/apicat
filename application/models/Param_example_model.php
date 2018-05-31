@@ -32,4 +32,15 @@ class Param_example_model extends CI_model
         }
         return $this->db->insert_id();
     }
+
+    /**
+     * 获取所有参数示例
+     * @param  int $doc_id 文档id
+     * @return array
+     */
+    public function get_records($doc_id)
+    {
+        $this->db->select('id,type,state,content');
+        return $this->db->get_where($this->table, array('doc_id' => $doc_id, 'status' => 0))->result_array();
+    }
 }

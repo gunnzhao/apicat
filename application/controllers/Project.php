@@ -29,18 +29,86 @@ class Project extends MY_Controller
 
         $this->load->model('doc_model');
         $records = $this->doc_model->get_records($project_info['id']);
-        $apis = array();
-        foreach ($records as $v) {
-            if (!isset($apis[$v['cid']])) {
-                $apis[$v['cid']] = array($v);
+
+        if ($records) {
+            if ($this->input->get('doc_id')) {
+                $doc_id = $this->input->get('doc_id');
             } else {
-                $apis[$v['cid']][] = $v;
+                if ($records) {
+                    $active_pid = $records[0]['pid'];
+                    $doc_id = $records[0]['id'];
+                } else {
+                    $active_pid = 0;
+                    $doc_id = 0;
+                }
             }
+        } else {
+            $active_pid = 0;
+            $doc_id = 0;
+        }
+
+        $apis = array();
+        $doc = array();
+        if ($records) {
+            foreach ($records as $v) {
+                if (!isset($apis[$v['cid']])) {
+                    $apis[$v['cid']] = array($v);
+                } else {
+                    $apis[$v['cid']][] = $v;
+                }
+
+                if ($doc_id == $v['id']) {
+                    $doc = $v;
+                }
+            }
+        }
+
+        if ($doc) {
+            $this->load->model('request_params_model');
+            $this->load->model('response_params_model');
+            $this->load->model('param_example_model');
+
+            $request_params = $this->request_params_model->get_records($doc_id);
+            $header = $body = array();
+            if ($request_params) {
+                foreach ($request_params as $v) {
+                    if ($v['source'] == 0) {
+                        $header[] = $v;
+                    } else {
+                        $body[] = $v;
+                    }
+                }
+            }
+            $doc['header'] = $header;
+            $doc['body'] = $body;
+            
+            $response_params = $this->response_params_model->get_records($doc_id);
+            
+            $examples = $this->param_example_model->get_records($doc_id);
+            $request = $response = array();
+            if ($examples) {
+                foreach ($examples as $v) {
+                    if ($v['type'] == 0) {
+                        $request[] = $v;
+                    } else {
+                        $response[] = $v;
+                    }
+                }
+            }
+            $doc['request'] = $request;
+            $doc['response'] = $response;
         }
 
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
-        $this->render('project/index', array('project_info' => $project_info, 'categories' => $categories, 'apis' => $apis));
+        $this->render('project/index', array(
+            'project_info' => $project_info,
+            'categories'   => $categories,
+            'apis'         => $apis,
+            'active_pid'   => $active_pid,
+            'doc_id'       => $doc_id,
+            'doc'          => $doc
+        ));
     }
 
     public function add()
