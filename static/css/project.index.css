@@ -79,6 +79,10 @@ h3 span {
     color: #08C;
 }
 
+.apis li:hover {
+    color: #08C;
+}
+
 .edit-entrance {
     margin-top: 20px;
 }

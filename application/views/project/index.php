@@ -38,8 +38,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
             <li style="display:none;">
                 <ul class="apis">
-                    <li class="active">添加商户</li>
-                    <li>编辑商户</li>
+                    <?php if (isset($apis[$v['id']])): ?>
+                    <?php foreach ($apis[$v['id']] as $v2): ?>
+                    <li class="active"><?php echo $v2['title']; ?></li>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
                     <li>
                         <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">创建接口</a>
                     </li>

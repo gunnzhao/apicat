@@ -27,9 +27,20 @@ class Project extends MY_Controller
 
         $categories = $this->category_model->get_categories($project_info['id']);
 
+        $this->load->model('doc_model');
+        $records = $this->doc_model->get_records($project_info['id']);
+        $apis = array();
+        foreach ($records as $v) {
+            if (!isset($apis[$v['cid']])) {
+                $apis[$v['cid']] = array($v);
+            } else {
+                $apis[$v['cid']][] = $v;
+            }
+        }
+
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
-        $this->render('project/index', array('project_info' => $project_info, 'categories' => $categories));
+        $this->render('project/index', array('project_info' => $project_info, 'categories' => $categories, 'apis' => $apis));
     }
 
     public function add()

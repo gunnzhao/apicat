@@ -41,6 +41,28 @@ class Doc_model extends CI_model
             log_message('error', $this->db->last_query());
             return false;
         }
-        return $this->db->insert_id();
+
+        $insert_id = $this->db->insert_id();
+
+        // 查询当前创建的文档是分类的第几个
+        $this->db->where(array('pid' => $pid, 'cid' => $cid, 'status' => 0));
+        $rank = $this->db->count_all_results($this->table);
+        
+        // 更新显示顺序
+        $this->db->update($this->table, array('display_order' => $rank), array('id' => $insert_id));
+
+        return $insert_id;
+    }
+
+    /**
+     * 获取API的列表
+     * @param  int $pid 项目id
+     * @return array
+     */
+    public function get_records($pid)
+    {
+        $this->db->select('id,cid,title,display_order');
+        $this->db->order_by('display_order', 'ASC');
+        return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
     }
 }
