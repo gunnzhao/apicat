@@ -45,6 +45,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="body">
+                                <p class="body-data-type">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="body_data_type" value="0" checked> none
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="body_data_type" value="1"> form-data
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="body_data_type" value="2"> x-www-form-urlencoded
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="body_data_type" value="3"> raw
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="body_data_type" value="4"> binary
+                                    </label>
+                                </p>
                                 <table class="table table-bordered">
                                     <tr>
                                         <th></th>

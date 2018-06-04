@@ -18,23 +18,12 @@ class Doc_model extends CI_model
 
     /**
      * 增加文档记录
-     * @param  int $pid 项目id
-     * @param  int $cid 分类id
-     * @param  string $title 文档名称
-     * @param  string $url API地址
-     * @param  int $method 请求方法
+     * @param  array $data 添加的文档信息
      * @return int|bool 成功返回uid，失败返回false
      */
-    public function add_record($pid, $cid, $title, $url, $method)
+    public function add_record($data)
     {
-        $data = array(
-            'pid'         => $pid,
-            'cid'         => $cid,
-            'title'       => $title,
-            'url'         => $url,
-            'method'      => $method,
-            'insert_time' => time()
-        );
+        $data['insert_time'] = $data['update_time'] = time();
 
         $res = $this->db->insert($this->table, $data);
         if (!$res) {
@@ -45,7 +34,7 @@ class Doc_model extends CI_model
         $insert_id = $this->db->insert_id();
 
         // 查询当前创建的文档是分类的第几个
-        $this->db->where(array('pid' => $pid, 'cid' => $cid, 'status' => 0));
+        $this->db->where(array('pid' => $data['pid'], 'cid' => $data['cid'], 'status' => 0));
         $rank = $this->db->count_all_results($this->table);
         
         // 更新显示顺序

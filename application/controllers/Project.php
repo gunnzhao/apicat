@@ -170,8 +170,18 @@ class Project extends MY_Controller
             return $this->response_json_fail('请输入接口地址');
         }
 
+        $body_data_type = trim($this->input->post('body_data_type'));
+
         $this->load->model('doc_model');
-        $doc_id = $this->doc_model->add_record($pid, $cid, $title, $url, $method);
+        $doc_id = $this->doc_model->add_record(array(
+            'pid'            => $pid,
+            'cid'            => $cid,
+            'title'          => $title,
+            'url'            => $url,
+            'method'         => $method,
+            'body_data_type' => $body_data_type,
+            'update_uid'     => $this->session->uid
+        ));
 
         $header_names = $this->input->post('header_names');
         if ($header_names and !empty($header_names[0])) {
