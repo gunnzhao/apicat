@@ -54,4 +54,20 @@ class Doc_model extends CI_model
         $this->db->order_by('display_order', 'ASC');
         return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
     }
+
+    /**
+     * 获取文档详情
+     * @param  int $doc_id 文档id
+     * @return array
+     */
+    public function get_record($doc_id)
+    {
+        $this->db->select('id,pid,cid,title,url,method,body_data_type,display_order');
+        $res = $this->db->get_where($this->table, array('id' => $doc_id, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
 }

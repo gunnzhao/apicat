@@ -85,7 +85,7 @@ class Project extends MY_Controller
             $doc['body'] = $body;
             
             $response_params = $this->response_params_model->get_records($doc_id);
-            $doc['response'] = $request_params;
+            $doc['response'] = $response_params;
             
             $examples = $this->param_example_model->get_records($doc_id);
             $request_example = $response_success_example = $response_fail_example = '';
@@ -213,7 +213,7 @@ class Project extends MY_Controller
         if ($this->input->post('request_example')) {
             $this->param_example_model->add_record(array(
                 'doc_id'  => $doc_id,
-                'content' => $this->input->post('request_example')
+                'content' => str_replace("\t", "    ", $this->input->post('request_example'))
             ));
         }
 
@@ -221,7 +221,7 @@ class Project extends MY_Controller
             $this->param_example_model->add_record(array(
                 'doc_id'  => $doc_id,
                 'type'    => 1,
-                'content' => $this->input->post('response_success')
+                'content' => str_replace("\t", "    ", $this->input->post('response_success'))
             ));
         }
 
@@ -230,11 +230,86 @@ class Project extends MY_Controller
                 'doc_id'  => $doc_id,
                 'type'    => 1,
                 'state'   => 1,
-                'content' => $this->input->post('response_fail')
+                'content' => str_replace("\t", "    ", $this->input->post('response_fail'))
             ));
         }
 
         $this->response_json_ok(array('doc_id' => $doc_id));
+    }
+
+    public function edit()
+    {
+        $pro_key = $this->input->get('pro_key');
+        if (!$pro_key) {
+            show_404();
+        }
+        $doc_id = $this->input->get('doc_id');
+        if (!$doc_id) {
+            show_404();
+        }
+
+        $project_info = $this->projects_model->get_project_by_key($pro_key);
+        if (!$project_info) {
+            show_404();
+        }
+
+        $this->load->model('doc_model');
+        $doc = $this->doc_model->get_record($doc_id);
+        if (!$doc) {
+            show_404();
+        }
+
+        $this->load->model('request_params_model');
+        $this->load->model('response_params_model');
+        $this->load->model('param_example_model');
+
+        $request_params = $this->request_params_model->get_records($doc_id);
+        $header = $body = array();
+        if ($request_params) {
+            foreach ($request_params as $v) {
+                if ($v['source'] == 0) {
+                    $header[] = $v;
+                } else {
+                    $body[] = $v;
+                }
+            }
+        }
+        $doc['header'] = $header;
+        $doc['body'] = $body;
+        
+        $response_params = $this->response_params_model->get_records($doc_id);
+        $doc['response'] = $response_params;
+        
+        $examples = $this->param_example_model->get_records($doc_id);
+        $request_example = $response_success_example = $response_fail_example = '';
+        if ($examples) {
+            foreach ($examples as $v) {
+                if ($v['type'] == 0) {
+                    $request_example = $v['content'];
+                } else {
+                    if ($v['state'] == 0) {
+                        $response_success_example = $v['content'];
+                    } else {
+                        $response_fail_example = $v['content'];
+                    }
+                }
+            }
+        }
+        $doc['request_example'] = $request_example;
+        $doc['response_success_example'] = $response_success_example;
+        $doc['response_fail_example'] = $response_fail_example;
+
+        $this->add_page_css('/static/css/jquery.numberedtextarea.css');
+        $this->add_page_css('/static/css/project.index.css');
+        $this->add_page_js('/static/js/jquery.numberedtextarea.js');
+        $this->add_page_js('/static/js/project.add.js');
+        $this->render('project/edit', array(
+            'project_info'   => $project_info,
+            'doc'            => $doc,
+            'param_types'    => array('', 'int', 'float', 'string', 'array', 'boolean'),
+            'request_types'  => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
+            'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary')
+        ));
     }
 
     public function add_category()
