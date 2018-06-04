@@ -100,7 +100,7 @@ $(function(){
             $('input[name="url"]').focus();
             return;
         }
-        var pro_key = $('.project-name').data('prokey');
+        var pro_link = $('.breadcrumb li:eq(1) a').attr('href');
 
         var body_names = $('input[name="body_names[]"]').serialize();
 
@@ -123,7 +123,7 @@ $(function(){
 
         $.post('/project/do_add', form_data, function(res) {
             if (res.status == 0) {
-                location.href = '/project?pro_key=' + pro_key + '&doc_id=' + res.data.doc_id;
+                location.href = pro_link + '&doc_id=' + res.data.doc_id;
             } else {
                 alert(res.msg);
             }

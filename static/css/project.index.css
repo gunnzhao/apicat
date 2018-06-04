@@ -112,7 +112,7 @@ h3 span {
 }
 .field-name input {
     min-width: 150px;
-    width: 185px;
+    width: 150px;
 }
 .field-type select {
     min-width: 60px;
@@ -123,15 +123,15 @@ h3 span {
     text-align: center;
 }
 .field-default input {
-    width: 130px;
+    width: 110px;
 }
 .field-description input {
     min-width: 150px;
-    width: 300px;
+    width: 260px;
 }
 .return-field-name input {
     min-width: 150px;
-    width: 275px;
+    width: 230px;
 }
 .return-field-type select {
     min-width: 60px;
@@ -140,5 +140,5 @@ h3 span {
 }
 .return-field-description input {
     min-width: 150px;
-    width: 400px;
+    width: 350px;
 }

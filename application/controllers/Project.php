@@ -136,14 +136,11 @@ class Project extends MY_Controller
             show_404();
         }
 
-        $categories = $this->category_model->get_categories($project_info['id']);
-
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
-        $this->add_page_js('/static/js/project.index.js');
         $this->add_page_js('/static/js/project.add.js');
-        $this->render('project/add', array('project_info' => $project_info, 'categories' => $categories, 'cid' => $cate_id));
+        $this->render('project/add', array('project_info' => $project_info, 'cid' => $cate_id));
     }
 
     public function do_add()
