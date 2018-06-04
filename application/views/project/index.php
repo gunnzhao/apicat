@@ -40,7 +40,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ul class="apis">
                     <?php if (isset($apis[$v['id']])): ?>
                     <?php foreach ($apis[$v['id']] as $v2): ?>
-                    <li <?php echo $doc_id == $v2['id'] ? 'class="active"' : ''; ?>><?php echo $v2['title']; ?></li>
+                    <?php if ($doc_id == $v2['id']): ?>
+                    <li class="active"><?php echo $v2['title']; ?></li>
+                    <?php else: ?>
+                    <li><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
+                    <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
                     <li>

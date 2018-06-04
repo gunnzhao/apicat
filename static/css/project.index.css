@@ -28,7 +28,6 @@ h3 span {
     border-bottom: 1px solid #DDDDDD;
     padding: 12px 0px 12px 24px;
     line-height: normal;
-    cursor: pointer;
 }
 .api-cate li:last-child {
     border: none;
@@ -79,8 +78,13 @@ h3 span {
     color: #08C;
 }
 
-.apis li:hover {
+.apis li a {
+    color: #101010;
+}
+
+.apis li a:hover {
     color: #08C;
+    text-decoration-line: none;
 }
 
 .edit-entrance {
