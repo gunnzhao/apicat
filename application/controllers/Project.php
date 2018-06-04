@@ -64,6 +64,7 @@ class Project extends MY_Controller
             }
         }
 
+        $update_user = '';
         if ($doc) {
             $this->load->model('request_params_model');
             $this->load->model('response_params_model');
@@ -104,6 +105,14 @@ class Project extends MY_Controller
             $doc['request_example'] = $request_example;
             $doc['response_success_example'] = $response_success_example;
             $doc['response_fail_example'] = $response_fail_example;
+
+            if ($doc['update_uid'] != $this->session->uid) {
+                $this->load->model('user_model');
+                $user_info = $this->user_model->get_user_by_uid($doc['update_uid']);
+                $update_user = $user_info['nickname'];
+            } else {
+                $update_user = $this->session->nickname;
+            }
         }
 
         $this->add_page_css('/static/css/project.index.css');
@@ -115,8 +124,10 @@ class Project extends MY_Controller
             'active_cid'    => $active_cid,
             'doc_id'        => $doc_id,
             'doc'           => $doc,
+            'update_user'   => $update_user,
             'param_types'   => array('', 'int', 'float', 'string', 'array', 'boolean'),
             'request_types' => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
+            'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary')
         ));
     }
 

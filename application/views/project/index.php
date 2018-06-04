@@ -114,9 +114,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
             </div>
-            <small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By Gunn</small>
+            <small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By <?php echo $update_user; ?></small>
             
-            <p><strong><?php echo $request_types[$doc['method']]; ?> Post-raw</strong></p>
+            <p><strong><?php echo $request_types[$doc['method']]; ?> <?php echo $body_data_type[$doc['body_data_type']]; ?></strong></p>
             <p><strong>URL: </strong> <code><?php echo $doc['url']; ?></code></p>
 
             <?php if (!empty($doc['header'])): ?>
@@ -176,7 +176,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <th>类型</th>
                     <th>参数说明</th>
                 </tr>
-                <?php foreach ($doc['header'] as $v): ?>
+                <?php foreach ($doc['response'] as $v): ?>
                 <tr>
                     <td><?php echo $v['title']; ?></td>
                     <td><?php echo $param_types[$v['type']]; ?></td>
