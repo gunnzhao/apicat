@@ -29,6 +29,11 @@ $(function(){
         body_params.pop();
         click_obj.parents('tr').remove();
     }
+    if ($('input[name="body_names[]"]').parents('tr').find('.field-cancel').children('a').length > 0) {
+        $('input[name="body_names[]"]').parents('tr').find('.field-cancel').children('a').each(function() {
+            $(this).click(function() {del_bodyline($(this))});
+        });
+    }
 
     var header_params = [];
     $('input[name="header_names[]"]').keydown(function() {add_headerline($(this))});
@@ -53,6 +58,11 @@ $(function(){
         header_params.pop();
         click_obj.parents('tr').remove();
     }
+    if ($('input[name="header_names[]"]').parents('tr').find('.field-cancel').children('a').length > 0) {
+        $('input[name="header_names[]"]').parents('tr').find('.field-cancel').children('a').each(function() {
+            $(this).click(function() {del_headerline($(this))});
+        });
+    }
 
     var return_params = [];
     $('input[name="response_names[]"]').keydown(function() {add_returnline($(this))});
@@ -76,6 +86,11 @@ $(function(){
     function del_returnline(click_obj) {
         return_params.pop();
         click_obj.parents('tr').remove();
+    }
+    if ($('input[name="response_names[]"]').parents('tr').find('.field-cancel').children('a').length > 0) {
+        $('input[name="response_names[]"]').parents('tr').find('.field-cancel').children('a').each(function() {
+            $(this).click(function() {del_returnline($(this))});
+        });
     }
 
     $('#method li a').click(function() {

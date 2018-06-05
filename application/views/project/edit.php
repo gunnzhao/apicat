@@ -75,7 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <?php if (!empty($doc['body'])): ?>
                                     <?php foreach ($doc['body'] as $v): ?>
                                     <tr>
-                                        <td class="field-cancel"></td>
+                                        <td class="field-cancel"><a href="javascript:void(0);">x</a></td>
                                         <td class="field-name">
                                             <input type="text" name="body_names[]" value="<?php echo $v['title']; ?>">
                                         </td>
@@ -135,7 +135,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <?php if (!empty($doc['header'])): ?>
                                     <?php foreach ($doc['header'] as $v): ?>
                                     <tr>
-                                        <td class="field-cancel"></td>
+                                        <td class="field-cancel"><a href="javascript:void(0);">x</a></td>
                                         <td class="field-name">
                                             <input type="text" name="body_names[]" value="<?php echo $v['title']; ?>">
                                         </td>
