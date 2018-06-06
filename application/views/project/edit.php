@@ -204,7 +204,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php if (!empty($doc['response'])): ?>
                             <?php foreach ($doc['response'] as $v): ?>
                             <tr>
-                                <td class="field-cancel"></td>
+                                <td class="field-cancel"><a href="javascript:void(0);">x</a></td>
                                 <td class="return-field-name">
                                     <input type="text" name="response_names[]" value="<?php echo $v['title']; ?>">
                                 </td>
