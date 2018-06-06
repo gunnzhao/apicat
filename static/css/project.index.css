@@ -28,6 +28,7 @@ h3 span {
     border-bottom: 1px solid #DDDDDD;
     padding: 12px 0px 12px 24px;
     line-height: normal;
+    cursor: pointer;
 }
 .api-cate li:last-child {
     border: none;

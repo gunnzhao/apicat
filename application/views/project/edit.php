@@ -263,9 +263,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="row row-form">
                     <div class="col-xs-12">
-                        <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
-                        <input type="hidden" name="cid" value="<?php echo $doc['cid']; ?>">
-                        <p class="text-center"><button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button></p>
+                        <input type="hidden" name="doc_id" value="<?php echo $doc['id']; ?>">
+                        <p class="text-center">
+                            <button type="button" id="update" class="btn btn-lblue" style="width:150px;">确定</button>
+                            <a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" class="btn btn-default" style="width:150px;">取消</a>
+                        </p>
                     </div>
                 </div>
             </form>

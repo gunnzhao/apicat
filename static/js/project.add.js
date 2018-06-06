@@ -144,4 +144,47 @@ $(function(){
             }
         });
     });
+
+    $('#update').click(function() {
+        var title = $('input[name="title"]').val();
+        if (!title) {
+            alert('请输入接口名称');
+            $('input[name="title"]').focus();
+            return;
+        }
+        var url = $('input[name="url"]').val();
+        if (!url) {
+            alert('请输入接口URL');
+            $('input[name="url"]').focus();
+            return;
+        }
+        var pro_link = $('.breadcrumb li:eq(1) a').attr('href');
+
+        var body_names = $('input[name="body_names[]"]').serialize();
+
+        var form_data = $('#api-doc').serializeArray();
+
+        $('.header_musts').each(function() {
+            if ($(this).prop('checked')) {
+                form_data.push({"name": "header_musts[]", "value": "1"});
+            } else {
+                form_data.push({"name": "header_musts[]", "value": "0"});
+            }
+        });
+        $('.body_musts').each(function() {
+            if ($(this).prop('checked')) {
+                form_data.push({"name": "body_musts[]", "value": "1"});
+            } else {
+                form_data.push({"name": "body_musts[]", "value": "0"});
+            }
+        });
+
+        $.post('/project/do_edit', form_data, function(res) {
+            if (res.status == 0) {
+                location.href = pro_link + '&doc_id=' + res.data.doc_id;
+            } else {
+                alert(res.msg);
+            }
+        });
+    });
 });

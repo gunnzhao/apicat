@@ -193,6 +193,9 @@ class Project extends MY_Controller
             'body_data_type' => $body_data_type,
             'update_uid'     => $this->session->uid
         ));
+        if (!$doc_id) {
+            return $this->response_json_fail('创建失败');
+        }
 
         $header_names = $this->input->post('header_names');
         if ($header_names and !empty($header_names[0])) {
@@ -312,6 +315,82 @@ class Project extends MY_Controller
         ));
     }
 
+    public function do_edit()
+    {
+        $doc_id = trim($this->input->post('doc_id'));
+        if (!$doc_id) {
+            return $this->response_json_fail('创建失败');
+        }
+
+        $title = trim($this->input->post('title'));
+        if (!$title or ($title < 1 and $title > 6)) {
+            return $this->response_json_fail('请输入接口名称');
+        }
+
+        $method = $this->input->post('method');
+        if ($method === null) {
+            return $this->response_json_fail('请选择请求方式');
+        }
+
+        $url = trim($this->input->post('url'));
+        if (!$url) {
+            return $this->response_json_fail('请输入接口地址');
+        }
+
+        $body_data_type = trim($this->input->post('body_data_type'));
+
+        $this->load->model('doc_model');
+        $this->doc_model->edit_record(array(
+            'title'          => $title,
+            'url'            => $url,
+            'method'         => $method,
+            'body_data_type' => $body_data_type,
+            'update_uid'     => $this->session->uid
+        ), $doc_id);
+
+        $header_names = $this->input->post('header_names');
+        if ($header_names and !empty($header_names[0])) {
+            $this->edit_header_info($doc_id);
+        }
+
+        $body_names = $this->input->post('body_names');
+        if ($body_names and !empty($body_names[0])) {
+            $this->edit_body_info($doc_id);
+        }
+
+        $response_names = $this->input->post('response_names');
+        if ($response_names and !empty($response_names[0])) {
+            $this->edit_response_info($doc_id);
+        }
+
+        $this->load->model('param_example_model');
+        if ($this->input->post('request_example')) {
+            $this->param_example_model->edit_record(array(
+                'doc_id'  => $doc_id,
+                'content' => str_replace("\t", "    ", $this->input->post('request_example'))
+            ));
+        }
+
+        if ($this->input->post('response_success')) {
+            $this->param_example_model->edit_record(array(
+                'doc_id'  => $doc_id,
+                'type'    => 1,
+                'content' => str_replace("\t", "    ", $this->input->post('response_success'))
+            ));
+        }
+
+        if ($this->input->post('response_fail')) {
+            $this->param_example_model->edit_record(array(
+                'doc_id'  => $doc_id,
+                'type'    => 1,
+                'state'   => 1,
+                'content' => str_replace("\t", "    ", $this->input->post('response_fail'))
+            ));
+        }
+
+        $this->response_json_ok(array('doc_id' => $doc_id));
+    }
+
     public function add_category()
     {
         $project_id = $this->input->post('pid');
@@ -408,6 +487,15 @@ class Project extends MY_Controller
 
         $this->load->model('request_params_model');
         $this->request_params_model->add_record($data);
+    }
+
+    public function edit_header_info($doc_id)
+    {
+        $header_names = $this->input->post('header_names');
+        $header_types = $this->input->post('header_types');
+        $header_musts = $this->input->post('header_musts');
+        $header_defaults = $this->input->post('header_defaults');
+        $header_descriptions = $this->input->post('header_descriptions');
     }
 
     private function add_body_info($doc_id)
