@@ -489,13 +489,38 @@ class Project extends MY_Controller
         $this->request_params_model->add_record($data);
     }
 
-    public function edit_header_info($doc_id)
+    private function edit_header_info($doc_id)
     {
         $header_names = $this->input->post('header_names');
         $header_types = $this->input->post('header_types');
         $header_musts = $this->input->post('header_musts');
         $header_defaults = $this->input->post('header_defaults');
         $header_descriptions = $this->input->post('header_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($header_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[$header_types[$k]] = array(
+                'doc_id'      => $doc_id,
+                'source'      => 0,
+                'title'       => $v,
+                'type'        => $header_types[$k],
+                'is_must'     => $header_musts[$k],
+                'default'     => $header_defaults[$k],
+                'description' => $header_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+        if (!$data) {
+            return;
+        }
+
+        $this->load->model('request_params_model');
+        $this->request_params_model->update_params($data, $doc_id, 0);
     }
 
     private function add_body_info($doc_id)
@@ -527,6 +552,40 @@ class Project extends MY_Controller
 
         $this->load->model('request_params_model');
         $this->request_params_model->add_record($data);
+    }
+
+    private function edit_body_info($doc_id)
+    {
+        $body_names = $this->input->post('body_names');
+        $body_types = $this->input->post('body_types');
+        $body_musts = $this->input->post('body_musts');
+        $body_defaults = $this->input->post('body_defaults');
+        $body_descriptions = $this->input->post('body_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($body_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[] = array(
+                'doc_id'      => $doc_id,
+                'source'      => 1,
+                'title'       => $v,
+                'type'        => $body_types[$k],
+                'is_must'     => $body_musts[$k],
+                'default'     => $body_defaults[$k],
+                'description' => $body_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+        if (!$data) {
+            return;
+        }
+
+        $this->load->model('request_params_model');
+        $this->request_params_model->update_params($data, $doc_id);
     }
 
     private function add_response_info($doc_id)
