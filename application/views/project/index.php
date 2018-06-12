@@ -105,6 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <div class="col-xs-9">
+        <?php if (!empty($doc)): ?>
         <div class="doc">
             <div class="row">
                 <div class="col-xs-11"><h3><?php echo $doc['title']; ?></h3></div>
@@ -203,5 +204,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <?php endif; ?>
         </div>
+        <?php else: ?>
+            <p class="text-center">暂无文档</p>
+        <?php endif; ?>
     </div>
 </div>
