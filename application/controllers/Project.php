@@ -115,10 +115,17 @@ class Project extends MY_Controller
             }
         }
 
+        $api_nums = $this->doc_model->get_nums($project_info['id']);
+
+        $this->load->model('project_members_model');
+        $member_nums = $this->project_members_model->get_nums($project_info['id']);
+
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
         $this->render('project/index', array(
             'project_info'  => $project_info,
+            'api_nums'      => $api_nums,
+            'member_nums'   => $member_nums,
             'categories'    => $categories,
             'apis'          => $apis,
             'active_cid'    => $active_cid,

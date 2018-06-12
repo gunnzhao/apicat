@@ -97,4 +97,15 @@ class Project_members_model extends CI_model
         }
         return false;
     }
+
+    /**
+     * 获取项目下的成员数量
+     * @param  int $pid 项目id
+     * @return int
+     */
+    public function get_nums($pid)
+    {
+        $this->db->where(array('pid' => $pid, 'status' => 0));
+        return $this->db->count_all_results($this->table);
+    }
 }

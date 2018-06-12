@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-9">
         <h3 class="project-name" data-prokey="<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?>
-        <small>API数: 123 | 团队成员: 9 | <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a></small>
+        <small>API数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> | <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a></small>
         </h3>
     </div>
     <div class="col-xs-3">
