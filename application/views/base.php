@@ -59,8 +59,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <?php echo $_page_nickname; ?> <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">我的团队</a></li>
-                                <li role="separator" class="divider"></li>
                                 <li><a href="/settings/profile">设置</a></li>
                                 <li><a href="/logout">退出</a></li>
                             </ul>
