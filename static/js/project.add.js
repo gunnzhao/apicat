@@ -7,7 +7,11 @@ $(function(){
 
     // 创建API部分
     var body_params = [];
-    $('input[name="body_names[]"]').keydown(function() {add_bodyline($(this))});
+    if ($('input[name="body_names[]"]').length > 1) {
+        $('input[name="body_names[]"]').last().keydown(function() {add_bodyline($(this))});
+    } else {
+        $('input[name="body_names[]"]').keydown(function() {add_bodyline($(this))});
+    }
 
     function add_bodyline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -36,7 +40,11 @@ $(function(){
     }
 
     var header_params = [];
-    $('input[name="header_names[]"]').keydown(function() {add_headerline($(this))});
+    if ($('input[name="header_names[]"]').length > 1) {
+        $('input[name="header_names[]"]').last().keydown(function() {add_headerline($(this))});
+    } else {
+        $('input[name="header_names[]"]').keydown(function() {add_headerline($(this))});
+    }
 
     function add_headerline(click_obj) {
         var param_num = click_obj.parents('tr').index();
@@ -65,7 +73,11 @@ $(function(){
     }
 
     var return_params = [];
-    $('input[name="response_names[]"]').keydown(function() {add_returnline($(this))});
+    if ($('input[name="response_names[]"]').length > 1) {
+        $('input[name="response_names[]"]').last().keydown(function() {add_returnline($(this))});
+    } else {
+        $('input[name="response_names[]"]').keydown(function() {add_returnline($(this))});
+    }
 
     function add_returnline(click_obj) {
         var param_num = click_obj.parents('tr').index();

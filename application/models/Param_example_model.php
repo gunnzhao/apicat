@@ -43,4 +43,26 @@ class Param_example_model extends CI_model
         $this->db->select('id,type,state,content');
         return $this->db->get_where($this->table, array('doc_id' => $doc_id, 'status' => 0))->result_array();
     }
+
+    /**
+     * 修改参数示例
+     * @param  int $doc_id 文档id
+     * @param  int $type 类型 0请求示例 1返回示例
+     * @param  int $state 响应类型 0正常示例 1异常示例
+     * @param  string $content 示例内容
+     * @return bool|int 影响记录数
+     */
+    public function edit_record($doc_id, $type, $state, $content)
+    {
+        $res = $this->db->update(
+            $this->table,
+            array('content' => $content),
+            array('doc_id' => $doc_id, 'type' => $type, 'state' => $state)
+        );
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

@@ -142,8 +142,10 @@ class Request_params_model extends CI_model
                 $this->db->update($this->table, array('status' => 1), array('id' => $v['id']));
             }
         } else {
-            foreach ($data as $k => $v) {
-                $this->db->update($this->table, $v, array('id' => $origin_records[$k]['id']));
+            if ($data) {
+                foreach ($data as $k => $v) {
+                    $this->db->update($this->table, $v, array('id' => $origin_records[$k]['id']));
+                }
             }
         }
     }

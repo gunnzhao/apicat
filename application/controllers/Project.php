@@ -365,27 +365,21 @@ class Project extends MY_Controller
 
         $this->load->model('param_example_model');
         if ($this->input->post('request_example')) {
-            $this->param_example_model->edit_record(array(
-                'doc_id'  => $doc_id,
-                'content' => str_replace("\t", "    ", $this->input->post('request_example'))
-            ));
+            $this->param_example_model->edit_record(
+                $doc_id, 0, 0, str_replace("\t", "    ", $this->input->post('request_example'))
+            );
         }
 
         if ($this->input->post('response_success')) {
-            $this->param_example_model->edit_record(array(
-                'doc_id'  => $doc_id,
-                'type'    => 1,
-                'content' => str_replace("\t", "    ", $this->input->post('response_success'))
-            ));
+            $this->param_example_model->edit_record(
+                $doc_id, 1, 0, str_replace("\t", "    ", $this->input->post('response_success'))
+            );
         }
 
         if ($this->input->post('response_fail')) {
-            $this->param_example_model->edit_record(array(
-                'doc_id'  => $doc_id,
-                'type'    => 1,
-                'state'   => 1,
-                'content' => str_replace("\t", "    ", $this->input->post('response_fail'))
-            ));
+            $this->param_example_model->edit_record(
+                $doc_id, 1, 1, str_replace("\t", "    ", $this->input->post('response_fail'))
+            );
         }
 
         $this->response_json_ok(array('doc_id' => $doc_id));
@@ -504,7 +498,7 @@ class Project extends MY_Controller
                 continue;
             }
 
-            $data[$header_types[$k]] = array(
+            $data[$v] = array(
                 'doc_id'      => $doc_id,
                 'source'      => 0,
                 'title'       => $v,
@@ -569,7 +563,7 @@ class Project extends MY_Controller
                 continue;
             }
 
-            $data[] = array(
+            $data[$v] = array(
                 'doc_id'      => $doc_id,
                 'source'      => 1,
                 'title'       => $v,
@@ -612,5 +606,34 @@ class Project extends MY_Controller
 
         $this->load->model('response_params_model');
         $this->response_params_model->add_record($data);
+    }
+
+    private function edit_response_info($doc_id)
+    {
+        $response_names = $this->input->post('response_names');
+        $response_types = $this->input->post('response_types');
+        $response_descriptions = $this->input->post('response_descriptions');
+
+        $data = array();
+        $now = time();
+        foreach ($response_names as $k => $v) {
+            if ($v == '') {
+                continue;
+            }
+
+            $data[$v] = array(
+                'doc_id'      => $doc_id,
+                'title'       => $v,
+                'type'        => $response_types[$k],
+                'description' => $response_descriptions[$k],
+                'insert_time' => $now
+            );
+        }
+        if (!$data) {
+            return;
+        }
+
+        $this->load->model('response_params_model');
+        $this->response_params_model->update_params($data, $doc_id);
     }
 }

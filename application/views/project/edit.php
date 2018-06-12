@@ -137,10 +137,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <tr>
                                         <td class="field-cancel"><a href="javascript:void(0);">x</a></td>
                                         <td class="field-name">
-                                            <input type="text" name="body_names[]" value="<?php echo $v['title']; ?>">
+                                            <input type="text" name="header_names[]" value="<?php echo $v['title']; ?>">
                                         </td>
                                         <td class="field-type">
-                                            <select name="body_types[]">
+                                            <select name="header_types[]">
                                                 <option value="1" <?php if ($v['type'] == 1) {echo 'selected';} ?>>int</option>
                                                 <option value="2" <?php if ($v['type'] == 2) {echo 'selected';} ?>>float</option>
                                                 <option value="3" <?php if ($v['type'] == 3) {echo 'selected';} ?>>string</option>
@@ -148,12 +148,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <option value="5" <?php if ($v['type'] == 5) {echo 'selected';} ?>>boolean</option>
                                             </select>
                                         </td>
-                                        <td class="field-transport"><input type="checkbox" class="body_musts" <?php if ($v['is_must'] == 1) {echo 'checked';} ?>></td>
+                                        <td class="field-transport"><input type="checkbox" class="header_musts" <?php if ($v['is_must'] == 1) {echo 'checked';} ?>></td>
                                         <td class="field-default">
-                                            <input type="text" name="body_defaults[]" value="<?php echo $v['default']; ?>">
+                                            <input type="text" name="header_defaults[]" value="<?php echo $v['default']; ?>">
                                         </td>
                                         <td class="field-description">
-                                            <input type="text" name="body_descriptions[]" value="<?php echo $v['description']; ?>">
+                                            <input type="text" name="header_descriptions[]" value="<?php echo $v['description']; ?>">
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
