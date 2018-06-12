@@ -49,7 +49,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/projects">我的项目</a></li>
+                        <?php foreach ($_page_navigator as $v): ?>
+                        <li <?php if ($v['active']) {echo 'class="active"';} ?>><a href="<?php echo $v['url']; ?>"><?php echo $v['title']; ?></a></li>
+                        <?php endforeach; ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../navbar/"<span class="icon-bell" aria-hidden="true"></span></a></li>

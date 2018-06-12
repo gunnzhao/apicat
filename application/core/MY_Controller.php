@@ -10,7 +10,8 @@ class MY_Controller extends CI_Controller {
         '_page_css'         => array(),
         '_page_js'          => array(),
         '_page_nickname'    => '',
-        '_page_avatar'      => ''
+        '_page_avatar'      => '',
+        '_page_navigator'   => array()
     );
 
     // json返回变量
@@ -33,6 +34,7 @@ class MY_Controller extends CI_Controller {
     protected function render($tpl, $data = null)
     {
         $this->tpldata['subpage_data'] = $data ? $data : array();
+        $this->navigator();
         $this->layout->view($tpl, $this->tpldata);
     }
 
@@ -151,5 +153,22 @@ class MY_Controller extends CI_Controller {
         $this->json_data['status'] = -1;
         $this->json_data['msg'] = $msg;
         $this->output->set_content_type('application/json')->set_output(json_encode($this->json_data));
+    }
+
+    private function navigator()
+    {
+        $this->config->load('navigator');
+        $nav = $this->config->item('nav');
+        $uri = $this->uri->segment(1);
+
+        $navigator = array();
+        foreach ($nav as $k => $v) {
+            $navigator[] = array(
+                'url' => $k,
+                'title' => $v['title'],
+                'active' => in_array($uri, $v['include']) ? true : false
+            );
+        }
+        $this->tpldata['_page_navigator'] = $navigator;
     }
 }

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <ol class="breadcrumb">
     <li><a href="/projects">我的项目</a></li>
-    <li><a href="/project?pro_key=c4ca4238a0b923820dcc509a6f75849b">ECP</a></li>
+    <li><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?></a></li>
     <li class="active">项目设置</li>
 </ol>
 
