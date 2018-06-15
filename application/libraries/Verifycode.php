@@ -130,6 +130,6 @@ class Verifycode
     {
         header('Content-type:image/png');
         imagepng($this->img);
-        magedestroy($this->img);
+        imagedestroy($this->img);
     }
 }
