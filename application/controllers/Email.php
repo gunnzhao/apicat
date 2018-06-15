@@ -66,7 +66,7 @@ class Email extends MY_Controller
         // 6位随机数
         $code = rand(100000, 999999);
 
-        $res = $this->email_verify_model->add_verify_record($email, $code);
+        $res = $this->email_verify_model->add_verify_record($this->session->uid, $email, $code);
         if (!$res) {
             return $this->response_json_fail('验证码发送失败，请稍后重试');
         }
@@ -102,7 +102,7 @@ class Email extends MY_Controller
         // 6位随机数
         $code = rand(100000, 999999);
 
-        $res = $this->email_verify_model->add_verify_record($email, $code);
+        $res = $this->email_verify_model->add_verify_record($this->session->uid, $email, $code);
         if (!$res) {
             return $this->response_json_fail('邮件发送失败，请稍后重试');
         }

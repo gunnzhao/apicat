@@ -18,18 +18,19 @@ class Email_verify_model extends CI_model
 
     /**
      * 插入一条邮箱验证的记录
+     * @param  int 用户id
      * @param  string $email 邮箱
      * @param  int $code 验证码
      * @return bool 成功返回uid，失败返回false
      */
-    public function add_verify_record($email, $code)
+    public function add_verify_record($uid, $email, $code)
     {
         $data = array(
-            'uid'         => $this->session->uid,
+            'uid'         => $uid,
             'email'       => $email,
             'verify_code' => $code,
             'insert_time' => time(),
-            'hash_val'    => hash('sha256', $this->session->uid . $email . $code)
+            'hash_val'    => hash('sha256', $uid . $email . $code)
         );
 
         $res = $this->db->insert($this->table, $data);
