@@ -53,32 +53,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		</style>
     </head>
 
-  <body>
-    <div class="container">
-        <form class="form-signin" action="/login/do" method="post">
-			<h3 class="text-center">用户登录</h3><br/>
-			<?php echo form_error('<div class="alert alert-warning" role="alert">', '</div>'); ?>
-			<div class="form-group">
-				<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px" value="<?php echo show_val('email'); ?>">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control" name="passwd" placeholder="密码" style="height:48px">
-			</div>
-			<div class="form-group">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="checkbox">
-							<label><input type="checkbox"> 记住我</label>
+    <body>
+		<div class="container">
+			<form class="form-signin" action="/login/do" method="post">
+				<h3 class="text-center">用户登录</h3><br/>
+				<?php echo form_error('<div class="alert alert-warning" role="alert">', '</div>'); ?>
+				<div class="form-group">
+					<input type="email" class="form-control" name="email" placeholder="邮箱" style="height:48px" value="<?php echo show_val('email'); ?>">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" name="passwd" placeholder="密码" style="height:48px">
+				</div>
+				<div class="form-group">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="checkbox">
+								<label><input type="checkbox"> 记住我</label>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<p class="text-right" style="margin-top: 10px;margin-bottom: 10px;"><a href="/forget">找回密码</a></p>
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<p class="text-right" style="margin-top: 10px;margin-bottom: 10px;"><a href="#">找回密码</a></p>
-					</div>
 				</div>
-			</div>
-			<button type="submit" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
-			<p class="text-center"><a href="/register">还没有账户，马上注册</a></p>
-		</form>
-    </div>
-  </body>
+				<button type="submit" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
+				<p class="text-center"><a href="/register">还没有账户，马上注册</a></p>
+			</form>
+		</div>
+    </body>
 </html>
