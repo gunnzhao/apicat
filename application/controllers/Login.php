@@ -86,6 +86,10 @@ class Login extends CI_Controller
             return redirect('/login');
         }
 
+        if ($user_info['status'] != 0 or $user_info['token_valid_time'] < time()) {
+            return redirect('/login');
+        }
+
         $this->session->set_userdata(array(
             'uid'        => $user_info['id'],
             'nickname'   => $user_info['nickname'],
