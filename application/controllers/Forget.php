@@ -84,4 +84,78 @@ class Forget extends CI_Controller
             return redirect('/forget');
         }
     }
+
+    public function password()
+    {
+        $hash_val = $this->input->get('code');
+        if (!$hash_val) {
+            return show_404();
+        }
+
+        $this->load->model('email_verify_model');
+        $record = $this->email_verify_model->get_record_by_hash_val($hash_val);
+        if (!$record) {
+            return show_404();
+        }
+
+        if ($record['status'] == 1) {
+            return $this->load->view('email/verify', array('msg' => '该链接已失效'));
+        }
+
+        // 验证链接有效期1天
+        if ((time() - $record['insert_time']) > 86400) {
+            return $this->load->view('email/verify', array('msg' => '该链接已失效'));
+        }
+
+        $this->load->helper('form_msg');
+        $this->load->view('forget/password', array('code' => $hash_val));
+    }
+
+    public function do_password()
+    {
+        $this->load->helper('url');
+        $this->load->helper('form_msg');
+
+        $hash_val = $this->input->post('code');
+        if (!$hash_val) {
+            set_error('修改失败');
+            return redirect('/forget');
+        }
+
+        $newpasswd = $this->input->post('newpasswd');
+        if (!$newpasswd) {
+            set_error('请填写新密码');
+            return redirect('/forget/password?code=' . $hash_val);
+        }
+
+        $re_newpasswd = $this->input->post('re_newpasswd');
+        if (!$re_newpasswd) {
+            set_error('请再次确认新密码');
+            return redirect('/forget/password?code=' . $hash_val);
+        }
+
+        if ($newpasswd != $re_newpasswd) {
+            set_error('两次新密码输入不一致');
+            return redirect('/forget/password?code=' . $hash_val);
+        }
+
+        $this->load->model('email_verify_model');
+        $record = $this->email_verify_model->get_record_by_hash_val($hash_val);
+        if (!$record) {
+            set_error('修改失败');
+            return redirect('/forget');
+        }
+
+        $this->load->model('user_model');
+        $res = $this->user_model->edit_user(
+            array('passwd' => password_hash($newpasswd, PASSWORD_DEFAULT)),
+            $record['uid']
+        );
+        if ($res !== false) {
+            redirect('/login');
+        } else {
+            set_error('修改失败，请稍后重试');
+            redirect('/forget/password?code=' . $hash_val);
+        }
+    }
 }

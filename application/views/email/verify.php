@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Starter Template for Bootstrap</title>
+        <title>ApiCat</title>
 
         <!-- Bootstrap core CSS -->
         <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
