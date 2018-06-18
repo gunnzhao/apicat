@@ -56,9 +56,44 @@ class Login extends CI_Controller
                 'login_time' => time()
             ));
 
+            // 更新token
+            $token = md5($email . time());
+            $token_valid_time = time() + 2592000; // Token有效期30天
+            $this->user_model->edit_user(array('token' => $token, 'token_valid_time' => $token_valid_time), $user_info['id']);
+
+            if ($this->input->post('remember_me') and $this->input->post('remember_me') == 1) {
+                $this->input->set_cookie('token', $token, 2592000);
+            }
+
             // 更新登录时间和IP
             $this->user_model->update_login_info($user_info['id']);
             redirect('/projects');
         }
+    }
+
+    public function auth_login()
+    {
+        $this->load->helper('url');
+
+        $token = $this->input->cookie('token');
+        if (!$token) {
+            return redirect('/login');
+        }
+
+        $this->load->model('user_model');
+        $user_info = $this->user_model->get_user_by_token($token);
+        if (!$user_info) {
+            return redirect('/login');
+        }
+
+        $this->session->set_userdata(array(
+            'uid'        => $user_info['id'],
+            'nickname'   => $user_info['nickname'],
+            'avatar'     => $user_info['avatar'],
+            'login_time' => time()
+        ));
+
+        $source_page = $this->input->server('HTTP_REFERER');
+        redirect($source_page);
     }
 }

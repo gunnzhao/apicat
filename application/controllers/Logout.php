@@ -11,6 +11,8 @@ class Logout extends CI_Controller
 
     public function index()
     {
+        $this->input->set_cookie('token', '');
+
         $this->load->library('session');
         $this->session->sess_destroy();
 

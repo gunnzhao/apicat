@@ -124,4 +124,19 @@ class User_model extends CI_model
         }
         return $this->db->affected_rows();
     }
+
+    /**
+     * 通过token查询用户数据
+     * @param  string $token 用户token
+     * @return array
+     */
+    public function get_user_by_token($token)
+    {
+        $res = $this->db->get_where($this->table, array('token' => $token, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
 }

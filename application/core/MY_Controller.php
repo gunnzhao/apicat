@@ -76,7 +76,13 @@ class MY_Controller extends CI_Controller {
     {
         if (empty($this->session->uid)) {
             $this->load->helper('url');
-            redirect('/login');
+
+            $token = $this->input->cookie('token');
+            if (!$token) {
+                redirect('/login/auth_login');
+            } else {
+                redirect('/login');
+            }
         }
 
         $this->set_tpldata('_page_nickname', $this->session->nickname);

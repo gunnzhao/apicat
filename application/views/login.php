@@ -68,7 +68,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<div class="row">
 						<div class="col-sm-6">
 							<div class="checkbox">
-								<label><input type="checkbox"> 记住我</label>
+								<label><input type="checkbox" name="remember_me" value="1"> 记住我</label>
 							</div>
 						</div>
 						<div class="col-sm-6">
