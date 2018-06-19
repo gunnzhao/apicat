@@ -23,12 +23,14 @@ class Projects extends MY_Controller
             }
         }
 
-        // 去查询修改项目的用户昵称
-        $this->load->model('user_model');
-        $user_arr = $this->user_model->get_users_by_uids($uids);
-        $users = array();
-        foreach ($user_arr as $v) {
-            $users[$v['id']] = $v['nickname'];
+        if ($records) {
+            // 去查询修改项目的用户昵称
+            $this->load->model('user_model');
+            $user_arr = $this->user_model->get_users_by_uids($uids);
+            $users = array();
+            foreach ($user_arr as $v) {
+                $users[$v['id']] = $v['nickname'];
+            }
         }
 
         $result = array();
