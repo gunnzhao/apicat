@@ -61,7 +61,7 @@ $config['smtp_keepalive'] = false;
  * SMTP 加密方式
  * 2种加密方式(tls 和 ssl)
  */
-$config['smtp_crypto'] = '';
+$config['smtp_crypto'] = 'ssl';
 
 /**
  * 是否启用自动换行
@@ -85,3 +85,20 @@ $config['mailtype'] = 'text';
  * Email 优先级（1 = 最高. 5 = 最低. 3 = 正常）
  */
 $config['priority'] = 3;
+
+/**
+ * 换行符（使用 "rn" 以遵守 RFC 822）
+ * 3种设置值("\r\n" or "\n" or "\r")
+ */
+$config['crlf'] = "\r\n";
+
+/**
+ * 换行符（使用 "rn" 以遵守 RFC 822）
+ * 3种设置值("\r\n" or "\n" or "\r")
+ */
+$config['newline'] = "\r\n";
+
+/**
+ * 字符集（utf-8, iso-8859-1 等）
+ */
+$config['charset'] = 'utf-8';
