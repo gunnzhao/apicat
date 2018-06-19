@@ -70,7 +70,7 @@ class Register extends CI_Controller
             $this->session->set_userdata(array(
                 'uid'        => $uid,
                 'nickname'   => $params['nickname']['val'],
-                'avatar'     => 'http://wx.qlogo.cn/mmhead/Q3auHgzwzM55stttUxUOyUHrcJ8MnaH292VkkcRmdlwNg4ERNU1jRw/0',
+                'avatar'     => '/static/img/user.png',
                 'login_time' => time()
             ));
             redirect('/settings/profile');
