@@ -32,8 +32,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body>
         <div class="container">
             <div class="starter-template">
-            <h1><?php echo $msg; ?></h1>
-            <a href="/home">返回</a>
+                <h1><?php echo $msg; ?></h1>
+                <a href="/projects">返回</a>
             </div>
         </div>
     </body>
