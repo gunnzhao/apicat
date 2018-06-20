@@ -108,4 +108,21 @@ class Project_members_model extends CI_model
         $this->db->where(array('pid' => $pid, 'status' => 0));
         return $this->db->count_all_results($this->table);
     }
+
+    /**
+     * 获取成员参与的项目
+     * @param  int $uid 成员id
+     * @return array
+     */
+    public function get_pids($uid)
+    {
+        $this->db->select('pid');
+        $res = $this->db->get_where($this->table, array('uid' => $uid, 'status' => 0));
+        if ($res->num_rows() > 0) {
+            $records = $res->result_array();
+            return array_column($records, 'pid');
+        } else {
+            return array();
+        }
+    }
 }

@@ -14,16 +14,29 @@ class Projects extends MY_Controller
 
     public function index()
     {
+        // 用户自己的项目
         $records = $this->projects_model->project_records($this->session->uid);
 
+        // 用户参与的项目
+        $this->load->model('project_members_model');
+        $participate_pids = $this->project_members_model->get_pids($this->session->uid);
+        if ($participate_pids) {
+            $records = $this->projects_model->get_project_by_ids($participate_pids);
+        } else {
+            $records = array();
+        }
+
         $uids = array();
-        foreach ($records as $v) {
-            if (!in_array($v['update_uid'], $uids)) {
-                $uids[] = $v['update_uid'];
+
+        if ($records) {
+            foreach ($records as $v) {
+                if (!in_array($v['update_uid'], $uids)) {
+                    $uids[] = $v['update_uid'];
+                }
             }
         }
 
-        if ($records) {
+        if ($uids) {
             // 去查询修改项目的用户昵称
             $this->load->model('user_model');
             $user_arr = $this->user_model->get_users_by_uids($uids);
@@ -34,14 +47,16 @@ class Projects extends MY_Controller
         }
 
         $result = array();
-        foreach ($records as $v) {
-            $result[] = array(
-                'id'          => $v['id'],
-                'pro_key'     => $v['pro_key'],
-                'title'       => $v['title'],
-                'update_time' => $v['update_time'],
-                'update_user' => $users[$v['update_uid']]
-            );
+        if ($records) {
+            foreach ($records as $v) {
+                $result[] = array(
+                    'id'          => $v['id'],
+                    'pro_key'     => $v['pro_key'],
+                    'title'       => $v['title'],
+                    'update_time' => $v['update_time'],
+                    'update_user' => $users[$v['update_uid']]
+                );
+            }
         }
 
         $this->add_page_css('/static/css/projects.css');

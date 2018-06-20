@@ -126,6 +126,24 @@ class Projects_model extends CI_model
     }
 
     /**
+     * 通过多个项目id获取项目
+     * @param  string $ids 多个项目id
+     * @return array
+     */
+    public function get_project_by_ids($ids)
+    {
+        $this->db->select('id,pro_key,title,authority,description,update_time,update_uid');
+        $this->db->order_by('update_time', 'DESC');
+        if (count($ids) == 1) {
+            $this->db->where('id', $ids[0]);
+        } else {
+            $this->db->where_in('id', $ids);
+        }
+        $this->db->where('status', 0);
+        return $this->db->get($this->table)->result_array();
+    }
+
+    /**
      * 验证项目是否属于某个用户
      * @param  int $uid 用户id
      * @param  int $pid 项目id
