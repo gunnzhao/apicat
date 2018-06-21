@@ -78,7 +78,7 @@ class MY_Controller extends CI_Controller {
             $this->load->helper('url');
 
             $token = $this->input->cookie('token');
-            if (!$token) {
+            if ($token) {
                 redirect('/login/auth_login');
             } else {
                 redirect('/login');
