@@ -115,16 +115,19 @@ $(function(){
     });
 
     $('#create').click(function() {
+        $(this).prop('disabled', true);
         var title = $('input[name="title"]').val();
         if (!title) {
             alert('请输入接口名称');
             $('input[name="title"]').focus();
+            $(this).prop('disabled', false);
             return;
         }
         var url = $('input[name="url"]').val();
         if (!url) {
             alert('请输入接口URL');
             $('input[name="url"]').focus();
+            $(this).prop('disabled', false);
             return;
         }
         var pro_link = $('.breadcrumb li:eq(1) a').attr('href');
@@ -152,22 +155,26 @@ $(function(){
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + res.data.doc_id;
             } else {
+                $(this).prop('disabled', false);
                 alert(res.msg);
             }
         });
     });
 
     $('#update').click(function() {
+        $(this).prop('disabled', true);
         var title = $('input[name="title"]').val();
         if (!title) {
             alert('请输入接口名称');
             $('input[name="title"]').focus();
+            $(this).prop('disabled', false);
             return;
         }
         var url = $('input[name="url"]').val();
         if (!url) {
             alert('请输入接口URL');
             $('input[name="url"]').focus();
+            $(this).prop('disabled', false);
             return;
         }
         var pro_link = $('.breadcrumb li:eq(1) a').attr('href');
@@ -195,6 +202,7 @@ $(function(){
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + res.data.doc_id;
             } else {
+                $(this).prop('disabled', false);
                 alert(res.msg);
             }
         });
