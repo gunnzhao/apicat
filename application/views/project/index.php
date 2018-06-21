@@ -193,7 +193,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </table>
             <?php endif; ?>
 
-            <?php if (!empty($doc['response_success_example']) or !empty($doc['response_fail_example'])): ?>
+            <?php if (!empty($doc['response_success_example']) and !empty($doc['response_fail_example'])): ?>
             <p><strong>返回参数示例</strong></p>
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#nomal" aria-controls="nomal" role="tab" data-toggle="tab">正常示例</a></li>
@@ -208,6 +208,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <br/><pre><?php echo $doc['response_fail_example']; ?></pre>
                 </div>
             </div>
+            <?php elseif (!empty($doc['response_success_example'])): ?>
+            <pre><?php echo $doc['response_success_example']; ?></pre>
+            <?php elseif (!empty($doc['response_fail_example'])): ?>
+            <pre><?php echo $doc['response_fail_example']; ?></pre>
             <?php endif; ?>
         </div>
         <?php else: ?>
