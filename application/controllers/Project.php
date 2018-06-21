@@ -25,6 +25,18 @@ class Project extends MY_Controller
             show_404();
         }
 
+        $this->load->model('project_members_model');
+        if ($project_info['authority'] == 0) {
+            // 私有项目
+            if (empty($this->session->uid)) {
+                show_404();
+            }
+            
+            if (!$this->project_members_model->check_exist($project_info['id'], $this->session->uid)) {
+                show_404();
+            }
+        }
+
         $categories = $this->category_model->get_categories($project_info['id']);
 
         $this->load->model('doc_model');
@@ -117,7 +129,6 @@ class Project extends MY_Controller
 
         $api_nums = $this->doc_model->get_nums($project_info['id']);
 
-        $this->load->model('project_members_model');
         $member_nums = $this->project_members_model->get_nums($project_info['id']);
 
         $this->add_page_css('/static/css/project.index.css');
