@@ -19,7 +19,7 @@ $(function(){
         // 裁剪完成的回调函数。this指向图片对象，会将裁剪出的图像数据DataURL作为参数传入
         clipFinish: function(dataURL) {
             img_data = dataURL;
-        }, 
+        },
     });
 
     $("#avatar-file-btn").click(function(){
@@ -27,9 +27,11 @@ $(function(){
     });
 
     $('#upload').click(function() {
+        $(this).prop('disabled', true);
         if (img_data == '') {
             $('#clipBtn').click();
             if (img_data == '') {
+                $(this).prop('disabled', false);
                 return;
             }
         }
@@ -41,6 +43,11 @@ $(function(){
                 alert(res.msg);
             }
         });
+        $(this).prop('disabled', false);
+    });
+
+    $('form').submit(function(){
+        $('button[type="submit"]').prop('disabled', true);
     });
 
     var cities = new Array();
