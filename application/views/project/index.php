@@ -209,8 +209,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
             <?php elseif (!empty($doc['response_success_example'])): ?>
+            <p><strong>返回参数示例</strong></p>
             <pre><?php echo $doc['response_success_example']; ?></pre>
             <?php elseif (!empty($doc['response_fail_example'])): ?>
+            <p><strong>返回参数示例</strong></p>
             <pre><?php echo $doc['response_fail_example']; ?></pre>
             <?php endif; ?>
         </div>
