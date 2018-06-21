@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-9">
         <h3 class="project-name" data-prokey="<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?>
-        <small>API数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> | <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a></small>
+        <small>API数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> <?php if ($project_info['uid'] == $_SESSION['uid']): ?>| <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a><?php endif; ?></small>
         </h3>
     </div>
     <div class="col-xs-3">
@@ -26,6 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="cate-title">
                     <span class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></span>&nbsp; <?php echo $v['title']; ?>
                 </div>
+                <?php if ($project_info['uid'] == $_SESSION['uid']): ?>
                 <div class="dropdown cate-icon" style="display:none">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="icon-cog" type="button"></span>
@@ -35,6 +36,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <li><a href="javascript:void(0);" class="del-category">删除</a></li>
                     </ul>
                 </div>
+                <?php endif; ?>
             </li>
             <li style="<?php echo $active_cid == $v['id'] ? 'display:block;' : 'display:none;'; ?>">
                 <ul class="apis">
@@ -47,14 +49,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
+                    <?php if ($project_info['uid'] == $_SESSION['uid']): ?>
                     <li>
                         <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">创建接口</a>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </li>
             <?php endforeach; ?>
             <?php endif; ?>
         </ul>
+        <?php if ($project_info['uid'] == $_SESSION['uid']): ?>
         <p class="create-cate-input" style="display:none;">
             <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
@@ -103,6 +108,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
         </div>
+        <?php endif; ?>
     </div>
     <div class="col-xs-9">
         <?php if (!empty($doc)): ?>

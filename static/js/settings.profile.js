@@ -39,11 +39,12 @@ $(function(){
             if (res.status == 0) {
                 $('#user-avatar').attr('src', res.data.img);
                 $('#changeAvatar').modal('hide');
+                $(this).prop('disabled', false);
             } else {
                 alert(res.msg);
+                $(this).prop('disabled', false);
             }
         });
-        $(this).prop('disabled', false);
     });
 
     $('form').submit(function(){

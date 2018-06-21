@@ -1,10 +1,13 @@
 $(function(){
     $('#invite').click(function() {
+        $(this).prop('disabled', true);
         $.post('/projects/add_member', {'pid': $('input[name="pid"]').val(), 'email': $('input[name="email"]').val()}, function(res) {
             if (res.status == 0) {
                 alert('已发送邀请');
+                $(this).prop('disabled', false);
             } else {
                 alert(res.msg);
+                $(this).prop('disabled', false);
             }
         });
     });
