@@ -63,7 +63,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="radio" name="body_data_type" value="4" <?php if ($doc['body_data_type'] == 4) {echo 'checked';} ?>> binary
                                     </label>
                                 </p>
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="body-params-table">
                                     <tr>
                                         <th></th>
                                         <th>参数名称</th>
@@ -123,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="header">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="header-params-table">
                                     <tr>
                                         <th></th>
                                         <th>参数名称</th>
@@ -194,7 +194,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row row-form">
                     <div class="col-xs-12">
                         <p><strong>返回参数</strong></p>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="return-params-table">
                             <tr>
                                 <th></th>
                                 <th>参数名称</th>

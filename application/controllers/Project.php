@@ -168,6 +168,7 @@ class Project extends MY_Controller
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
+        $this->add_page_js('/static/js/jquery-ui.min.js');
         $this->add_page_js('/static/js/project.add.js');
         $this->render('project/add', array('project_info' => $project_info, 'cid' => $cate_id));
     }
@@ -323,6 +324,7 @@ class Project extends MY_Controller
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
+        $this->add_page_js('/static/js/jquery-ui.min.js');
         $this->add_page_js('/static/js/project.add.js');
         $this->render('project/edit', array(
             'project_info'   => $project_info,
@@ -486,14 +488,15 @@ class Project extends MY_Controller
             }
 
             $data[] = array(
-                'doc_id'      => $doc_id,
-                'source'      => 0,
-                'title'       => $v,
-                'type'        => $header_types[$k],
-                'is_must'     => $header_musts[$k],
-                'default'     => $header_defaults[$k],
-                'description' => $header_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'source'        => 0,
+                'title'         => $v,
+                'type'          => $header_types[$k],
+                'is_must'       => $header_musts[$k],
+                'default'       => $header_defaults[$k],
+                'description'   => $header_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
 
@@ -517,14 +520,15 @@ class Project extends MY_Controller
             }
 
             $data[$v] = array(
-                'doc_id'      => $doc_id,
-                'source'      => 0,
-                'title'       => $v,
-                'type'        => $header_types[$k],
-                'is_must'     => $header_musts[$k],
-                'default'     => $header_defaults[$k],
-                'description' => $header_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'source'        => 0,
+                'title'         => $v,
+                'type'          => $header_types[$k],
+                'is_must'       => $header_musts[$k],
+                'default'       => $header_defaults[$k],
+                'description'   => $header_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
         if (!$data) {
@@ -551,14 +555,15 @@ class Project extends MY_Controller
             }
 
             $data[] = array(
-                'doc_id'      => $doc_id,
-                'source'      => 1,
-                'title'       => $v,
-                'type'        => $body_types[$k],
-                'is_must'     => $body_musts[$k],
-                'default'     => $body_defaults[$k],
-                'description' => $body_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'source'        => 1,
+                'title'         => $v,
+                'type'          => $body_types[$k],
+                'is_must'       => $body_musts[$k],
+                'default'       => $body_defaults[$k],
+                'description'   => $body_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
 
@@ -582,14 +587,15 @@ class Project extends MY_Controller
             }
 
             $data[$v] = array(
-                'doc_id'      => $doc_id,
-                'source'      => 1,
-                'title'       => $v,
-                'type'        => $body_types[$k],
-                'is_must'     => $body_musts[$k],
-                'default'     => $body_defaults[$k],
-                'description' => $body_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'source'        => 1,
+                'title'         => $v,
+                'type'          => $body_types[$k],
+                'is_must'       => $body_musts[$k],
+                'default'       => $body_defaults[$k],
+                'description'   => $body_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
         if (!$data) {
@@ -614,11 +620,12 @@ class Project extends MY_Controller
             }
 
             $data[] = array(
-                'doc_id'      => $doc_id,
-                'title'       => $v,
-                'type'        => $response_types[$k],
-                'description' => $response_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'title'         => $v,
+                'type'          => $response_types[$k],
+                'description'   => $response_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
 
@@ -640,11 +647,12 @@ class Project extends MY_Controller
             }
 
             $data[$v] = array(
-                'doc_id'      => $doc_id,
-                'title'       => $v,
-                'type'        => $response_types[$k],
-                'description' => $response_descriptions[$k],
-                'insert_time' => $now
+                'doc_id'        => $doc_id,
+                'title'         => $v,
+                'type'          => $response_types[$k],
+                'description'   => $response_descriptions[$k],
+                'display_order' => $k,
+                'insert_time'   => $now
             );
         }
         if (!$data) {

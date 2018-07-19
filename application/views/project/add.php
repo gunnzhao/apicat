@@ -62,8 +62,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="radio" name="body_data_type" value="4"> binary
                                     </label>
                                 </p>
-                                <table class="table table-bordered">
-                                    <tr>
+                                <table class="table table-bordered" id="body-params-table">
+                                    <tr class="ui-state-default">
                                         <th></th>
                                         <th>参数名称</th>
                                         <th>类型</th>
@@ -71,7 +71,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <th>默认值</th>
                                         <th>参数说明</th>
                                     </tr>
-                                    <tr>
+                                    <tr class="ui-state-default">
                                         <td class="field-cancel"></td>
                                         <td class="field-name">
                                             <input type="text" name="body_names[]">
@@ -96,7 +96,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </table>
                             </div>
                             <div role="tabpanel" class="tab-pane" id="header">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="header-params-table">
                                     <tr>
                                         <th></th>
                                         <th>参数名称</th>
@@ -141,7 +141,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="row row-form">
                     <div class="col-xs-12">
                         <p><strong>返回参数</strong></p>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" id="return-params-table">
                             <tr>
                                 <th></th>
                                 <th>参数名称</th>

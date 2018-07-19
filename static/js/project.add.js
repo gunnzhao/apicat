@@ -207,4 +207,14 @@ $(function(){
             }
         });
     });
+
+    $('#body-params-table').sortable({
+        items: 'tr'
+    });
+    $('#header-params-table').sortable({
+        items: 'tr'
+    });
+    $('#return-params-table').sortable({
+        items: 'tr'
+    });
 });

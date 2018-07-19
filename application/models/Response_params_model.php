@@ -44,6 +44,7 @@ class Response_params_model extends CI_model
     public function get_records($doc_id)
     {
         $this->db->select('id,title,type,description');
+        $this->db->order_by('display_order', 'ASC');
         return $this->db->get_where($this->table, array('doc_id' => $doc_id, 'status' => 0))->result_array();
     }
 

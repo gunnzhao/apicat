@@ -60,6 +60,7 @@ class Request_params_model extends CI_model
     public function get_records($doc_id)
     {
         $this->db->select('id,source,title,type,is_must,default,description');
+        $this->db->order_by('display_order', 'ASC');
         return $this->db->get_where($this->table, array('doc_id' => $doc_id, 'status' => 0))->result_array();
     }
 
