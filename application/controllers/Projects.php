@@ -211,7 +211,8 @@ class Projects extends MY_Controller
             }
             $be_invited_uid = $user['id'];
         } else {
-            $be_invited_uid = $this->user_model->add_user('HelloWorld', $email, '123456');
+            $nickname_arr = explode('@', $email);
+            $be_invited_uid = $this->user_model->add_user($nickname_arr[0], $email, '123456');
             if (!$be_invited_uid) {
                 return $this->response_json_fail('邀请失败，请重试');
             }
