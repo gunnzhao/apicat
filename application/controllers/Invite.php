@@ -84,7 +84,7 @@ class Invite extends CI_Controller
 
         if ($is_post) {
             $this->load->model('user_model');
-            $this->user_model->edit_user(array('passwd' => password_hash($password, PASSWORD_DEFAULT)), $uid);
+            $this->user_model->edit_user(array('passwd' => password_hash($password, PASSWORD_DEFAULT), 'email_verified' => 1), $uid);
         }
 
         $this->project_invite_model->edit_record(array('accept' => 1, 'accept_time' => time()), $record['id']);
