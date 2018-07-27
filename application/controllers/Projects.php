@@ -139,7 +139,13 @@ class Projects extends MY_Controller
         }
 
         $res = $this->projects_model->edit_project_by_id(
-            array('title' => $title, 'authority' => $authority, 'description' => $description, 'update_uid' => $this->session->uid),
+            array(
+                'title'       => $title,
+                'authority'   => $authority,
+                'description' => $description,
+                'update_time' => time(),
+                'update_uid'  => $this->session->uid
+            ),
             $pid
         );
         if ($res !== false) {

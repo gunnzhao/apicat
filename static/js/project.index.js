@@ -76,7 +76,7 @@ $(function(){
         $.ajax({
             type: 'post',
             url: '/project/del_category',
-            data: {'cid': $('#wantto-del').val()},
+            data: {'cid': $('#wantto-del').val(), 'pid': $('#pid').val()},
             async: false,
             success: function(res) {
                 if (res.status == 0) {

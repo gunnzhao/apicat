@@ -256,6 +256,8 @@ class Project extends MY_Controller
             ));
         }
 
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $pid);
+
         $this->response_json_ok(array('doc_id' => $doc_id));
     }
 
@@ -337,6 +339,8 @@ class Project extends MY_Controller
 
     public function do_edit()
     {
+        $pid = trim($this->input->post('pid'));
+
         $doc_id = trim($this->input->post('doc_id'));
         if (!$doc_id) {
             return $this->response_json_fail('创建失败');
@@ -402,6 +406,8 @@ class Project extends MY_Controller
             );
         }
 
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $pid);
+
         $this->response_json_ok(array('doc_id' => $doc_id));
     }
 
@@ -428,6 +434,9 @@ class Project extends MY_Controller
         if (!$res) {
             return $this->response_json_fail('添加失败，请重试。');
         }
+
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $project_id);
+
         return $this->response_json_ok(array('cid' => $res));
     }
 
@@ -455,11 +464,16 @@ class Project extends MY_Controller
         if (!$res) {
             return $this->response_json_fail('编辑失败，请重试。');
         }
+
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $project_id);
+
         return $this->response_json_ok();
     }
 
     public function del_category()
     {
+        $pid = $this->input->post('pid');
+
         $category_id = $this->input->post('cid');
         if ($category_id == 0) {
             return $this->response_json_fail('删除失败');
@@ -469,6 +483,9 @@ class Project extends MY_Controller
         if (!$res) {
             return $this->response_json_fail('删除失败，请重试。');
         }
+
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $pid);
+
         return $this->response_json_ok();
     }
 

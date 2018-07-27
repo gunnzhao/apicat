@@ -263,6 +263,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
                 <div class="row row-form">
                     <div class="col-xs-12">
+                        <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
                         <input type="hidden" name="doc_id" value="<?php echo $doc['id']; ?>">
                         <p class="text-center">
                             <button type="button" id="update" class="btn btn-lblue" style="width:150px;">确定</button>
