@@ -14,9 +14,6 @@ class Projects extends MY_Controller
 
     public function index()
     {
-        // 用户自己的项目
-        $records = $this->projects_model->project_records($this->session->uid);
-
         // 用户参与的项目
         $this->load->model('project_members_model');
         $participate_pids = $this->project_members_model->get_pids($this->session->uid);
