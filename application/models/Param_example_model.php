@@ -54,15 +54,33 @@ class Param_example_model extends CI_model
      */
     public function edit_record($doc_id, $type, $state, $content)
     {
-        $res = $this->db->update(
-            $this->table,
-            array('content' => $content),
-            array('doc_id' => $doc_id, 'type' => $type, 'state' => $state)
-        );
-        if (!$res) {
-            log_message('error', $this->db->last_query());
-            return false;
+        $record = $this->db->get_where($this->table, array('doc_id' => $doc_id, 'type' => $type, 'state' => $state));
+        if ($record->num_rows() >= 1) {
+            $res = $this->db->update(
+                $this->table,
+                array('content' => $content, 'status' => 0),
+                array('doc_id' => $doc_id, 'type' => $type, 'state' => $state)
+            );
+
+            if (!$res) {
+                log_message('error', $this->db->last_query());
+                return false;
+            }
+            return $this->db->affected_rows();
+        } else {
+            $res = $this->db->insert($this->table, array(
+                'doc_id' => $doc_id,
+                'type'   => $type,
+                'state'  => $state,
+                'content' => $content,
+                'insert_time' => time()
+            ));
+
+            if (!$res) {
+                log_message('error', $this->db->last_query());
+                return false;
+            }
+            return 1;
         }
-        return $this->db->affected_rows();
     }
 }
