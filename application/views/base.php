@@ -54,6 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php endforeach; ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        <?php if (isset($_SESSION['uid'])): ?>
                         <li><a href="../navbar/"<span class="icon-bell" aria-hidden="true"></span></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -65,6 +66,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <li><a href="/logout">退出</a></li>
                             </ul>
                         </li>
+                        <?php else: ?>
+                        <li><a href="/login">登录</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

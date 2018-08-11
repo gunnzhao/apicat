@@ -74,19 +74,28 @@ class MY_Controller extends CI_Controller {
      */
     protected function check_login()
     {
-        if (empty($this->session->uid)) {
-            $this->load->helper('url');
-
-            $token = $this->input->cookie('token');
-            if ($token) {
-                redirect('/login/auth_login');
-            } else {
-                redirect('/login');
+        $rsegment_arr = $this->uri->rsegment_array();
+        // API详情页不必须登录
+        if ($rsegment_arr[1] != 'project' and $rsegment_arr[2] != 'index') {
+            if (empty($this->session->uid)) {
+                $this->load->helper('url');
+    
+                $token = $this->input->cookie('token');
+                if ($token) {
+                    redirect('/login/auth_login');
+                } else {
+                    redirect('/login');
+                }
             }
         }
 
-        $this->set_tpldata('_page_nickname', $this->session->nickname);
-        $this->set_tpldata('_page_avatar', $this->session->avatar);
+        if (isset($this->session->nickname)) {
+            $this->set_tpldata('_page_nickname', $this->session->nickname);
+        }
+
+        if (isset($this->session->avatar)) {
+            $this->set_tpldata('_page_avatar', $this->session->avatar);
+        }
     }
 
     /**
@@ -172,7 +181,7 @@ class MY_Controller extends CI_Controller {
             $navigator[] = array(
                 'url' => $k,
                 'title' => $v['title'],
-                'active' => in_array($uri, $v['include']) ? true : false
+                'active' => isset($this->session->uid) and in_array($uri, $v['include']) ? true : false
             );
         }
         $this->tpldata['_page_navigator'] = $navigator;
