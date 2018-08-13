@@ -180,6 +180,11 @@ class Project extends MY_Controller
             show_404();
         }
 
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($project_info['id'], $this->session->uid)) {
+            show_404();
+        }
+
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
@@ -193,6 +198,11 @@ class Project extends MY_Controller
         $pid = trim($this->input->post('pid'));
         if (!$pid) {
             return $this->response_json_fail('创建失败');
+        }
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('创建失败，没有创建权限。');
         }
 
         $cid = trim($this->input->post('cid'));
@@ -292,6 +302,11 @@ class Project extends MY_Controller
             show_404();
         }
 
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($project_info['id'], $this->session->uid)) {
+            show_404();
+        }
+
         $this->load->model('doc_model');
         $doc = $this->doc_model->get_record($doc_id);
         if (!$doc) {
@@ -355,6 +370,11 @@ class Project extends MY_Controller
     public function do_edit()
     {
         $pid = trim($this->input->post('pid'));
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('修改失败，没有修改权限。');
+        }
 
         $doc_id = trim($this->input->post('doc_id'));
         if (!$doc_id) {
@@ -435,6 +455,11 @@ class Project extends MY_Controller
             return $this->response_json_fail('添加失败');
         }
 
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($project_id, $this->session->uid)) {
+            return $this->response_json_fail('添加失败，没有添加权限。');
+        }
+
         if (empty($category_name)) {
             return $this->response_json_fail('名称不能为空');
         }
@@ -465,6 +490,11 @@ class Project extends MY_Controller
             return $this->response_json_fail('编辑失败');
         }
 
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($project_id, $this->session->uid)) {
+            return $this->response_json_fail('编辑失败，没有编辑权限。');
+        }
+
         if (empty($category_name)) {
             return $this->response_json_fail('名称不能为空');
         }
@@ -488,6 +518,11 @@ class Project extends MY_Controller
     public function del_category()
     {
         $pid = $this->input->post('pid');
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('删除失败，没有删除权限。');
+        }
 
         $category_id = $this->input->post('cid');
         if ($category_id == 0) {

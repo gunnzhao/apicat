@@ -145,6 +145,23 @@ class Project_members_model extends CI_model
     }
 
     /**
+     * 检查某个用户在项目中是否有编辑文档的权限
+     * @param  int $pid 项目id
+     * @param  int $uid 成员id
+     * @return bool 有返回true，没有返回false
+     */
+    public function check_write_permission($pid, $uid)
+    {
+        $this->db->select('can_write');
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'uid' => $uid, 'status' => 0));
+        if ($res->num_rows() == 1) {
+            $records = $res->result_array();
+            return $records[0]['can_write'] == 1 ? true : false;
+        }
+        return false;
+    }
+
+    /**
      * 获取项目下的成员数量
      * @param  int $pid 项目id
      * @return int
