@@ -118,12 +118,18 @@ class Project extends MY_Controller
             $doc['response_success_example'] = $response_success_example;
             $doc['response_fail_example'] = $response_fail_example;
 
-            if ($doc['update_uid'] != $this->session->uid) {
+            if (isset($this->session->uid)) {
+                if ($doc['update_uid'] != $this->session->uid) {
+                    $this->load->model('user_model');
+                    $user_info = $this->user_model->get_user_by_uid($doc['update_uid']);
+                    $update_user = $user_info['nickname'];
+                } else {
+                    $update_user = $this->session->nickname;
+                }
+            } else {
                 $this->load->model('user_model');
                 $user_info = $this->user_model->get_user_by_uid($doc['update_uid']);
                 $update_user = $user_info['nickname'];
-            } else {
-                $update_user = $this->session->nickname;
             }
         }
 
@@ -131,20 +137,29 @@ class Project extends MY_Controller
 
         $member_nums = $this->project_members_model->get_nums($project_info['id']);
 
+        if (isset($this->session->uid)) {
+            $permission_info = $this->project_members_model->get_member($project_info['id'], $this->session->uid);
+            $has_permission = $permission_info['can_write'] == 1 ? true : false;
+        } else {
+            $has_permission = false;
+        }
+        
+
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
         $this->render('project/index', array(
-            'project_info'  => $project_info,
-            'api_nums'      => $api_nums,
-            'member_nums'   => $member_nums,
-            'categories'    => $categories,
-            'apis'          => $apis,
-            'active_cid'    => $active_cid,
-            'doc_id'        => $doc_id,
-            'doc'           => $doc,
-            'update_user'   => $update_user,
-            'param_types'   => array('', 'int', 'float', 'string', 'array', 'boolean'),
-            'request_types' => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
+            'project_info'   => $project_info,
+            'api_nums'       => $api_nums,
+            'member_nums'    => $member_nums,
+            'categories'     => $categories,
+            'apis'           => $apis,
+            'active_cid'     => $active_cid,
+            'doc_id'         => $doc_id,
+            'doc'            => $doc,
+            'update_user'    => $update_user,
+            'has_permission' => $has_permission,
+            'param_types'    => array('', 'int', 'float', 'string', 'array', 'boolean'),
+            'request_types'  => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
             'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary')
         ));
     }

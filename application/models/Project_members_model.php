@@ -34,6 +34,24 @@ class Project_members_model extends CI_model
     }
 
     /**
+     * 获取项目下一个成员的信息
+     * @param  int $pid 项目id
+     * @param  int $uid 成员id
+     * @return array
+     */
+    public function get_member($pid, $uid)
+    {
+        $this->db->select('pid,uid,can_write,insert_time');
+        $res = $this->db->get_where($this->table, array('pid' => $pid, 'uid' => $uid, 'status' => 0));
+        if ($res->num_rows() > 0) {
+            $records = $res->result_array();
+            return $records[0];
+        } else {
+            return array();
+        }
+    }
+
+    /**
      * 获取项目下所有成员的信息
      * @param  int $pid 项目id
      * @return array

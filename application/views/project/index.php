@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="cate-title">
                     <span class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></span>&nbsp; <?php echo $v['title']; ?>
                 </div>
-                <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>
+                <?php if ($has_permission): ?>
                 <div class="dropdown cate-icon" style="display:none">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <span class="icon-cog" type="button"></span>
@@ -49,7 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
-                    <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>
+                    <?php if ($has_permission): ?>
                     <li>
                         <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">创建接口</a>
                     </li>
@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php endforeach; ?>
             <?php endif; ?>
         </ul>
-        <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>
+        <?php if ($has_permission): ?>
         <p class="create-cate-input" style="display:none;">
             <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
@@ -116,7 +116,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="row">
                 <div class="col-xs-11"><h3><?php echo $doc['title']; ?></h3></div>
                 <div class="col-xs-1">
-                    <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>
+                    <?php if ($has_permission): ?>
                     <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" class="btn btn-lblue btn-xs edit-entrance">修改</a>
                     <?php endif; ?>
                 </div>
