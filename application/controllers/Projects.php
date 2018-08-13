@@ -81,7 +81,7 @@ class Projects extends MY_Controller
         }
 
         $this->load->model('project_members_model');
-        $this->project_members_model->add_member($res, $this->session->uid);
+        $this->project_members_model->add_member($res, $this->session->uid, 1);
         $this->response_json_ok();
     }
 
@@ -169,7 +169,7 @@ class Projects extends MY_Controller
         }
 
         $this->load->model('project_members_model');
-        $uids = $this->project_members_model->get_members($pid);
+        $uids = $this->project_members_model->get_members_id($pid);
 
         $this->load->model('user_model');
         $members = $this->user_model->get_users_by_uids($uids);
@@ -277,12 +277,47 @@ class Projects extends MY_Controller
         }
 
         $this->load->model('project_members_model');
-        $uids = $this->project_members_model->get_members($pid);
+        $members_permission = $this->project_members_model->get_members($pid);
+
+        $uids = array();
+        foreach ($members_permission as $v) {
+            $uids[$v['uid']] = $v;
+        }
+
+        $members_permission = $uids;
+        $uids = array_keys($members_permission);
 
         $this->load->model('user_model');
         $members = $this->user_model->get_users_by_uids($uids);
 
-        $this->render('projects/permissions', array('project_info' => $project_info, 'members' => $members));
+        $this->add_page_js('/static/js/projects.js');
+        $this->render('projects/permissions', array('project_info' => $project_info, 'members' => $members, 'members_permission' => $members_permission));
+    }
+
+    public function do_permission()
+    {
+        $pid = $this->input->post('pid');
+        if (!$pid) {
+            return $this->response_json_fail('修改失败');
+        }
+
+        $uid = $this->input->post('uid');
+        if (!$uid) {
+            return $this->response_json_fail('请选择要修改权限的用户');
+        }
+
+        if ($this->input->post('permission')) {
+            $permission = $this->input->post('permission') > 0 ? 1 : 0;
+        } else {
+            $permission = 0;
+        }
+
+        $this->load->model('project_members_model');
+        $res = $this->project_members_model->edit_member(array('can_write' => $permission), $pid, $uid);
+        if ($res === false) {
+            return $this->response_json_fail('修改失败');
+        }
+        $this->response_json_ok();
     }
 
     private function send_email($email, $pid, $invite_code)

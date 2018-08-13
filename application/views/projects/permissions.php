@@ -30,11 +30,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php foreach ($members as $v): ?>
                     <tr>
                         <td><?php echo $v['nickname']; ?></td>
-                        <td><input type="checkbox"></td>
+                        <td data-index="<?php echo $v['id']; ?>"><input name="permission" type="checkbox" <?php echo $members_permission[$v['id']]['can_write'] == 1 ? 'checked' : ''; ?> <?php echo $project_info['uid'] == $v['id'] ? 'disabled' : ''; ?>></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
     </div>
+    <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
 </div>

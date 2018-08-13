@@ -21,7 +21,7 @@ class Project_members_model extends CI_model
      * @param  int $pid 项目id
      * @return array
      */
-    public function get_members($pid)
+    public function get_members_id($pid)
     {
         $this->db->select('pid,uid');
         $res = $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0));
@@ -34,18 +34,29 @@ class Project_members_model extends CI_model
     }
 
     /**
+     * 获取项目下所有成员的信息
+     * @param  int $pid 项目id
+     * @return array
+     */
+    public function get_members($pid)
+    {
+        $this->db->select('pid,uid,can_write,insert_time');
+        return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
+    }
+
+    /**
      * 添加项目成员
      * @param  int $pid 项目id
      * @param  int $uid 成员id
      * @return bool 成功返回true，失败返回false
      */
-    public function add_member($pid, $uid)
+    public function add_member($pid, $uid, $can_write = 0)
     {
         $this->db->select('id');
         $res = $this->db->get_where($this->table, array('pid' => $pid, 'uid' => $uid));
         if ($res->num_rows() == 1) {
             $record = $res->result_array();
-            $res = $this->db->update($this->table, array('insert_time' => time(), 'status' => 0), array('id' => $record[0]['id']));
+            $res = $this->db->update($this->table, array('can_write' => $can_write, 'insert_time' => time(), 'status' => 0), array('id' => $record[0]['id']));
             if (!$res) {
                 log_message('error', $this->db->last_query());
                 return false;
@@ -53,8 +64,9 @@ class Project_members_model extends CI_model
             return true;
         } else {
             $data = array(
-                'pid' => $pid,
-                'uid' => $uid,
+                'pid'         => $pid,
+                'uid'         => $uid,
+                'can_write'   => $can_write,
                 'insert_time' => time()
             );
             $res = $this->db->insert($this->table, $data);
@@ -64,6 +76,22 @@ class Project_members_model extends CI_model
             }
             return true;
         }
+    }
+
+    /**
+     * 编辑项目成员
+     * @param  int $pid 项目id
+     * @param  int $uid 成员id
+     * @return bool|int 影响记录数
+     */
+    public function edit_member($data, $pid, $uid)
+    {
+        $res = $this->db->update($this->table, $data, array('pid' => $pid, 'uid' => $uid));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
     }
 
     /**

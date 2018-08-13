@@ -35,5 +35,15 @@ $(function(){
         $('#err-msg').hide();
         $('#add').html('确认');
         $('#add').prop('disabled', false);
-    })
+    });
+
+    $('input[name="permission"]').click(function() {
+        var pid = $('input[name="pid"]').val();
+        var uid = $(this).parent().data('index');
+        if ($(this).prop('checked')) {
+            $.post('/projects/do_permission', {'pid': pid, 'uid': uid, 'permission': 1});
+        } else {
+            $.post('/projects/do_permission', {'pid': pid, 'uid': uid, 'permission': 0});
+        }
+    });
 });
