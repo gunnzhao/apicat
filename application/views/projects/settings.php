@@ -13,6 +13,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <a href="#" class="list-group-item disabled">项目设置</a>
             <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>" class="list-group-item active">基本设置</a>
             <a href="/projects/members?pid=<?php echo $project_info['id']; ?>" class="list-group-item">成员管理</a>
+            <a href="/projects/permissions?pid=<?php echo $project_info['id']; ?>" class="list-group-item">权限管理</a>
         </div>
     </div>
     <div class="col-xs-9">

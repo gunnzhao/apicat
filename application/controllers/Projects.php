@@ -260,6 +260,31 @@ class Projects extends MY_Controller
         $this->response_json_ok();
     }
 
+    public function permissions()
+    {
+        $pid = $this->input->get('pid');
+        if (!$pid) {
+            show_404();
+        }
+
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        if (!$project_info) {
+            show_404();
+        }
+
+        if ($project_info['uid'] != $this->session->uid) {
+            show_404();
+        }
+
+        $this->load->model('project_members_model');
+        $uids = $this->project_members_model->get_members($pid);
+
+        $this->load->model('user_model');
+        $members = $this->user_model->get_users_by_uids($uids);
+
+        $this->render('projects/permissions', array('project_info' => $project_info, 'members' => $members));
+    }
+
     private function send_email($email, $pid, $invite_code)
     {
         $project_info = $this->projects_model->get_project_by_id($pid);
