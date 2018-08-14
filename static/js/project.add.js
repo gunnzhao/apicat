@@ -162,6 +162,7 @@ $(function(){
     });
 
     $('#update').click(function() {
+        var _self = $(this);
         $(this).prop('disabled', true);
         var title = $('input[name="title"]').val();
         if (!title) {
@@ -202,7 +203,7 @@ $(function(){
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + res.data.doc_id;
             } else {
-                $(this).prop('disabled', false);
+                _self.prop('disabled', false);
                 alert(res.msg);
             }
         });
