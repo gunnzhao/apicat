@@ -117,7 +117,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-xs-11"><h3><?php echo $doc['title']; ?></h3></div>
                 <div class="col-xs-1">
                     <?php if ($has_permission): ?>
-                    <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" class="btn btn-lblue btn-xs edit-entrance">修改</a>
+                    <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" class="btn btn-lblue btn-xs edit-entrance" id="go-edit">修改</a>
                     <?php endif; ?>
                 </div>
             </div>

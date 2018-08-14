@@ -302,6 +302,7 @@ class Project extends MY_Controller
             show_404();
         }
 
+        // 检查是否对文档操作的权限
         $this->load->model('project_members_model');
         if (!$this->project_members_model->check_write_permission($project_info['id'], $this->session->uid)) {
             show_404();
@@ -311,6 +312,14 @@ class Project extends MY_Controller
         $doc = $this->doc_model->get_record($doc_id);
         if (!$doc) {
             show_404();
+        }
+
+        // 判断文档当前的修改人是否为本人
+        if ($doc['updating_uid'] != $this->session->uid) {
+            $this->load->model('user_model');
+            $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
+            $this->add_page_js('/static/js/project.addfail.js');
+            return $this->render('/project/edit_fail', array('pro_key' => $pro_key, 'doc_id' => $doc_id, 'edit_user' => $user_info['nickname']));
         }
 
         $this->load->model('request_params_model');
@@ -381,6 +390,15 @@ class Project extends MY_Controller
             return $this->response_json_fail('创建失败');
         }
 
+        // 判断文档当前的修改人是否为本人
+        $this->load->model('doc_model');
+        $doc = $this->doc_model->get_record($doc_id);
+        if ($doc['updating_uid'] != $this->session->uid) {
+            $this->load->model('user_model');
+            $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
+            return $this->response_json_fail('无法修改，当前' . $user_info['nickname'] . '正在修改此文档。');
+        }
+
         $title = trim($this->input->post('title'));
         if (!$title or ($title < 1 and $title > 6)) {
             return $this->response_json_fail('请输入接口名称');
@@ -398,7 +416,6 @@ class Project extends MY_Controller
 
         $body_data_type = trim($this->input->post('body_data_type'));
 
-        $this->load->model('doc_model');
         $this->doc_model->edit_record(array(
             'title'          => $title,
             'url'            => $url,
@@ -444,6 +461,35 @@ class Project extends MY_Controller
         $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $pid);
 
         $this->response_json_ok(array('doc_id' => $doc_id));
+    }
+
+    public function check_edit()
+    {
+        $pid = trim($this->input->post('pid'));
+        if (!$pid) {
+            return $this->response_json_fail('无法修改');
+        }
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('修改失败，没有修改权限。');
+        }
+
+        $doc_id = trim($this->input->post('doc_id'));
+        if (!$doc_id) {
+            return $this->response_json_fail('无法修改');
+        }
+
+        $this->load->model('doc_model');
+        $edit_permission = $this->doc_model->get_edit_permission($doc_id, $this->session->uid);
+        if (!$edit_permission) {
+            $doc_info = $this->doc_model->get_record($doc_id);
+            $this->load->model('user_model');
+            $user_info = $this->user_model->get_user_by_uid($doc_info['updating_uid']);
+            return $this->response_json_fail('无法修改，当前' . $user_info['nickname'] . '正在修改此文档。');
+        }
+
+        $this->response_json_ok();
     }
 
     public function add_category()

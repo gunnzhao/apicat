@@ -134,4 +134,28 @@ $(function(){
             });
         }
     });
+
+    $('#go-edit').click(function() {
+        var url = $(this).attr('href');
+        var doc_id = url.split('&doc_id=').pop();
+        var pid = $('#pid').val();
+        var can_edit = true;
+
+        $.ajax({
+            type: 'post',
+            url: '/project/check_edit',
+            data: {'pid': pid, 'doc_id': doc_id},
+            async: false,
+            success: function(res) {
+                if (res.status != 0) {
+                    alert(res.msg);
+                    can_edit = false;
+                }
+            }
+        });
+
+        if (!can_edit) {
+            return can_edit;
+        }
+    });
 });
