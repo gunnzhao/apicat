@@ -129,4 +129,20 @@ class Doc_model extends CI_model
         $this->db->trans_complete();
         return true;
     }
+
+    /**
+     * 通过文档title搜索
+     * @param  int $pid 项目id
+     * @param  string $keyword 关键字
+     * @return array
+     */
+    public function search_by_title($pid, $keyword)
+    {
+        $this->db->select('id,pid,cid,title,update_uid,update_time');
+        $this->db->where(array('pid' => $pid, 'status' => 0));
+        $this->db->like('title', $keyword);
+        $this->db->order_by('update_time', 'DESC');
+        $this->db->limit(50, 0);
+        return $this->db->get($this->table)->result_array();
+    }
 }

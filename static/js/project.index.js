@@ -158,4 +158,18 @@ $(function(){
             return can_edit;
         }
     });
+
+    $('#go-search').click(function() {
+        var pro_key = $('.project-name').data('prokey');
+        var keyword = $('#keyword').val();
+        if (!keyword) {
+            return false;
+        }
+        location.href = '/doc_search?pro_key=' + pro_key + '&keyword=' + keyword;
+    });
+    $('#keyword').keydown(function(e){
+        if (e.keyCode == 13) {
+            $('#go-search').click();
+        }
+    });
 });

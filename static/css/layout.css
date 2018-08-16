@@ -20,6 +20,9 @@ footer {
 .main-container {
     min-height: 575px;
 }
+.text-base-blue {
+    color: #08c;
+}
 
 /* Logo */
 .logo {

@@ -84,4 +84,23 @@ class Category_model extends CI_model
         }
         return $this->db->affected_rows();
     }
+
+    /**
+     * 通过多个id获取多个分类名称
+     * @param  array $ids 分类id数组
+     * @return array
+     */
+    public function get_titles_by_ids($ids)
+    {
+        $this->db->select('id,title');
+        $this->db->where('status', 0);
+
+        if (count($ids) == 1) {
+            $this->db->where('id', $ids[0]);
+        } else {
+            $this->db->where_in('id', $ids);
+        }
+        
+        return $this->db->get($this->table)->result_array();
+    }
 }
