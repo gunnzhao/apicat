@@ -172,4 +172,23 @@ $(function(){
             $('#go-search').click();
         }
     });
+
+    $('.quit-project').click(function() {
+        $('#quitProjectModal').modal('toggle');
+    });
+    $('#quit-project').click(function() {
+        $.ajax({
+            type: 'post',
+            url: '/project/quit',
+            data: {'pid': $('#pid').val()},
+            async: false,
+            success: function(res) {
+                if (res.status == 0) {
+                    $('#quitProjectModal').modal('toggle');
+                } else {
+                    alert(res.msg);
+                }
+            }
+        });
+    });
 });

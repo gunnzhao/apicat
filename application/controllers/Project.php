@@ -143,7 +143,6 @@ class Project extends MY_Controller
         } else {
             $has_permission = false;
         }
-        
 
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
