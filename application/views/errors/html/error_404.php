@@ -1,64 +1,89 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>404 Page Not Found</title>
-<style type="text/css">
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="/static/img/favicon.ico">
+		<title>404 Page Not Found</title>
+		<!-- Bootstrap core CSS -->
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<style type="text/css">
+			/*
+			* Base structure
+			*/
+			html,
+			body {
+				height: 100%;
+			}
+			body {
+				text-align: center;
+			}
 
-::selection { background-color: #E13300; color: white; }
-::-moz-selection { background-color: #E13300; color: white; }
+			/* Extra markup and styles for table-esque vertical and horizontal centering */
+			.site-wrapper {
+				display: table;
+				width: 100%;
+				height: 100%; /* For at least Firefox */
+				min-height: 100%;
+			}
+			.site-wrapper-inner {
+				display: table-cell;
+				vertical-align: top;
+			}
+			.cover-container {
+				margin-right: auto;
+				margin-left: auto;
+			}
 
-body {
-	background-color: #fff;
-	margin: 40px;
-	font: 13px/20px normal Helvetica, Arial, sans-serif;
-	color: #4F5155;
-}
+			/* Padding for spacing */
+			.inner {
+				padding: 30px;
+			}
 
-a {
-	color: #003399;
-	background-color: transparent;
-	font-weight: normal;
-}
+			/*
+			* Cover
+			*/
+			.cover {
+				padding: 0 20px;
+			}
+			.cover .btn-lg {
+				padding: 10px 20px;
+				font-weight: bold;
+			}
 
-h1 {
-	color: #444;
-	background-color: transparent;
-	border-bottom: 1px solid #D0D0D0;
-	font-size: 19px;
-	font-weight: normal;
-	margin: 0 0 14px 0;
-	padding: 14px 15px 10px 15px;
-}
+			/*
+			* Affix and center
+			*/
+			@media (min-width: 768px) {
+				/* Start the vertical centering */
+				.site-wrapper-inner {
+					vertical-align: middle;
+				}
+				/* Handle the widths */
+				.cover-container {
+					width: 100%; /* Must be percentage or pixels for horizontal alignment */
+				}
+			}
 
-code {
-	font-family: Consolas, Monaco, Courier New, Courier, monospace;
-	font-size: 12px;
-	background-color: #f9f9f9;
-	border: 1px solid #D0D0D0;
-	color: #002166;
-	display: block;
-	margin: 14px 0 14px 0;
-	padding: 12px 10px 12px 10px;
-}
-
-#container {
-	margin: 10px;
-	border: 1px solid #D0D0D0;
-	box-shadow: 0 0 8px #D0D0D0;
-}
-
-p {
-	margin: 12px 15px 12px 15px;
-}
-</style>
-</head>
-<body>
-	<div id="container">
-		<h1><?php echo $heading; ?></h1>
-		<?php echo $message; ?>
-	</div>
-</body>
+			@media (min-width: 992px) {
+				.cover-container {
+					width: 700px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="site-wrapper">
+			<div class="site-wrapper-inner">
+				<div class="cover-container">
+					<div class="inner cover">
+						<h1 class="cover-heading">404</h1>
+						<p class="lead">你来到了一个无人之境</p>
+						<p class="lead"><a href="javascript:history.go(-1);" class="">返回</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
