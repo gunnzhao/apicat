@@ -185,6 +185,7 @@ $(function(){
             success: function(res) {
                 if (res.status == 0) {
                     $('#quitProjectModal').modal('toggle');
+                    location.href = '/projects';
                 } else {
                     alert(res.msg);
                 }

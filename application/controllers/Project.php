@@ -584,6 +584,25 @@ class Project extends MY_Controller
         return $this->response_json_ok();
     }
 
+    public function quit()
+    {
+        $pid = $this->input->post('pid');
+        if (!$pid) {
+            return $this->response_json_fail('退出失败，请重试。');
+        }
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_exist($pid, $this->session->uid)) {
+            return $this->response_json_fail('退出失败');
+        }
+
+        if ($this->project_members_model->del_member($pid, $this->session->uid)) {
+            $this->response_json_ok();
+        } else {
+            $this->response_json_fail('退出失败');
+        }
+    }
+
     private function add_header_info($doc_id)
     {
         $header_names = $this->input->post('header_names');
