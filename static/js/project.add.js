@@ -199,6 +199,16 @@ $(function(){
             }
         });
 
+        var notice_uid = [];
+        $('input[name="notice_uid[]"]').each(function() {
+            if ($(this).prop('checked')) {
+                notice_uid.push($(this).val());
+            }
+        });
+        if (notice_uid.length > 0) {
+            $.post('/project/notice', {'pid': $('input[name="pid"]').val(), 'doc_id': $('input[name="doc_id"]').val(), 'notice_uid': notice_uid.join(',')});
+        }
+
         $.post('/project/do_edit', form_data, function(res) {
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + res.data.doc_id;

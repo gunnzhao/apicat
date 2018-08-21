@@ -313,9 +313,9 @@ class Project extends MY_Controller
             show_404();
         }
 
+        $this->load->model('user_model');
         // 判断文档当前的修改人是否为本人
         if ($doc['updating_uid'] != $this->session->uid) {
-            $this->load->model('user_model');
             $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
             $this->add_page_js('/static/js/project.addfail.js');
             return $this->render('/project/edit_fail', array('pro_key' => $pro_key, 'doc_id' => $doc_id, 'edit_user' => $user_info['nickname']));
@@ -361,6 +361,13 @@ class Project extends MY_Controller
         $doc['response_success_example'] = $response_success_example;
         $doc['response_fail_example'] = $response_fail_example;
 
+        $members_id = $this->project_members_model->get_members_id($project_info['id']);
+        if (count($members_id) > 1) {
+            $members_info = $this->user_model->get_users_by_uids($members_id);
+        } else {
+            $members_info = array();
+        }
+
         $this->add_page_css('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/jquery.numberedtextarea.js');
@@ -371,7 +378,8 @@ class Project extends MY_Controller
             'doc'            => $doc,
             'param_types'    => array('', 'int', 'float', 'string', 'array', 'boolean'),
             'request_types'  => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
-            'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary')
+            'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary'),
+            'members_info'   => $members_info
         ));
     }
 
@@ -601,6 +609,12 @@ class Project extends MY_Controller
         } else {
             $this->response_json_fail('退出失败');
         }
+    }
+
+    public function notice()
+    {
+        sleep(10);
+        file_put_contents('test.txt', $this->input->post('notice_uid'));
     }
 
     private function add_header_info($doc_id)

@@ -261,6 +261,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                 </div>
+                <?php if ($members_info): ?>
+                <div class="row row-form">
+                    <div class="col-xs-12">
+                        <p><strong>通知到: </strong></p>
+                        <?php foreach ($members_info as $v): ?>
+                        <?php if ($v['id'] != $_SESSION['uid']): ?>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="notice_uid[]" value="<?php echo $v['id'] ?>"> <?php echo $v['nickname'] ?>
+                        </label>
+                        <?php endif; ?>
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="notice_uid[]" value="9527"> 9527
+                        </label>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endif; ?>
                 <div class="row row-form">
                     <div class="col-xs-12">
                         <input type="hidden" name="pid" value="<?php echo $project_info['id']; ?>">
