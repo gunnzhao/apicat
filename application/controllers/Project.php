@@ -613,8 +613,54 @@ class Project extends MY_Controller
 
     public function notice()
     {
-        sleep(10);
-        file_put_contents('test.txt', $this->input->post('notice_uid'));
+        $pid = $this->input->post('pid');
+        $doc_id = $this->input->post('doc_id');
+        $notice_uid = $this->input->post('notice_uid');
+        if (!$pid or !$doc_id or !$notice_uid) {
+            return $this->response_json_fail('请求失败');
+        }
+
+        $this->load->model('projects_model');
+        $project_info = $this->projects_model->get_project_by_id($pid);
+        if (!$project_info) {
+            // 项目不存在
+            return $this->response_json_fail('请求失败');
+        }
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            // 没有修改权限
+            return $this->response_json_fail('请求失败');
+        }
+
+        $this->load->model('doc_model');
+        $doc_info = $this->doc_model->get_record($doc_id);
+        if (!$doc_info) {
+            // 文档不存在
+            return $this->response_json_fail('请求失败');
+        }
+
+        $uids = explode(',', $notice_uid);
+        $uids = array_unique($uids);
+        $this->load->model('user_model');
+        $users = $this->user_model->get_users_by_uids($uids);
+        if (!$users) {
+            // 没有用户
+            return $this->response_json_fail('请求失败');
+        }
+
+        $members = $this->project_members_model->get_members_id($pid);
+        if (!$members) {
+            // 成员不存在
+            return $this->response_json_fail('请求失败');
+        }
+
+        foreach ($users as $v) {
+            if (in_array($v['id'], $members)) {
+                $this->send_email($v['email'], $project_info['pro_key'], $project_info['title'], $doc_id, $doc_info['title']);
+            }
+        }
+        $this->response_json_ok();
     }
 
     private function add_header_info($doc_id)
@@ -806,5 +852,25 @@ class Project extends MY_Controller
 
         $this->load->model('response_params_model');
         $this->response_params_model->update_params($data, $doc_id);
+    }
+
+    private function send_email($email, $pro_key, $pro_title, $doc_id, $doc_title)
+    {
+        $subject = $pro_title . '项目下的' . $doc_title . '文档修改提醒。';
+        $message = $this->session->nickname . "对" . $pro_title . "项目下的" . $doc_title . "文档进行了修改\n";
+        $message .= "通过此链接查看文档详情：" . config_item('base_url') . "/project?pro_key=" . $pro_key . "&doc_id=" . $doc_id;
+
+        $this->config->load('email');
+        $this->load->library('email');
+        $this->email->from($this->config->item('sender_email'), $this->config->item('useragent'));
+        $this->email->to($email);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        $res = $this->email->send();
+
+        if (!$res) {
+            return false;
+        }
+        return true;
     }
 }

@@ -271,9 +271,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input type="checkbox" name="notice_uid[]" value="<?php echo $v['id'] ?>"> <?php echo $v['nickname'] ?>
                         </label>
                         <?php endif; ?>
-                        <label class="checkbox-inline">
-                            <input type="checkbox" name="notice_uid[]" value="9527"> 9527
-                        </label>
                         <?php endforeach; ?>
                     </div>
                 </div>

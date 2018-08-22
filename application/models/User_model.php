@@ -95,7 +95,7 @@ class User_model extends CI_model
      */
     public function get_users_by_uids($uids)
     {
-        $this->db->select('id,nickname,avatar');
+        $this->db->select('id,email,nickname,avatar');
 
         if (count($uids) == 1) {
             $this->db->where('id', $uids[0]);
