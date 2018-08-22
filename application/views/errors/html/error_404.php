@@ -80,7 +80,7 @@
 					<div class="inner cover">
 						<h1 class="cover-heading">404</h1>
 						<p class="lead">你来到了一个无人之境</p>
-						<p class="lead"><a href="javascript:history.go(-1);" class="">返回</a></p>
+						<p class="lead"><a href="javascript:history.back();" class="">返回</a></p>
 					</div>
 				</div>
 			</div>
