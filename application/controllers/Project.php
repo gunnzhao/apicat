@@ -29,7 +29,12 @@ class Project extends MY_Controller
         if ($project_info['authority'] == 0) {
             // 私有项目
             if (empty($this->session->uid)) {
-                show_404();
+                $token = $this->input->cookie('token');
+                if ($token) {
+                    redirect('/login/auth_login');
+                } else {
+                    redirect('/login');
+                }
             }
             
             if (!$this->project_members_model->check_exist($project_info['id'], $this->session->uid)) {
