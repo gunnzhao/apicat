@@ -29,6 +29,7 @@ class Project extends MY_Controller
         if ($project_info['authority'] == 0) {
             // 私有项目
             if (empty($this->session->uid)) {
+                $this->load->helper('url');
                 $token = $this->input->cookie('token');
                 if ($token) {
                     redirect('/login/auth_login');
