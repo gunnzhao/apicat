@@ -70,34 +70,4 @@ class Login extends CI_Controller
             redirect('/projects');
         }
     }
-
-    public function auth_login()
-    {
-        $this->load->helper('url');
-
-        $token = $this->input->cookie('token');
-        if (!$token) {
-            return redirect('/login');
-        }
-
-        $this->load->model('user_model');
-        $user_info = $this->user_model->get_user_by_token($token);
-        if (!$user_info) {
-            return redirect('/login');
-        }
-
-        if ($user_info['status'] != 0 or $user_info['token_valid_time'] < time()) {
-            return redirect('/login');
-        }
-
-        $this->session->set_userdata(array(
-            'uid'        => $user_info['id'],
-            'nickname'   => $user_info['nickname'],
-            'avatar'     => $user_info['avatar'],
-            'login_time' => time()
-        ));
-
-        $source_page = $this->input->server('HTTP_REFERER');
-        redirect($source_page);
-    }
 }

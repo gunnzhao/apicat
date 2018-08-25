@@ -79,16 +79,7 @@ class MY_Controller extends CI_Controller {
         if ($rsegment_arr[1] == 'project' and $rsegment_arr[2] == 'index') {
             // API详情页不必须登录
         } else {
-            if (empty($this->session->uid)) {
-                $this->load->helper('url');
-    
-                $token = $this->input->cookie('token');
-                if ($token) {
-                    redirect('/login/auth_login');
-                } else {
-                    redirect('/login');
-                }
-            }
+            $this->re_login();
         }
 
         if (isset($this->session->nickname)) {
@@ -97,6 +88,38 @@ class MY_Controller extends CI_Controller {
 
         if (isset($this->session->avatar)) {
             $this->set_tpldata('_page_avatar', $this->session->avatar);
+        }
+    }
+
+    /**
+     * 重新登录
+     */
+    protected function re_login()
+    {
+        if (empty($this->session->uid)) {
+            $this->load->helper('url');
+
+            $token = $this->input->cookie('token');
+            if ($token) {
+                $this->load->model('user_model');
+                $user_info = $this->user_model->get_user_by_token($token);
+                if (!$user_info) {
+                    return redirect('/login');
+                }
+
+                if ($user_info['status'] != 0 or $user_info['token_valid_time'] < time()) {
+                    return redirect('/login');
+                }
+                
+                $this->session->set_userdata(array(
+                    'uid'        => $user_info['id'],
+                    'nickname'   => $user_info['nickname'],
+                    'avatar'     => $user_info['avatar'],
+                    'login_time' => time()
+                ));
+            } else {
+                redirect('/login');
+            }
         }
     }
 
