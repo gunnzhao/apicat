@@ -28,6 +28,14 @@ class Invite extends CI_Controller
         if ($record['accept'] == 1) {
             $result['accept'] = 1;
             $result['main_text'] = '您已经加入该项目。';
+
+            $this->load->model('projects_model');
+            $project_info = $this->projects_model->get_project_by_id($record['pid']);
+            if (!$project_info) {
+                show_404();
+            }
+            $result['link'] = '/project?pro_key=' . $project_info['pro_key'];
+            return $this->load->view('invite/index', $result);
         }
 
         $this->load->model('user_model');

@@ -48,6 +48,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <p class="lead"><?php echo $main_text; ?></p>
         <?php if ($accept == 0): ?>
         <p>点击 <a href="<?php echo $link; ?>">接受邀请</a> 快来一起合作吧。</p>
+        <?php else: ?>
+        <p>点击 <a href="<?php echo $link; ?>">这里</a> 前去查看。</p>
         <?php endif; ?>
     </div>
 
