@@ -78,8 +78,10 @@ class Invite extends CI_Controller
             show_404();
         }
 
+        $this->load->helper('url');
+
         if ($record['accept'] == 1) {
-            show_404();
+            return redirect('/login');
         }
 
         if ($is_post) {
@@ -91,8 +93,6 @@ class Invite extends CI_Controller
 
         $this->load->model('project_members_model');
         $this->project_members_model->add_member($record['pid'], $uid);
-
-        $this->load->helper('url');
 
         if ($is_post) {
             redirect('/login');

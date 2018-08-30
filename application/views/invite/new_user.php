@@ -55,9 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">登录密码</label>
+                <label for="inputPassword" class="col-sm-2 control-label">设置密码</label>
                 <div class="col-sm-6">
-                    <input type="password" class="form-control" name="password" placeholder="密码">
+                    <input type="password" class="form-control" name="password" placeholder="请设置登录密码">
                 </div>
             </div>
             <div class="form-group">
