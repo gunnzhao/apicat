@@ -1,7 +1,7 @@
 $(function(){
     var simplemde = new SimpleMDE({
         autofocus: true,
-        element: $("#markdown")[0],
+        element: $("#markdown-editor")[0],
         forceSync: true,
         hideIcons: ["guide"],
         indentWithTabs: false,
@@ -30,5 +30,11 @@ $(function(){
         spellChecker: false,
         styleSelectedText: false,
         tabSize: 4,
+    });
+
+    $('#create').click(function() {
+        var markdown_text = simplemde.value();
+        var html_text = simplemde.markdown(testPlain);
+        alert(html_text);
     });
 });

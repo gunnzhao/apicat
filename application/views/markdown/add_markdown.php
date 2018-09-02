@@ -17,8 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
     <link href="/static/css/layout.css?v=<?php echo microtime(true); ?>" rel="stylesheet">
 
-    <link href="/static/css/simplemde.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/highlight/default.css">
+    <link href="/static/css/simplemde.min.css?v=<?php echo microtime(true); ?>" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/highlight/default.css?v=<?php echo microtime(true); ?>">
             
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="https://v3.bootcss.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -46,7 +46,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <ol class="breadcrumb">
                     <li><a href="javascript:history.back();">返回</a></li>
                 </ol>
-                <textarea id="markdown" class="form-control"></textarea>
+                <textarea id="markdown-editor" class="form-control"></textarea>
                 <p class="text-center"><button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button></p>
             </div>
         </div>
@@ -59,8 +59,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
-        <script src="/static/js/simplemde.min.js"></script>
-        <script src="/static/js/highlight.pack.js"></script>
-        <script src="/static/js/markdown-textarea.js"></script>
+        <script src="/static/js/simplemde.min.js?v=<?php echo microtime(true); ?>"></script>
+        <script src="/static/js/highlight.pack.js?v=<?php echo microtime(true); ?>"></script>
+        <script src="/static/js/markdown-textarea.js?v=<?php echo microtime(true); ?>"></script>
     </body>
 </html>
