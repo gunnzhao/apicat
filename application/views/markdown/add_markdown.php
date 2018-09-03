@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     html, body {
         height: 100%;
         margin: 0px;
-        padding: 20px 0px 100px 0px;
+        padding: 20px 0px 120px 0px;
     }
     .main-container, .row, .CodeMirror {
         height: 100%;
@@ -43,11 +43,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body>
         <div class="container main-container">
             <div class="row">
-                <ol class="breadcrumb">
-                    <li><a href="javascript:history.back();">返回</a></li>
-                </ol>
+                <div class="form-group">
+                    <label for="title">文档名称</label>
+                    <input type="text" class="form-control" id="title" placeholder="请输入文档的名称">
+                </div>
                 <textarea id="markdown-editor" class="form-control"></textarea>
-                <p class="text-center"><button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button></p>
+                <input type="hidden" id="pro_key" value="<?php echo $project_info['pro_key']; ?>">
+                <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
+                <input type="hidden" id="cid" value="<?php echo $cid; ?>">
+                <p class="text-center">
+                    <button type="button" id="create" class="btn btn-lblue" style="width:150px;">创建</button>
+                    <a href="javascript:history.back();" class="btn btn-default" style="width:150px;">返回</a>
+                </p>
             </div>
         </div>
 
