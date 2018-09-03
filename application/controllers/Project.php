@@ -208,12 +208,12 @@ class Project extends MY_Controller
         }
 
         $title = trim($this->input->post('title'));
-        if (!$title or ($title < 1 and $title > 6)) {
+        if (!$title) {
             return $this->response_json_fail('请输入接口名称');
         }
 
         $method = $this->input->post('method');
-        if ($method === null) {
+        if ($method === null or $method < 1 or $method > 6) {
             return $this->response_json_fail('请选择请求方式');
         }
 
@@ -405,12 +405,12 @@ class Project extends MY_Controller
         }
 
         $title = trim($this->input->post('title'));
-        if (!$title or ($title < 1 and $title > 6)) {
+        if (!$title) {
             return $this->response_json_fail('请输入接口名称');
         }
 
         $method = $this->input->post('method');
-        if ($method === null) {
+        if ($method === null or $method < 1 or $method > 6) {
             return $this->response_json_fail('请选择请求方式');
         }
 
