@@ -115,7 +115,9 @@ class Project extends MY_Controller
             $template = 'project/markdown_doc';
         }
 
+        $this->add_page_css('/static/css/highlight/default.css');
         $this->add_page_css('/static/css/project.index.css');
+        $this->add_page_js('/static/js/highlight.pack.js');
         $this->add_page_js('/static/js/project.index.js');
         $this->render($template, array(
             'project_info'   => $project_info,

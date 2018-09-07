@@ -190,7 +190,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <?php if (!empty($doc['request_example'])): ?>
             <p><strong>请求参数示例</strong></p>
-            <pre><?php echo $doc['request_example']; ?></pre>
+            <pre><code class="lang-json"><?php echo $doc['request_example']; ?></code></pre>
             <?php endif; ?>
 
             <?php if (!empty($doc['response'])): ?>
@@ -220,18 +220,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="nomal">
-                    <br/><pre><?php echo $doc['response_success_example']; ?></pre>
+                    <br/><pre><code class="lang-json"><?php echo $doc['response_success_example']; ?></code></pre>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="exception">
-                    <br/><pre><?php echo $doc['response_fail_example']; ?></pre>
+                    <br/><pre><code class="lang-json"><?php echo $doc['response_fail_example']; ?></code></pre>
                 </div>
             </div>
             <?php elseif (!empty($doc['response_success_example'])): ?>
             <p><strong>返回参数示例</strong></p>
-            <pre><?php echo $doc['response_success_example']; ?></pre>
+            <pre><code class="lang-json"><?php echo $doc['response_success_example']; ?></code></pre>
             <?php elseif (!empty($doc['response_fail_example'])): ?>
             <p><strong>返回参数示例</strong></p>
-            <pre><?php echo $doc['response_fail_example']; ?></pre>
+            <pre><code class="lang-json"><?php echo $doc['response_fail_example']; ?></code></pre>
             <?php endif; ?>
         </div>
         <?php else: ?>
