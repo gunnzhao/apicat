@@ -32,10 +32,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     html, body {
         height: 100%;
         margin: 0px;
-        padding: 20px 0px 120px 0px;
+        padding: 10px 0px 120px 0px;
     }
-    .main-container, .row, .CodeMirror {
+    .main-container, .row {
         height: 100%;
+    }
+    .CodeMirror {
+        min-height: 450px;
     }
     </style>
     </head>

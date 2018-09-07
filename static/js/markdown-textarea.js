@@ -36,10 +36,25 @@ $(function(){
         var pro_key = $('#pro_key').val();
         var pid = $('#pid').val();
         var cid = $('#cid').val();
-        var markdown_text = simplemde.value();
-        var html_text = simplemde.markdown(testPlain);
 
-        $.post('/markdown/do_add', {'pid': pid, 'cid': cid, 'markdown_text': markdown_text, 'html_text': html_text}, function(res) {
+        if (!pro_key || !pid || !cid) {
+            alert('无法创建文档');
+            return false;
+        }
+
+        var title = $('#title').val();
+        if (!title) {
+            alert('请输入文档名称');
+            return false;
+        }
+        var markdown_text = simplemde.value();
+        if (!markdown_text) {
+            alert('请输入文档内容');
+            return false;
+        }
+        var html_text = simplemde.markdown(markdown_text);
+
+        $.post('/markdown/do_add', {'pid': pid, 'cid': cid, 'title': title, 'markdown_text': markdown_text, 'html_text': html_text}, function(res) {
             if (res.status == 0) {
                 location.href = '/project?pro_key=' + pro_key + '&doc_id=' + res.data.doc_id;
             } else {
