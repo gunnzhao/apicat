@@ -33,4 +33,20 @@ class Markdown_doc_model extends CI_model
 
         return $this->db->insert_id();
     }
+
+    /**
+     * 通过doc_id获取文档
+     * @param  int $doc_id 总文档id
+     * @return array
+     */
+    public function get_record_by_doc_id($doc_id)
+    {
+        $this->db->select('id,markdown_text,html_text');
+        $res = $this->db->get_where($this->table, array('doc_id' => $doc_id));
+        if ($res->num_rows() == 1) {
+            $record = $res->result_array();
+            return $record[0];
+        }
+        return array();
+    }
 }

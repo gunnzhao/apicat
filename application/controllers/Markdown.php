@@ -72,7 +72,7 @@ class Markdown extends MY_Controller
             'pid'        => $pid,
             'cid'        => $cid,
             'title'      => $title,
-            'type'       => 1,
+            'type'       => 2,
             'update_uid' => $this->session->uid
         ));
         if (!$doc_id) {

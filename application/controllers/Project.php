@@ -76,45 +76,12 @@ class Project extends MY_Controller
 
         $update_user = '';
         if ($doc) {
-            $this->load->model('request_params_model');
-            $this->load->model('response_params_model');
-            $this->load->model('param_example_model');
-
-            $request_params = $this->request_params_model->get_records($doc_id);
-            $header = $body = array();
-            if ($request_params) {
-                foreach ($request_params as $v) {
-                    if ($v['source'] == 0) {
-                        $header[] = $v;
-                    } else {
-                        $body[] = $v;
-                    }
-                }
+            if ($doc['type'] == 1) {
+                $doc_data = $this->get_api_doc($doc_id);
+            } else {
+                $doc_data = $this->get_markdown_doc($doc_id);
             }
-            $doc['header'] = $header;
-            $doc['body'] = $body;
-            
-            $response_params = $this->response_params_model->get_records($doc_id);
-            $doc['response'] = $response_params;
-            
-            $examples = $this->param_example_model->get_records($doc_id);
-            $request_example = $response_success_example = $response_fail_example = '';
-            if ($examples) {
-                foreach ($examples as $v) {
-                    if ($v['type'] == 0) {
-                        $request_example = $v['content'];
-                    } else {
-                        if ($v['state'] == 0) {
-                            $response_success_example = $v['content'];
-                        } else {
-                            $response_fail_example = $v['content'];
-                        }
-                    }
-                }
-            }
-            $doc['request_example'] = $request_example;
-            $doc['response_success_example'] = $response_success_example;
-            $doc['response_fail_example'] = $response_fail_example;
+            $doc = array_merge($doc, $doc_data);
 
             if (isset($this->session->uid)) {
                 if ($doc['update_uid'] != $this->session->uid) {
@@ -142,9 +109,15 @@ class Project extends MY_Controller
             $has_permission = false;
         }
 
+        if ($doc['type'] == 1) {
+            $template = 'project/api_doc';
+        } else {
+            $template = 'project/markdown_doc';
+        }
+
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/project.index.js');
-        $this->render('project/index', array(
+        $this->render($template, array(
             'project_info'   => $project_info,
             'api_nums'       => $api_nums,
             'member_nums'    => $member_nums,
@@ -850,6 +823,61 @@ class Project extends MY_Controller
 
         $this->load->model('response_params_model');
         $this->response_params_model->update_params($data, $doc_id);
+    }
+
+    private function get_api_doc($doc_id)
+    {
+        $this->load->model('request_params_model');
+        $this->load->model('response_params_model');
+        $this->load->model('param_example_model');
+        $data = array();
+
+        $request_params = $this->request_params_model->get_records($doc_id);
+        $header = $body = array();
+        if ($request_params) {
+            foreach ($request_params as $v) {
+                if ($v['source'] == 0) {
+                    $header[] = $v;
+                } else {
+                    $body[] = $v;
+                }
+            }
+        }
+        $data['header'] = $header;
+        $data['body'] = $body;
+        
+        $response_params = $this->response_params_model->get_records($doc_id);
+        $data['response'] = $response_params;
+        
+        $examples = $this->param_example_model->get_records($doc_id);
+        $request_example = $response_success_example = $response_fail_example = '';
+        if ($examples) {
+            foreach ($examples as $v) {
+                if ($v['type'] == 0) {
+                    $request_example = $v['content'];
+                } else {
+                    if ($v['state'] == 0) {
+                        $response_success_example = $v['content'];
+                    } else {
+                        $response_fail_example = $v['content'];
+                    }
+                }
+            }
+        }
+        $data['request_example'] = $request_example;
+        $data['response_success_example'] = $response_success_example;
+        $data['response_fail_example'] = $response_fail_example;
+        return $data;
+    }
+
+    private function get_markdown_doc($doc_id)
+    {
+        $this->load->model('markdown_doc_model');
+        $data = $this->markdown_doc_model->get_record_by_doc_id($doc_id);
+        if (!$data) {
+            return array('html_text' => '');
+        }
+        return array('html_text' => $data['html_text']);
     }
 
     private function send_email($email, $pro_key, $pro_title, $doc_id, $doc_title)

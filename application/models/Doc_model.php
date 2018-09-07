@@ -50,7 +50,7 @@ class Doc_model extends CI_model
      */
     public function get_records($pid)
     {
-        $this->db->select('id,pid,cid,title,url,method,body_data_type,display_order,update_uid,update_time');
+        $this->db->select('id,pid,cid,title,type,url,method,body_data_type,display_order,update_uid,update_time');
         $this->db->order_by('display_order', 'ASC');
         return $this->db->get_where($this->table, array('pid' => $pid, 'status' => 0))->result_array();
     }
@@ -62,7 +62,7 @@ class Doc_model extends CI_model
      */
     public function get_record($doc_id)
     {
-        $this->db->select('id,pid,cid,title,url,method,body_data_type,display_order,updating_uid');
+        $this->db->select('id,pid,cid,title,type,url,method,body_data_type,display_order,updating_uid');
         $res = $this->db->get_where($this->table, array('id' => $doc_id, 'status' => 0));
         if ($res->num_rows() == 1) {
             $record = $res->result_array();
