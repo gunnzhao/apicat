@@ -37,7 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     .main-container, .row {
         height: 100%;
     }
-    .CodeMirror {
+    .CodeMirror, .CodeMirror-scroll {
         min-height: 450px;
     }
     </style>
