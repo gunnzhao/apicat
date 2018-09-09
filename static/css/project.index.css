@@ -63,6 +63,28 @@ h3 span {
     margin-bottom: 24px;
 }
 
+.tools-bar {
+    height: 39px;
+    line-height: 39px;
+    margin-bottom: 0px;
+}
+#go-edit {
+    background-color: #ddd;
+    color: #333;
+    border-radius: 5px;
+}
+#go-edit:hover {
+    text-decoration-line: none;
+}
+#go-info {
+    margin-left: 10px;
+    cursor: pointer;
+}
+#go-del {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
 .row-form {
     margin-top: 16px;
 }

@@ -61,39 +61,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </p>
         <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
         <?php endif; ?>
-
-        <?php if (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>
-        <div id="quitProjectModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">退出项目</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>退出项目后，将不能浏览该项目内容。</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-block" id="quit-project">确定退出</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
     </div>
     <div class="col-xs-9">
         <?php if (!empty($doc)): ?>
-        <div class="doc">
-            <div class="row">
-                <div class="col-xs-11">
-                    <p class="text-left"><small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By <?php echo $update_user; ?></small></p>
-                </div>
-                <div class="col-xs-1">
+        <div class="row">
+            <div class="col-xs-8"><h4><?php echo $doc['title']; ?></h4></div>
+            <div class="col-xs-4">
+                <p class="text-right tools-bar">
                     <?php if ($has_permission): ?>
-                    <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" class="btn btn-lblue btn-xs edit-entrance" id="go-edit">修改</a>
+                    <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" id="go-edit">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
                     <?php endif; ?>
-                </div>
+                    <i class="icon-info-sign" id="go-info"></i>
+                    <?php if ($has_permission): ?>
+                    <i class="icon-trash" id="go-del" title="删除"></i>
+                    <?php endif; ?>
+                </p>
             </div>
+        </div>
+
+        <p><small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By <?php echo $update_user; ?></small></p>
+
+        <div class="doc">
             <?php echo html_entity_decode($doc['html_text']); ?>
         </div>
         <?php else: ?>
@@ -101,3 +89,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <?php endif; ?>
     </div>
 </div>
+
+<?php if (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>
+<div id="quitProjectModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">退出项目</h4>
+            </div>
+            <div class="modal-body">
+                <p>退出项目后，将不能浏览该项目内容。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-block" id="quit-project">确定退出</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
