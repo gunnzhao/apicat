@@ -19,39 +19,33 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <hr>
 <div class="row">
     <div class="col-xs-3">
-        <ul class="api-cate">
+        <ul class="list-group cates">
             <?php if (!empty($categories)): ?>
             <?php foreach ($categories as $v): ?>
-            <li class="cate-node">
-                <div class="cate-title">
-                    <span class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></span>&nbsp; <?php echo $v['title']; ?>
-                </div>
-                <?php if ($has_permission): ?>
-                <div class="dropdown cate-icon" style="display:none">
-                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <span class="icon-cog" type="button"></span>
-                    </a>
-                    <ul class="dropdown-menu" data-cid="<?php echo $v['id']; ?>">
-                        <li><a href="javascript:void(0);" class="edit-category">编辑</a></li>
-                        <li><a href="javascript:void(0);" class="del-category">删除</a></li>
-                    </ul>
-                </div>
-                <?php endif; ?>
-            </li>
-            <li style="<?php echo $active_cid == $v['id'] ? 'display:block;' : 'display:none;'; ?>">
-                <ul class="apis">
+            <li class="list-group-item cates-node">
+                <p class="cate-title"><i class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></i> <?php echo $v['title']; ?></p>
+                <ul class="list-unstyled docs" style="<?php echo $active_cid == $v['id'] ? 'display:block;' : 'display:none;'; ?>">
                     <?php if (isset($apis[$v['id']])): ?>
                     <?php foreach ($apis[$v['id']] as $v2): ?>
                     <?php if ($doc_id == $v2['id']): ?>
-                    <li class="active"><?php echo $v2['title']; ?></li>
+                    <li class="docs-node active"><?php echo $v2['title']; ?></li>
                     <?php else: ?>
-                    <li><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
+                    <li class="docs-node"><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
                     <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
                     <?php if ($has_permission): ?>
-                    <li>
-                        <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">创建接口</a>
+                    <li class="docs-node">
+                        <div class="btn-group">
+                            <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">+ 新建文档</a>
+                            <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="icon-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>">新建API文档</a></li>
+                                <li><a href="/markdown/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>">新建Markdown文档</a></li>
+                            </ul>
+                        </div>
                     </li>
                     <?php endif; ?>
                 </ul>
@@ -59,56 +53,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php endforeach; ?>
             <?php endif; ?>
         </ul>
+        
         <?php if ($has_permission): ?>
         <p class="create-cate-input" style="display:none;">
             <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
         </p>
         <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
-
-        <div id="editCateModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">编辑分类</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form name="edit-cate-form" onsubmit="return false;">
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label">分类名称</label>
-                                <input type="hidden" name="cid" value="0">
-                                <input type="text" class="form-control" name="cate_name">
-                                <input type="hidden" name="position" value="0">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-lblue" id="edit-cate">确定</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="delCateModal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="del-cate-title">删除分类</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>删除分类后，该分类下的所有内容都将被清除。</p>
-                        <input type="hidden" id="wantto-del" value="0">
-                        <input type="hidden" id="wantto-del-position" value="0">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger btn-block" id="del-cate">确定删除</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <?php endif; ?>
+
         <?php if (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>
         <div id="quitProjectModal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">

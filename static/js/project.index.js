@@ -1,93 +1,18 @@
 $(function(){
-    function bind_apilist(obj) {
+    function bind_cates(obj) {
         obj.click(function() {
-            var folder = $(this).children('.cate-title span').attr('class');
+            var folder = $(this).children('.cate-title i').attr('class');
             if (folder == 'icon-folder-close-alt') {
-                $('.cate-title').children('span').attr('class', 'icon-folder-close-alt');
-                $('.apis').parent().hide();
-                $(this).children('.cate-title span').attr('class', 'icon-folder-open-alt');
+                $('.cate-title').children('i').attr('class', 'icon-folder-close-alt');
+                $('.docs').hide();
+                $(this).children('.cate-title i').attr('class', 'icon-folder-open-alt');
             } else {
-                $(this).children('.cate-title span').attr('class', 'icon-folder-close-alt');
+                $(this).children('.cate-title i').attr('class', 'icon-folder-close-alt');
             }
-            $(this).parent().next().toggle();
+            $(this).parent().children('.docs').toggle();
         });
     }
-    bind_apilist($('.cate-title'));
-
-    function bind_setting(obj) {
-        obj.mouseover(function() {
-            $(this).children('.cate-icon').show();
-        });
-        obj.mouseout(function() {
-            $(this).children('.cate-icon').hide();
-        });
-    }
-    bind_setting($('.cate-node'));
-
-    function bind_edit(obj) {
-        obj.click(function() {
-            $('form[name="edit-cate-form"] input[name="cid"]').val($(this).parents('ul').data('cid'));
-            $('form[name="edit-cate-form"] input[name="position"]').val($(this).parents('.cate-node').index() / 2);
-
-            var title = $(this).parents('.cate-node').children('.cate-title').text();
-            $('form[name="edit-cate-form"] input[name="cate_name"]').val(title.trim());
-
-            $('#editCateModal').modal('toggle');
-        });
-    }
-    bind_edit($('.edit-category'));
-
-    function bind_del(obj) {
-        obj.click(function() {
-            $('#wantto-del').val($(this).parents('ul').data('cid'));
-            $('#wantto-del-position').val($(this).parents('.cate-node').index() / 2);
-
-            var title = $(this).parents('.cate-node').children('.cate-title').text();
-            $('#del-cate-title').text('确定删除 ' + title.trim() + '?');
-            $('#delCateModal').modal('toggle');
-        });
-    }
-    bind_del($('.del-category'));
-
-    $('#edit-cate').click(function() {
-        var data = $('form[name="edit-cate-form"]').serializeArray();
-        $.ajax({
-            type: 'post',
-            url: '/project/edit_category',
-            data: {'pid': $('#pid').val(), 'cid': data[0]['value'], 'title': data[1]['value']},
-            async: false,
-            success: function(res) {
-                if (res.status == 0) {
-                    var title = $('.cate-node:eq(' + data[2]['value'] + ')').children('.cate-title');
-                    var icon = title.children('span').attr('class');
-                    title.html('<span class="' + icon + '"></span>&nbsp; ' + data[1]['value']);
-                    $('#editCateModal').modal('toggle');
-                } else {
-                    alert(res.msg);
-                }
-            }
-        });
-    });
-    function toClickEdit() {
-        $('#edit-cate').click();
-    }
-
-    $('#del-cate').click(function() {
-        $.ajax({
-            type: 'post',
-            url: '/project/del_category',
-            data: {'cid': $('#wantto-del').val(), 'pid': $('#pid').val()},
-            async: false,
-            success: function(res) {
-                if (res.status == 0) {
-                    $('.cate-node:eq(' + $('#wantto-del-position').val() + ')').remove();
-                    $('#delCateModal').modal('toggle');
-                } else {
-                    alert(res.msg);
-                }
-            }
-        });
-    });
+    bind_cates($('.cate-title'));
 
     $('#create-cate').click(function() {
         $('#create-category').val('');
@@ -108,25 +33,25 @@ $(function(){
                 async: false,
                 success: function(res) {
                     if (res.status == 0) {
-                        var append_html = '<li class="cate-node"><div class="cate-title"><span class="icon-folder-close-alt"></span>&nbsp; ';
+                        var append_html = '<li class="list-group-item cates-node">';
+                        append_html += '<p class="cate-title"><i class="icon-folder-close-alt"></i> ';
                         append_html += _self.val();
-                        append_html += '</div><div class="dropdown cate-icon" style="display:none">';
-                        append_html += '<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">';
-                        append_html += '<span class="icon-cog" type="button"></span>';
-                        append_html += '<ul class="dropdown-menu" data-cid="';
-                        append_html += res.data.cid;
-                        append_html += '"><li><a href="javascript:void(0);" class="edit-category">编辑</a></li><li><a href="javascript:void(0);" class="del-category">删除</a></li></ul>';
-                        append_html += '</div></li>';
-                        append_html += '<li style="display:none;"><ul class="apis"><li>';
-                        append_html += '<a href="/project/add?pro_key=' + pro_key;
-                        append_html += '&cate_id=' + res.data.cid + '" class="btn btn-default btn-xs">创建接口</a></li></ul></li>';
-                        $('.api-cate').append(append_html);
+                        append_html += '</p>';
+                        append_html += '<ul class="list-unstyled docs" style="display:none;">';
+                        append_html += '<li class="docs-node">';
+                        append_html += '<div class="btn-group">';
+                        append_html += '<a href="/project/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '" class="btn btn-default btn-xs">+ 新建文档</a>';
+                        append_html += '<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        append_html += '<i class="icon-angle-down"></i>';
+                        append_html += '</button>';
+                        append_html += '<ul class="dropdown-menu">';
+                        append_html += '<li><a href="/project/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '">新建API文档</a></li>';
+                        append_html += '<li><a href="/markdown/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '">新建Markdown文档</a></li>';
+                        append_html += '</ul></div></li>';
+                        $('.cates').append(append_html);
                         $('.create-cate-input').hide();
                         _self.val('');
-                        bind_apilist($('.api-cate').children('.cate-node').last().children('.cate-title'));
-                        bind_setting($('.api-cate').children('.cate-node').last());
-                        bind_edit($('.api-cate').children('.cate-node').last().children('.cate-icon').children('.dropdown-menu').children('li').first());
-                        bind_del($('.api-cate').children('.cate-node').last().children('.cate-icon').children('.dropdown-menu').children('li').last());
+                        bind_cates($('.cates').children('.cates-node').last().children('.cate-title'));
                     } else {
                         alert(res.msg);
                     }

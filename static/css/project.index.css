@@ -18,72 +18,39 @@ h3 span {
     color: #777777
 }
 
-.api-cate {
-    margin-top: 0px;
-    padding: 0px;
+.cates-node:first-child {
+    border-top: none;
 }
-
-.api-cate li {
-    list-style-type: none;
-    border-bottom: 1px solid #DDDDDD;
-    padding: 12px 0px 12px 24px;
-    line-height: normal;
-    cursor: pointer;
+.cates-node {
+    border-left: none;
+    border-right: none;
 }
-.api-cate li:last-child {
-    border: none;
-}
-
-.dropdown-menu li {
-    border: none;
-    padding: 0px;
-    cursor: none;
-}
-
-.cate-node {
-    position: relative;
-}
-
 .cate-title {
-    max-width: 195px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.cate-icon {
-    position: absolute;
-    right: 24px;
-    top: 12px;
-}
-.cate-icon a {
-    color: #888888; 
-}
-.cate-icon a:hover {
-    text-decoration-line: none;
-}
-
-.apis {
-    padding: 0px;
-}
-
-.apis li {
-    border: none;
-    list-style-type: none;
-    padding: 8px 0px 8px 8px;
     max-width: 230px;
     white-space: nowrap;
     overflow: hidden;
+    margin-bottom: 0px;
+    cursor: pointer;
 }
 
-.apis li.active {
+.docs {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+.docs-node {
+    height: 30px;
+    line-height: 30px;
+}
+
+.docs-node.active {
     color: #08C;
 }
 
-.apis li a {
+.docs-node a {
     color: #101010;
 }
 
-.apis li a:hover {
+.docs-node a:hover {
     color: #08C;
     text-decoration-line: none;
 }
