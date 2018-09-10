@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						</div>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-lblue btn-lg btn-block">登录</button><br/>
+				<button type="submit" class="btn btn-lblue btn-lg btn-block">登 录</button><br/>
 				<p class="text-center"><a href="/register">还没有账户，马上注册</a></p>
 			</form>
 		</div>

@@ -76,7 +76,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<span class="input-group-addon" id="basic-addon2"><img src="/verify_code?tm=123" title="点击更换验证码" onclick="javascript:this.src='/verify_code?tm='+Math.random()" style="height:34px;cursor:pointer;"></span>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-lblue btn-lg btn-block">注册</button><br/>
+				<button type="submit" class="btn btn-lblue btn-lg btn-block">注 册</button><br/>
 				<p class="text-center"><a href="/login">已有账户？马上登录</a></p>
 			</form>
 		</div>
