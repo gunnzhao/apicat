@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-9">
         <h3 class="project-name" data-prokey="<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?>
-            <small>文档数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>| <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a><?php else: ?>| <a href="javascript:void(0);" class="quit-project">退出该项目</a><?php endif; ?></small>
+            <small>文档数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>| <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a><?php elseif (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>| <a href="javascript:void(0);" class="quit-project">退出该项目</a><?php endif; ?></small>
         </h3>
     </div>
     <div class="col-xs-3">
@@ -103,6 +103,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-block" id="quit-project">确定退出</button>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php if ($has_permission): ?>
+<div id="delDocModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">删除文档</h4>
+            </div>
+            <div class="modal-body">
+                <p>确定删除该文档吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger btn-block" id="quit-project">确定删除</button>
             </div>
         </div>
     </div>

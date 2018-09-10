@@ -117,4 +117,8 @@ $(function(){
             }
         });
     });
+
+    $('#go-del').click(function() {
+        $('#delDocModal').modal('toggle');
+    });
 });

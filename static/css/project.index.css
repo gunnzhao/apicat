@@ -84,6 +84,9 @@ h3 span {
     margin-left: 10px;
     cursor: pointer;
 }
+#go-del:hover {
+    color: #a94442;
+}
 
 .row-form {
     margin-top: 16px;
