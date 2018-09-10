@@ -98,6 +98,7 @@ class Project_members_model extends CI_model
 
     /**
      * 编辑项目成员
+     * @param  array $data 编辑信息
      * @param  int $pid 项目id
      * @param  int $uid 成员id
      * @return bool|int 影响记录数

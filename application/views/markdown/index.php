@@ -121,7 +121,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p>确定删除该文档吗？</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-block" id="quit-project">确定删除</button>
+                <button type="button" class="btn btn-danger btn-block" id="del-markdown-doc">确定删除</button>
             </div>
         </div>
     </div>

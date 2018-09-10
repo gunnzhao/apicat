@@ -10,6 +10,7 @@ class Markdown extends MY_Controller
     {
         parent::__construct();
         $this->load->model('projects_model');
+        $this->load->model('markdown_doc_model');
     }
 
     public function index()
@@ -76,6 +77,10 @@ class Markdown extends MY_Controller
 
         $update_user = '';
         if ($doc) {
+            if ($doc['type'] != 2) {
+                show_404();
+            }
+            
             $doc_data = $this->get_markdown_doc($doc_id);
             $doc = array_merge($doc, $doc_data);
 
@@ -190,7 +195,6 @@ class Markdown extends MY_Controller
             return $this->response_json_fail('创建失败');
         }
 
-        $this->load->model('markdown_doc_model');
         $markdown_doc_id = $this->markdown_doc_model->add_record(array(
             'doc_id'        => $doc_id,
             'markdown_text' => $markdown_text,
@@ -256,9 +260,64 @@ class Markdown extends MY_Controller
         ));
     }
 
+    public function do_edit()
+    {
+        $pid = trim($this->input->post('pid'));
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('修改失败，没有修改权限。');
+        }
+
+        $doc_id = trim($this->input->post('doc_id'));
+        if (!$doc_id) {
+            return $this->response_json_fail('修改失败');
+        }
+
+        // 判断文档当前的修改人是否为本人
+        $this->load->model('doc_model');
+        $doc = $this->doc_model->get_record($doc_id);
+        if ($doc['updating_uid'] != $this->session->uid) {
+            $this->load->model('user_model');
+            $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
+            return $this->response_json_fail('无法修改，当前' . $user_info['nickname'] . '正在修改此文档。');
+        }
+
+        $title = trim($this->input->post('title'));
+        if (!$title) {
+            return $this->response_json_fail('请输入接口名称');
+        }
+
+        $markdown_text = trim($this->input->post('markdown_text'));
+        if (!$markdown_text) {
+            return $this->response_json_fail('请输入文档内容');
+        }
+
+        $html_text = trim($this->input->post('html_text'));
+        if (!$html_text) {
+            return $this->response_json_fail('请输入文档内容');
+        }
+
+        $this->doc_model->edit_record(array(
+            'title'          => $title,
+            'update_uid'     => $this->session->uid
+        ), $doc_id);
+
+        $res = $this->markdown_doc_model->edit_record_by_doc_id(array(
+            'markdown_text' => $markdown_text,
+            'html_text'     => htmlentities($html_text)
+        ), $doc_id);
+        if ($res === false) {
+            return $this->response_json_fail('文档编辑失败，请重试。');
+        }
+
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $pid);
+
+        $this->response_json_ok();
+    }
+
     private function get_markdown_doc($doc_id)
     {
-        $this->load->model('markdown_doc_model');
         $data = $this->markdown_doc_model->get_record_by_doc_id($doc_id);
         if (!$data) {
             return array('markdown_text' => '', 'html_text' => '');

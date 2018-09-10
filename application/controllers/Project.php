@@ -76,6 +76,10 @@ class Project extends MY_Controller
 
         $update_user = '';
         if ($doc) {
+            if ($doc['type'] != 1) {
+                show_404();
+            }
+            
             $doc_data = $this->get_api_doc($doc_id);
             $doc = array_merge($doc, $doc_data);
 

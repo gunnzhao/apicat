@@ -88,7 +88,7 @@ $(function(){
 
         $.post('/markdown/do_edit', {'pid': pid, 'doc_id': doc_id, 'title': title, 'markdown_text': markdown_text, 'html_text': html_text}, function(res) {
             if (res.status == 0) {
-                location.href = '/project?pro_key=' + pro_key + '&doc_id=' + doc_id;
+                location.href = '/markdown?pro_key=' + pro_key + '&doc_id=' + doc_id;
             } else {
                 $(this).prop('disabled', false);
                 alert(res.msg);

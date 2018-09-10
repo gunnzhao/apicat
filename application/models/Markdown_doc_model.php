@@ -49,4 +49,20 @@ class Markdown_doc_model extends CI_model
         }
         return array();
     }
+
+    /**
+     * 通过doc_id修改文档
+     * @param  array $data 修改内容
+     * @param  int $doc_id 总文档id
+     * @return bool|int 影响记录数
+     */
+    public function edit_record_by_doc_id($data, $doc_id)
+    {
+        $res = $this->db->update($this->table, $data, array('doc_id' => $doc_id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }
