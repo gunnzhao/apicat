@@ -83,4 +83,19 @@ class Param_example_model extends CI_model
             return 1;
         }
     }
+
+    /**
+     * 根据文档ID清除记录
+     * @param  int $doc_id 记文档录ID
+     * @return bool|int 影响记录数
+     */
+    public function del_records_by_doc_id($doc_id)
+    {
+        $res = $this->db->update($this->table, array('status' => 1), array('doc_id' => $doc_id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

@@ -145,4 +145,19 @@ class Doc_model extends CI_model
         $this->db->limit(50, 0);
         return $this->db->get($this->table)->result_array();
     }
+
+    /**
+     * 删除文档
+     * @param  int $id 记录ID
+     * @return bool|int 影响记录数
+     */
+    public function del_record($id)
+    {
+        $res = $this->db->update($this->table, array('status' => 1), array('id' => $id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

@@ -80,7 +80,7 @@ class Markdown extends MY_Controller
             if ($doc['type'] != 2) {
                 show_404();
             }
-            
+
             $doc_data = $this->get_markdown_doc($doc_id);
             $doc = array_merge($doc, $doc_data);
 
@@ -266,21 +266,21 @@ class Markdown extends MY_Controller
 
         $this->load->model('project_members_model');
         if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
-            return $this->response_json_fail('修改失败，没有修改权限。');
+            return $this->response_json_fail('编辑失败，没有编辑权限。');
         }
 
         $doc_id = trim($this->input->post('doc_id'));
         if (!$doc_id) {
-            return $this->response_json_fail('修改失败');
+            return $this->response_json_fail('编辑失败');
         }
 
         // 判断文档当前的修改人是否为本人
         $this->load->model('doc_model');
         $doc = $this->doc_model->get_record($doc_id);
-        if ($doc['updating_uid'] != $this->session->uid) {
+        if ($doc['updating_uid'] != 0 and $doc['updating_uid'] != $this->session->uid) {
             $this->load->model('user_model');
             $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
-            return $this->response_json_fail('无法修改，当前' . $user_info['nickname'] . '正在修改此文档。');
+            return $this->response_json_fail('无法编辑，当前' . $user_info['nickname'] . '正在编辑此文档。');
         }
 
         $title = trim($this->input->post('title'));

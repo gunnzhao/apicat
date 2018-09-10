@@ -183,6 +183,8 @@ $(function(){
         var body_names = $('input[name="body_names[]"]').serialize();
 
         var form_data = $('#api-doc').serializeArray();
+        var pid = $('input[name="pid"]').val();
+        var doc_id = $('input[name="doc_id"]').val();
 
         $('.header_musts').each(function() {
             if ($(this).prop('checked')) {
@@ -206,12 +208,12 @@ $(function(){
             }
         });
         if (notice_uid.length > 0) {
-            $.post('/project/notice', {'pid': $('input[name="pid"]').val(), 'doc_id': $('input[name="doc_id"]').val(), 'notice_uid': notice_uid.join(',')});
+            $.post('/project/notice', {'pid': pid, 'doc_id': doc_id, 'notice_uid': notice_uid.join(',')});
         }
 
         $.post('/project/do_edit', form_data, function(res) {
             if (res.status == 0) {
-                location.href = pro_link + '&doc_id=' + res.data.doc_id;
+                location.href = pro_link + '&doc_id=' + doc_id;
             } else {
                 _self.prop('disabled', false);
                 alert(res.msg);
