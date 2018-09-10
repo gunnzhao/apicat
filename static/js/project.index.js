@@ -122,17 +122,24 @@ $(function(){
         $('#delDocModal').modal('toggle');
     });
     $('#del-api-doc').click(function() {
+        del_doc('project');
+    });
+    $('#del-markdown-doc').click(function() {
+        del_doc('markdown');
+    });
+    function del_doc(uri)
+    {
         var url = $('#go-edit').attr('href');
         var doc_id = url.split('&doc_id=').pop();
         var pid = $('#pid').val();
         var pro_key = $('.project-name').data('prokey');
 
-        $.post('/project/do_del', {'pid': pid, 'doc_id': doc_id}, function(res) {
+        $.post('/' + uri + '/do_del', {'pid': pid, 'doc_id': doc_id}, function(res) {
             if (res.status == 0) {
                 location.href = '/project?pro_key=' + pro_key;
             } else {
                 alert(res.msg);
             }
         });
-    });
+    }
 });

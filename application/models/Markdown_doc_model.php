@@ -65,4 +65,19 @@ class Markdown_doc_model extends CI_model
         }
         return $this->db->affected_rows();
     }
+
+    /**
+     * 删除文档
+     * @param  int $id 总文档记录ID
+     * @return bool|int 影响记录数
+     */
+    public function del_record($doc_id)
+    {
+        $res = $this->db->update($this->table, array('status' => 1), array('doc_id' => $doc_id));
+        if (!$res) {
+            log_message('error', $this->db->last_query());
+            return false;
+        }
+        return $this->db->affected_rows();
+    }
 }

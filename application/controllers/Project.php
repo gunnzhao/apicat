@@ -76,11 +76,12 @@ class Project extends MY_Controller
 
         $update_user = '';
         if ($doc) {
-            if ($doc['type'] != 1) {
-                show_404();
+            if ($doc['type'] == 1) {
+                $doc_data = $this->get_api_doc($doc_id);	
+            } else {	
+                $doc_data = $this->get_markdown_doc($doc_id);	
             }
-
-            $doc_data = $this->get_api_doc($doc_id);
+            
             $doc = array_merge($doc, $doc_data);
 
             if (isset($this->session->uid)) {
@@ -109,11 +110,17 @@ class Project extends MY_Controller
             $has_permission = false;
         }
 
+        if ($doc['type'] == 1) {	
+            $template = 'project/index';	
+        } else {	
+            $template = 'markdown/index';	
+        }
+
         $this->add_page_css('/static/css/highlight/default.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js('/static/js/highlight.pack.js');
         $this->add_page_js('/static/js/project.index.js');
-        $this->render('project/index', array(
+        $this->render($template, array(
             'project_info'   => $project_info,
             'api_nums'       => $api_nums,
             'member_nums'    => $member_nums,
@@ -867,6 +874,16 @@ class Project extends MY_Controller
         $data['response_success_example'] = $response_success_example;
         $data['response_fail_example'] = $response_fail_example;
         return $data;
+    }
+
+    private function get_markdown_doc($doc_id)
+    {
+        $this->load->model('markdown_doc_model');
+        $data = $this->markdown_doc_model->get_record_by_doc_id($doc_id);
+        if (!$data) {
+            return array('html_text' => '');
+        }
+        return array('html_text' => $data['html_text']);
     }
 
     private function send_email($email, $pro_key, $pro_title, $doc_id, $doc_title)
