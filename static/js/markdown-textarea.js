@@ -5,7 +5,7 @@ $(function(){
         forceSync: true,
         hideIcons: ["guide"],
         indentWithTabs: false,
-        initialValue: "Hello world!",
+        //initialValue: "Hello world!",
         insertTexts: {
             horizontalRule: ["", "\n\n-----\n\n"],
             image: ["![](http://", ")"],
@@ -57,6 +57,38 @@ $(function(){
         $.post('/markdown/do_add', {'pid': pid, 'cid': cid, 'title': title, 'markdown_text': markdown_text, 'html_text': html_text}, function(res) {
             if (res.status == 0) {
                 location.href = '/project?pro_key=' + pro_key + '&doc_id=' + res.data.doc_id;
+            } else {
+                $(this).prop('disabled', false);
+                alert(res.msg);
+            }
+        });
+    });
+
+    $('#edit').click(function() {
+        var pro_key = $('#pro_key').val();
+        var pid = $('#pid').val();
+        var doc_id = $('#doc_id').val();
+
+        if (!pid || !doc_id) {
+            alert('无法编辑文档');
+            return false;
+        }
+
+        var title = $('#title').val();
+        if (!title) {
+            alert('请输入文档名称');
+            return false;
+        }
+        var markdown_text = simplemde.value();
+        if (!markdown_text) {
+            alert('请输入文档内容');
+            return false;
+        }
+        var html_text = simplemde.markdown(markdown_text);
+
+        $.post('/markdown/do_edit', {'pid': pid, 'doc_id': doc_id, 'title': title, 'markdown_text': markdown_text, 'html_text': html_text}, function(res) {
+            if (res.status == 0) {
+                location.href = '/project?pro_key=' + pro_key + '&doc_id=' + doc_id;
             } else {
                 $(this).prop('disabled', false);
                 alert(res.msg);

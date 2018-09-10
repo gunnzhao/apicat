@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-9">
         <h3 class="project-name" data-prokey="<?php echo $project_info['pro_key']; ?>"><?php echo $project_info['title']; ?>
-            <small>文档数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>| <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a><?php elseif (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>| <a href="javascript:void(0);" class="quit-project">退出该项目</a><?php endif; ?></small>
+            <small>API数: <?php echo $api_nums; ?> | 团队成员: <?php echo $member_nums; ?> <?php if (isset($_SESSION['uid']) and $project_info['uid'] == $_SESSION['uid']): ?>| <a href="/projects/settings?pid=<?php echo $project_info['id']; ?>">设置</a><?php elseif (isset($_SESSION['uid']) and $project_info['uid'] != $_SESSION['uid']): ?>| <a href="javascript:void(0);" class="quit-project">退出该项目</a><?php endif; ?></small>
         </h3>
     </div>
     <div class="col-xs-3">
@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if ($doc_id == $v2['id']): ?>
                     <li class="docs-node active"><?php echo $v2['title']; ?></li>
                     <?php else: ?>
-                    <li class="docs-node"><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
+                    <li class="docs-node"><a href="<?php echo $v2['type'] == 1 ? '/project' : '/markdown'; ?>?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
                     <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
@@ -53,15 +53,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php endforeach; ?>
             <?php endif; ?>
         </ul>
-        
+
         <?php if ($has_permission): ?>
         <p class="create-cate-input" style="display:none;">
             <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
         </p>
-        <p class="text-center"><a href="javascript:void(0)" id="create-cate">创建分类</a></p>
+        <p class="text-center"><a href="javascript:void(0)" id="create-cate">新建分类</a></p>
         <?php endif; ?>
     </div>
+
     <div class="col-xs-9">
         <?php if (!empty($doc)): ?>
         <div class="row">
@@ -82,7 +83,98 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <p><small>最后修改 <?php echo date('Y-m-d H:i:s', $doc['update_time']); ?> By <?php echo $update_user; ?></small></p>
 
         <div class="doc">
-            <?php echo html_entity_decode($doc['html_text']); ?>
+            <p><strong><?php echo $request_types[$doc['method']]; ?> <?php echo $body_data_type[$doc['body_data_type']]; ?></strong></p>
+            <p><strong>URL: </strong> <code><?php echo $doc['url']; ?></code></p>
+
+            <?php if (!empty($doc['header'])): ?>
+            <p><strong>请求Header参数说明</strong></p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>是否必传</th>
+                    <th>默认值</th>
+                    <th>参数说明</th>
+                </tr>
+                <?php foreach ($doc['header'] as $v): ?>
+                <tr>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['is_must'] == 0 ? '否' : '是'; ?></td>
+                    <td><?php echo $v['default']; ?></td>
+                    <td><?php echo $v['description']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+
+            <?php if (!empty($doc['body'])): ?>
+            <p><strong>请求参数说明</strong></p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>是否必传</th>
+                    <th>默认值</th>
+                    <th>参数说明</th>
+                </tr>
+                <?php foreach ($doc['body'] as $v): ?>
+                <tr>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['is_must'] == 0 ? '否' : '是'; ?></td>
+                    <td><?php echo $v['default']; ?></td>
+                    <td><?php echo $v['description']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+
+            <?php if (!empty($doc['request_example'])): ?>
+            <p><strong>请求参数示例</strong></p>
+            <pre><code class="lang-json"><?php echo $doc['request_example']; ?></code></pre>
+            <?php endif; ?>
+
+            <?php if (!empty($doc['response'])): ?>
+            <p><strong>返回参数说明</strong></p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>参数名称</th>
+                    <th>类型</th>
+                    <th>参数说明</th>
+                </tr>
+                <?php foreach ($doc['response'] as $v): ?>
+                <tr>
+                    <td><?php echo $v['title']; ?></td>
+                    <td><?php echo $param_types[$v['type']]; ?></td>
+                    <td><?php echo $v['description']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+
+            <?php if (!empty($doc['response_success_example']) and !empty($doc['response_fail_example'])): ?>
+            <p><strong>返回参数示例</strong></p>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#nomal" aria-controls="nomal" role="tab" data-toggle="tab">正常示例</a></li>
+                <li role="presentation"><a href="#exception" aria-controls="exception" role="tab" data-toggle="tab">异常示例</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="nomal">
+                    <br/><pre><code class="lang-json"><?php echo $doc['response_success_example']; ?></code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="exception">
+                    <br/><pre><code class="lang-json"><?php echo $doc['response_fail_example']; ?></code></pre>
+                </div>
+            </div>
+            <?php elseif (!empty($doc['response_success_example'])): ?>
+            <p><strong>返回参数示例</strong></p>
+            <pre><code class="lang-json"><?php echo $doc['response_success_example']; ?></code></pre>
+            <?php elseif (!empty($doc['response_fail_example'])): ?>
+            <p><strong>返回参数示例</strong></p>
+            <pre><code class="lang-json"><?php echo $doc['response_fail_example']; ?></code></pre>
+            <?php endif; ?>
         </div>
         <?php else: ?>
             <p class="text-center">暂无文档</p>
