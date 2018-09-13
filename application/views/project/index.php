@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php if (!empty($doc['header'])): ?>
             <p><strong>请求Header参数说明</strong></p>
             <table class="table table-bordered">
-                <tr>
+                <tr class="active">
                     <th>参数名称</th>
                     <th>类型</th>
                     <th>是否必传</th>
@@ -111,7 +111,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php if (!empty($doc['body'])): ?>
             <p><strong>请求参数说明</strong></p>
             <table class="table table-bordered">
-                <tr>
+                <tr class="active">
                     <th>参数名称</th>
                     <th>类型</th>
                     <th>是否必传</th>
@@ -138,7 +138,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <?php if (!empty($doc['response'])): ?>
             <p><strong>返回参数说明</strong></p>
             <table class="table table-bordered">
-                <tr>
+                <tr class="active">
                     <th>参数名称</th>
                     <th>类型</th>
                     <th>参数说明</th>
