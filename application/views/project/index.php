@@ -30,7 +30,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if ($doc_id == $v2['id']): ?>
                     <li class="docs-node active"><?php echo $v2['title']; ?></li>
                     <?php else: ?>
-                    <li class="docs-node"><a href="<?php echo $v2['type'] == 1 ? '/project' : '/markdown'; ?>?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
+                    <li class="docs-node"><a href="/project?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $v2['id']; ?>"><?php echo $v2['title']; ?></a></li>
                     <?php endif; ?>
                     <?php endforeach; ?>
                     <?php endif; ?>
