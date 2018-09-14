@@ -87,7 +87,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
         <footer>
-            <p class="text-center">&copy; ApiCat</p>
+            <p class="text-center">&copy; ApiCat Beta</p>
         </footer>
 
         <!-- Bootstrap core JavaScript

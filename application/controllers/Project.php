@@ -97,6 +97,14 @@ class Project extends MY_Controller
                 $user_info = $this->user_model->get_user_by_uid($doc['update_uid']);
                 $update_user = $user_info['nickname'];
             }
+
+            if ($doc['type'] == 1) {
+                $template = 'project/index';
+            } else {
+                $template = 'markdown/index';
+            }
+        } else {
+            $template = 'project/index';
         }
 
         $api_nums = $this->doc_model->get_nums($project_info['id']);
@@ -108,12 +116,6 @@ class Project extends MY_Controller
             $has_permission = $permission_info['can_write'] == 1 ? true : false;
         } else {
             $has_permission = false;
-        }
-
-        if ($doc['type'] == 1) {	
-            $template = 'project/index';	
-        } else {	
-            $template = 'markdown/index';	
         }
 
         $this->add_page_css_file('/static/css/highlight/default.css');
