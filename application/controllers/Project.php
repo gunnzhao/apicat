@@ -116,9 +116,9 @@ class Project extends MY_Controller
             $template = 'markdown/index';	
         }
 
-        $this->add_page_css('/static/css/highlight/default.css');
+        $this->add_page_css_file('/static/css/highlight/default.css');
         $this->add_page_css('/static/css/project.index.css');
-        $this->add_page_js('/static/js/highlight.pack.js');
+        $this->add_page_js_file('/static/js/highlight.pack.js');
         $this->add_page_js('/static/js/project.index.js');
         $this->render($template, array(
             'project_info'   => $project_info,
@@ -158,10 +158,10 @@ class Project extends MY_Controller
             show_404();
         }
 
-        $this->add_page_css('/static/css/jquery.numberedtextarea.css');
+        $this->add_page_css_file('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
-        $this->add_page_js('/static/js/jquery.numberedtextarea.js');
-        $this->add_page_js('/static/js/jquery-ui.min.js');
+        $this->add_page_js_file('/static/js/jquery.numberedtextarea.js');
+        $this->add_page_js_file('/static/js/jquery-ui.min.js');
         $this->add_page_js('/static/js/project.add.js');
         $this->render('project/add', array('project_info' => $project_info, 'cid' => $cate_id));
     }
@@ -305,10 +305,10 @@ class Project extends MY_Controller
             $members_info = array();
         }
 
-        $this->add_page_css('/static/css/jquery.numberedtextarea.css');
+        $this->add_page_css_file('/static/css/jquery.numberedtextarea.css');
         $this->add_page_css('/static/css/project.index.css');
-        $this->add_page_js('/static/js/jquery.numberedtextarea.js');
-        $this->add_page_js('/static/js/jquery-ui.min.js');
+        $this->add_page_js_file('/static/js/jquery.numberedtextarea.js');
+        $this->add_page_js_file('/static/js/jquery-ui.min.js');
         $this->add_page_js('/static/js/project.add.js');
         $this->render('project/edit', array(
             'project_info'   => $project_info,

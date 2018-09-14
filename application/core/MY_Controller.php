@@ -7,7 +7,9 @@ class MY_Controller extends CI_Controller {
     protected $tpldata = array(
         '_page_description' => '',
         '_page_title'       => 'ApiCat',
+        '_page_css_file'    => array(),
         '_page_css'         => array(),
+        '_page_js_file'     => array(),
         '_page_js'          => array(),
         '_page_nickname'    => '',
         '_page_avatar'      => '',
@@ -54,9 +56,30 @@ class MY_Controller extends CI_Controller {
      * @param  string $js js文件的路径
      * @return void
      */
+    protected function add_page_js_file($js)
+    {
+        $this->tpldata['_page_js_file'][] = $js . '?v=' . microtime(true);
+    }
+
+    /**
+     * 添加页面js代码
+     * @param  string $js js文件的路径
+     * @return void
+     */
     protected function add_page_js($js)
     {
-        $this->tpldata['_page_js'][] = $js . '?v=' . microtime(true);
+        $js = trim($js, '/');
+        $this->tpldata['_page_js'][] = file_get_contents(FCPATH . $js);
+    }
+
+    /**
+     * 添加页面css文件
+     * @param  string $css css文件的路径
+     * @return void
+     */
+    protected function add_page_css_file($css)
+    {
+        $this->tpldata['_page_css_file'][] = $css . '?v=' . microtime(true);
     }
 
     /**
@@ -66,7 +89,8 @@ class MY_Controller extends CI_Controller {
      */
     protected function add_page_css($css)
     {
-        $this->tpldata['_page_css'][] = $css . '?v=' . microtime(true);
+        $css = trim($css, '/');
+        $this->tpldata['_page_css'][] = file_get_contents(FCPATH . $css);
     }
 
     /**

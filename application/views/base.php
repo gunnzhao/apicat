@@ -18,9 +18,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link href="/static/css/layout.css?v=<?php echo microtime(true); ?>" rel="stylesheet">
 
-    <?php if (!empty($_page_css)): ?>
-        <?php foreach ($_page_css as $_pc): ?>
+    <?php if (!empty($_page_css_file)): ?>
+        <?php foreach ($_page_css_file as $_pc): ?>
         <link href="<?php echo $_pc; ?>" rel="stylesheet">
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php if (!empty($_page_css)): ?>
+        <?php foreach ($_page_css as $code): ?>
+        <style>
+        <?php echo $code; ?>
+        </style>
         <?php endforeach; ?>
     <?php endif; ?>
 
@@ -90,9 +98,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
-        <?php if (!empty($_page_js)): ?>
-            <?php foreach ($_page_js as $_pj): ?>
+        <?php if (!empty($_page_js_file)): ?>
+            <?php foreach ($_page_js_file as $_pj): ?>
             <script src="<?php echo $_pj; ?>"></script>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if (!empty($_page_js)): ?>
+            <?php foreach ($_page_js as $code): ?>
+            <script type="text/javascript">
+            <?php echo $code; ?>
+            </script>
             <?php endforeach; ?>
         <?php endif; ?>
     </body>
