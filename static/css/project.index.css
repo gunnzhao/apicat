@@ -105,6 +105,9 @@ table>tbody>tr>td, table>tbody>tr>th, table>tfoot>tr>td, table>tfoot>tr>th, tabl
 #go-del:hover {
     color: #a94442;
 }
+#create-cate {
+    margin-left: 15px;
+}
 
 .row-form {
     margin-top: 16px;

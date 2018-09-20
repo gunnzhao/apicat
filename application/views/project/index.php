@@ -59,7 +59,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <input type="text" class="form-control input-sm" id="create-category" placeholder="分类名称">
             <input type="hidden" id="pid" value="<?php echo $project_info['id']; ?>">
         </p>
-        <p class="text-center"><a href="javascript:void(0)" id="create-cate">新建分类</a></p>
+
+        <div class="row">
+            <div class="col-xs-9"><p class="text-left"><a href="javascript:void(0)" id="create-cate">新建分类</a></div>
+            <div class="col-xs-3"><p class="text-right"><a href="javascript:void(0)"><i class="icon-cog" title="分类管理"></i></a></p></div>
+        </div>
         <?php endif; ?>
     </div>
 
