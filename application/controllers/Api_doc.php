@@ -37,7 +37,7 @@ class Api_doc extends MY_Controller
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js_file('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js_file('/static/js/jquery-ui.min.js');
-        $this->add_page_js('/static/js/project.add.js');
+        $this->add_page_js('/static/js/apidoc.js');
         $this->render('api_doc/add', array('project_info' => $project_info, 'cid' => $cate_id));
     }
 
@@ -184,7 +184,7 @@ class Api_doc extends MY_Controller
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js_file('/static/js/jquery.numberedtextarea.js');
         $this->add_page_js_file('/static/js/jquery-ui.min.js');
-        $this->add_page_js('/static/js/project.add.js');
+        $this->add_page_js('/static/js/apidoc.js');
         $this->render('api_doc/edit', array(
             'project_info'   => $project_info,
             'doc'            => $doc,
