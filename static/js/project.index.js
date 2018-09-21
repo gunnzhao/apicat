@@ -122,7 +122,7 @@ $(function(){
         $('#delDocModal').modal('toggle');
     });
     $('#del-api-doc').click(function() {
-        del_doc('project');
+        del_doc('api_doc');
     });
     $('#del-markdown-doc').click(function() {
         del_doc('markdown');

@@ -282,6 +282,46 @@ class Api_doc extends MY_Controller
         $this->response_json_ok();
     }
 
+    public function do_del()
+    {
+        $pid = trim($this->input->post('pid'));
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($pid, $this->session->uid)) {
+            return $this->response_json_fail('删除失败，没有删除权限。');
+        }
+
+        $doc_id = trim($this->input->post('doc_id'));
+        if (!$doc_id) {
+            return $this->response_json_fail('删除失败');
+        }
+
+        // 判断文档当前的修改人是否为本人
+        $this->load->model('doc_model');
+        $doc = $this->doc_model->get_record($doc_id);
+        if ($doc['updating_uid'] != 0 and $doc['updating_uid'] != $this->session->uid) {
+            $this->load->model('user_model');
+            $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
+            return $this->response_json_fail('无法删除，当前' . $user_info['nickname'] . '正在编辑此文档。');
+        }
+
+        $res = $this->doc_model->del_record($doc_id);
+        if ($res === false) {
+            return $this->response_json_fail('删除失败，请稍后重试。');
+        }
+
+        $this->load->model('response_params_model');
+        $this->response_params_model->del_records_by_doc_id($doc_id);
+
+        $this->load->model('request_params_model');
+        $this->request_params_model->del_records_by_doc_id($doc_id);
+
+        $this->load->model('param_example_model');
+        $this->param_example_model->del_records_by_doc_id($doc_id);
+
+        $this->response_json_ok();
+    }
+
     private function set_header_info($doc_id, $insert = true)
     {
         $header_names = $this->input->post('header_names');
