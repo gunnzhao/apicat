@@ -37,12 +37,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php if ($has_permission): ?>
                     <li class="docs-node">
                         <div class="btn-group">
-                            <a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">+ 新建文档</a>
+                            <a href="/api_doc/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>" class="btn btn-default btn-xs">+ 新建文档</a>
                             <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-angle-down"></i>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="/project/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>">新建API文档</a></li>
+                                <li><a href="/api_doc/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>">新建API文档</a></li>
                                 <li><a href="/markdown/add?pro_key=<?php echo $project_info['pro_key'] ?>&cate_id=<?php echo $v['id'] ?>">新建Markdown文档</a></li>
                             </ul>
                         </div>

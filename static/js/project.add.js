@@ -151,7 +151,7 @@ $(function(){
             }
         });
 
-        $.post('/project/do_add', form_data, function(res) {
+        $.post('/api_doc/do_add', form_data, function(res) {
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + res.data.doc_id;
             } else {
