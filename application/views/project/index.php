@@ -74,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="col-xs-4">
                 <p class="text-right tools-bar">
                     <?php if ($has_permission): ?>
-                    <a href="/project/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" id="go-edit">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
+                    <a href="/api_doc/edit?pro_key=<?php echo $project_info['pro_key']; ?>&doc_id=<?php echo $doc['id']; ?>" id="go-edit">&nbsp;&nbsp;编辑&nbsp;&nbsp;</a>
                     <?php endif; ?>
                     <i class="icon-info-sign" id="go-info"></i>
                     <?php if ($has_permission): ?>
