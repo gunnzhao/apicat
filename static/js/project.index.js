@@ -28,7 +28,7 @@ $(function(){
             var pro_key = $('.project-name').data('prokey');
             $.ajax({
                 type: 'post',
-                url: '/project/add_category',
+                url: '/category/do_add',
                 data: {'pid': $('#pid').val(), 'title': _self.val()},
                 async: false,
                 success: function(res) {
