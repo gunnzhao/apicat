@@ -166,7 +166,7 @@ class Api_doc extends MY_Controller
         // 判断文档当前的修改人是否为本人
         if ($doc['updating_uid'] != $this->session->uid) {
             $user_info = $this->user_model->get_user_by_uid($doc['updating_uid']);
-            $this->add_page_js('/static/js/project.addfail.js');
+            $this->add_page_js('/static/js/project.editfail.js');
             return $this->render('/api_doc/edit_fail', array('pro_key' => $pro_key, 'doc_id' => $doc_id, 'edit_user' => $user_info['nickname']));
         }
 
