@@ -40,21 +40,10 @@ class Project extends MY_Controller
         $this->load->model('doc_model');
         $records = $this->doc_model->get_records($project_info['id']);
 
-        if ($records) {
-            if ($this->input->get('doc_id')) {
-                $doc_id = $this->input->get('doc_id');
-            } else {
-                if ($records) {
-                    $active_cid = $records[0]['cid'];
-                    $doc_id = $records[0]['id'];
-                } else {
-                    $active_cid = 0;
-                    $doc_id = 0;
-                }
-            }
+        if ($this->input->get('doc_id')) {
+            $doc_id = $this->input->get('doc_id');
         } else {
-            $active_cid = 0;
-            $doc_id = 0;
+            $active_cid = $doc_id = 0;
         }
 
         $apis = array();
@@ -70,6 +59,22 @@ class Project extends MY_Controller
                 if ($doc_id == $v['id']) {
                     $active_cid = $v['cid'];
                     $doc = $v;
+                }
+            }
+
+            foreach ($apis as $k => $v) {
+                $display_order_arr = array_column($v, 'display_order');
+                array_multisort($display_order_arr, SORT_ASC, SORT_NUMERIC, $apis[$k]);
+            }
+        }
+
+        if ($active_cid == 0 and $doc_id == 0) {
+            foreach ($categories as $v) {
+                if (!empty($apis[$v['id']])) {
+                    $active_cid = $v['id'];
+                    $doc_id = $apis[$v['id']][0]['id'];
+                    $doc = $apis[$v['id']][0];
+                    break;
                 }
             }
         }
