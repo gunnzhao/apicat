@@ -105,4 +105,49 @@ class Category extends MY_Controller
 
         return $this->response_json_ok();
     }
+
+    public function update_order()
+    {
+        $project_id = $this->input->post('pid');
+        $category_id = $this->input->post('cid');
+        $position = $this->input->post('position');
+
+        if ($project_id == 0 or $category_id == 0) {
+            return $this->response_json_fail('编辑失败');
+        }
+
+        $this->load->model('project_members_model');
+        if (!$this->project_members_model->check_write_permission($project_id, $this->session->uid)) {
+            return $this->response_json_fail('编辑失败，没有编辑权限。');
+        }
+
+        $data = array();
+        $origin_position = 0;
+        
+        $categories = $this->category_model->get_categories($project_id);
+        foreach ($categories as $k => $v) {
+            if ($v['display_order'] !== ($k + 1)) {
+                $data[] = array('id' => $v['id'], 'display_order' => $k + 1);
+            }
+
+            if ($v['id'] == $category_id) {
+                $data[] = array('id' => $v['id'], 'display_order' => $position);
+                $origin_position = $v['display_order'];
+            }
+
+            if ($v['display_order'] == $position) {
+                $data[] = array('id' => $v['id'], 'display_order' => &$origin_position);
+            }
+        }
+
+        if ($data) {
+            foreach ($data as $v) {
+                $this->category_model->edit_category(array('display_order' => $v['display_order']), $v['id']);
+            }
+        }
+
+        $this->projects_model->edit_project_by_id(array('update_time' => time(), 'update_uid' => $this->session->uid), $project_id);
+
+        return $this->response_json_ok();
+    }
 }

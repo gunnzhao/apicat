@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <ul class="list-group cates">
             <?php if (!empty($categories)): ?>
             <?php foreach ($categories as $v): ?>
-            <li class="list-group-item cates-node">
+            <li class="list-group-item cates-node" data-index="<?php echo $v['id']; ?>">
                 <p class="cate-title"><i class="<?php echo $active_cid == $v['id'] ? 'icon-folder-open-alt' : 'icon-folder-close-alt'; ?>"></i> <?php echo $v['title']; ?></p>
                 <ul class="list-unstyled docs" style="<?php echo $active_cid == $v['id'] ? 'display:block;' : 'display:none;'; ?>">
                     <?php if (isset($apis[$v['id']])): ?>

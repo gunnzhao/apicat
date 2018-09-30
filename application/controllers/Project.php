@@ -126,6 +126,10 @@ class Project extends MY_Controller
         $this->add_page_css_file('/static/css/highlight/default.css');
         $this->add_page_css('/static/css/project.index.css');
         $this->add_page_js_file('/static/js/highlight.pack.js');
+        if ($has_permission) {
+            $this->add_page_js_file('/static/js/jquery-ui.min.js');
+            $this->add_page_js('/static/js/category.sort.js');
+        }
         $this->add_page_js('/static/js/project.index.js');
         $this->render($template, array(
             'project_info'   => $project_info,
