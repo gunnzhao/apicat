@@ -211,7 +211,7 @@ $(function(){
             $.post('/project/notice', {'pid': pid, 'doc_id': doc_id, 'notice_uid': notice_uid.join(',')});
         }
 
-        $.post('/project/do_edit', form_data, function(res) {
+        $.post('/api_doc/do_edit', form_data, function(res) {
             if (res.status == 0) {
                 location.href = pro_link + '&doc_id=' + doc_id;
             } else {
