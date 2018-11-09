@@ -250,12 +250,12 @@ class Api_doc extends MY_Controller
 
         $body_names = $this->input->post('body_names');
         if ($body_names and !empty($body_names[0])) {
-            $this->edit_body_info($doc_id);
+            $this->set_body_info($doc_id);
         }
 
         $response_names = $this->input->post('response_names');
         if ($response_names and !empty($response_names[0])) {
-            $this->edit_response_info($doc_id);
+            $this->set_response_info($doc_id);
         }
 
         $this->load->model('param_example_model');
