@@ -245,17 +245,17 @@ class Api_doc extends MY_Controller
 
         $header_names = $this->input->post('header_names');
         if ($header_names and !empty($header_names[0])) {
-            $this->edit_header_info($doc_id);
+            $this->set_header_info($doc_id, false);
         }
 
         $body_names = $this->input->post('body_names');
         if ($body_names and !empty($body_names[0])) {
-            $this->set_body_info($doc_id);
+            $this->set_body_info($doc_id, false);
         }
 
         $response_names = $this->input->post('response_names');
         if ($response_names and !empty($response_names[0])) {
-            $this->set_response_info($doc_id);
+            $this->set_response_info($doc_id, false);
         }
 
         $this->load->model('param_example_model');
