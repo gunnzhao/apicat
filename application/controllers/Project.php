@@ -118,7 +118,11 @@ class Project extends MY_Controller
 
         if (isset($this->session->uid)) {
             $permission_info = $this->project_members_model->get_member($project_info['id'], $this->session->uid);
-            $has_permission = $permission_info['can_write'] == 1 ? true : false;
+            if (!$permission_info) {
+                $has_permission = false;
+            } else {
+                $has_permission = $permission_info['can_write'] == 1 ? true : false;
+            }
         } else {
             $has_permission = false;
         }
