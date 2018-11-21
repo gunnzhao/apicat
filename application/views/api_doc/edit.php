@@ -86,6 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 <option value="3" <?php if ($v['type'] == 3) {echo 'selected';} ?>>string</option>
                                                 <option value="4" <?php if ($v['type'] == 4) {echo 'selected';} ?>>array</option>
                                                 <option value="5" <?php if ($v['type'] == 5) {echo 'selected';} ?>>boolean</option>
+                                                <option value="5" <?php if ($v['type'] == 6) {echo 'selected';} ?>>file</option>
                                             </select>
                                         </td>
                                         <td class="field-transport"><input type="checkbox" class="body_musts" <?php if ($v['is_must'] == 1) {echo 'checked';} ?>></td>

@@ -146,7 +146,7 @@ class Project extends MY_Controller
             'doc'            => $doc,
             'update_user'    => $update_user,
             'has_permission' => $has_permission,
-            'param_types'    => array('', 'int', 'float', 'string', 'array', 'boolean'),
+            'param_types'    => array('', 'int', 'float', 'string', 'array', 'boolean', 'file'),
             'request_types'  => array('', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'),
             'body_data_type' => array('', 'form-data', 'x-www-form-urlencoded', 'raw', 'binary')
         ));
