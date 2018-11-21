@@ -40,12 +40,12 @@ $(function(){
                         append_html += '<ul class="list-unstyled docs" style="display:none;">';
                         append_html += '<li class="docs-node">';
                         append_html += '<div class="btn-group">';
-                        append_html += '<a href="/project/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '" class="btn btn-default btn-xs">+ 新建文档</a>';
+                        append_html += '<a href="/api_doc/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '" class="btn btn-default btn-xs">+ 新建文档</a>';
                         append_html += '<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
                         append_html += '<i class="icon-angle-down"></i>';
                         append_html += '</button>';
                         append_html += '<ul class="dropdown-menu">';
-                        append_html += '<li><a href="/project/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '">新建API文档</a></li>';
+                        append_html += '<li><a href="/api_doc/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '">新建API文档</a></li>';
                         append_html += '<li><a href="/markdown/add?pro_key=' + pro_key + '&cate_id=' + res.data.cid + '">新建Markdown文档</a></li>';
                         append_html += '</ul></div></li>';
                         $('.cates').append(append_html);
