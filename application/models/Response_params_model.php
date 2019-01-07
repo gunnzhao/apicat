@@ -58,7 +58,7 @@ class Response_params_model extends CI_model
     {
         $records = $this->get_records($doc_id);
         if (!$records) {
-            $this->add_record($data);
+            return $this->add_record(array_values($data));
         }
 
         $data_params = array_keys($data);

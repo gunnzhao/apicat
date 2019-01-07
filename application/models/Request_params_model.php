@@ -101,8 +101,7 @@ class Request_params_model extends CI_model
             $records = $this->get_body_records($doc_id);
         }
         if (!$records) {
-            $data = array_values($data);
-            return $this->add_record($data);
+            return $this->add_record(array_values($data));
         }
 
         $data_params = array_keys($data);
