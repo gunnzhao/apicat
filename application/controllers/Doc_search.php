@@ -32,12 +32,27 @@ class Doc_search extends MY_Controller
             show_404();
         }
 
-        $search_list = $this->doc_model->search_by_title($project_info['id'], $keyword);
+        $search_title_list = $this->doc_model->search_by_title($project_info['id'], $keyword);
+        $search_url_list = $this->doc_model->search_by_url($project_info['id'], trim($keyword, '/'));
+        $search_list = array_merge($search_title_list, $search_url_list);
         if (!$search_list) {
             return $this->render('doc_search/index', array('pro_key' => $pro_key, 'keyword' => $keyword, 'total' => 0, 'result' => array()));
         }
+
+        // 按照update_time排序
+        $update_time_arr = array_column($search_list, 'update_time');
+        array_multisort($update_time_arr, SORT_DESC, $search_list);
+
+        // 文档去重
+        $ids = array();
+        $result = array();
+        foreach ($search_list as $v) {
+            if (!in_array($v['id'], $ids)) {
+                $result[] = $v;
+            }
+        }
         
-        $cids = array_column($search_list, 'cid');
+        $cids = array_column($result, 'cid');
         $cids = array_unique($cids);
         $categories = $this->category_model->get_titles_by_ids($cids);
         $cate_arr = array();
@@ -45,7 +60,7 @@ class Doc_search extends MY_Controller
             $cate_arr[$v['id']] = $v['title'];
         }
 
-        $uids = array_column($search_list, 'update_uid');
+        $uids = array_column($result, 'update_uid');
         $uids = array_unique($uids);
         $users = $this->user_model->get_users_by_uids($uids);
         $user_arr = array();
@@ -58,8 +73,8 @@ class Doc_search extends MY_Controller
             array(
                 'pro_key'    => $pro_key,
                 'keyword'    => $keyword,
-                'total'      => count($search_list),
-                'result'     => $search_list,
+                'total'      => count($result),
+                'result'     => $result,
                 'categories' => $cate_arr,
                 'users'      => $user_arr
             )

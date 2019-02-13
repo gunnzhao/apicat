@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row">
     <div class="col-xs-2"></div>
     <div class="col-xs-8">
-        <p class="lead">共<?php echo $total; ?>条 <?php echo $keyword; ?>的搜索结果:</p>
+        <p class="lead">共<?php echo $total; ?>条 <strong><?php echo $keyword; ?></strong> 的搜索结果:</p>
         <?php if (!empty($result)): ?>
         <div class="list-group">
             <?php foreach ($result as $v): ?>
