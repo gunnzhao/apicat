@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </div>
     <div class="col-xs-3">
         <div class="input-group">
-            <input type="text" class="form-control" id="keyword">
+            <input type="text" class="form-control" id="keyword" placeholder="API名称或URL">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" id="go-search"><span class="icon-search" aria-hidden="true"></span></button>
             </span>
